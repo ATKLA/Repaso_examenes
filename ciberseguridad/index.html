@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DWES — Repaso · UAX</title>
+  <title>Ciberseguridad — Repaso · UAX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../quiz_shared.css"/>
   <style>
     :root {
-      --accent:            #D18A00;
-      --accent-bright:     #F5A623;
-      --accent-bg:         rgba(245,166,35,0.12);
+      --accent:            #6BAF0A;
+      --accent-bright:     #A3E635;
+      --accent-bg:         rgba(107,175,10,0.13);
       --accent-start-text: #0A0908;
     }
   </style>
@@ -23,28 +23,26 @@
     <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
     Inicio
   </a>
-  <span class="header-title">DWES</span>
-  <span class="header-tag">0613 · UAX</span>
+  <span class="header-title">CIBERSEGURIDAD</span>
+  <span class="header-tag">0615 · UAX</span>
 </header>
 <main class="main">
   <div id="panel-config">
     <div class="config-card">
-      <h1 class="config-title">Desarrollo Web Entorno Servidor</h1>
+      <h1 class="config-title">Ciberseguridad</h1>
       <p class="config-sub">ELIGE UNIDADES Y NÚMERO DE PREGUNTAS</p>
       <p class="section-label">Unidades formativas</p>
             <button class="btn-todo" id="btn-todo">
         <span class="todo-icon">★</span> Todo el temario
       </button>
       <div class="uf-grid">
-        <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>Introducción al lado servidor<span class="uf-count" id="count-UF1"></span></button>
-        <button class="btn-uf" data-uf="UF2"><span class="tag">UF2</span>PHP Básico<span class="uf-count" id="count-UF2"></span></button>
-        <button class="btn-uf" data-uf="UF3"><span class="tag">UF3</span>PHP Avanzado<span class="uf-count" id="count-UF3"></span></button>
-        <button class="btn-uf" data-uf="UF4"><span class="tag">UF4</span>Bases de datos con PHP<span class="uf-count" id="count-UF4"></span></button>
-        <button class="btn-uf" data-uf="UF5"><span class="tag">UF5</span>MVC y Frameworks<span class="uf-count" id="count-UF5"></span></button>
-        <button class="btn-uf" data-uf="UF6"><span class="tag">UF6</span>Servicios REST<span class="uf-count" id="count-UF6"></span></button>
-        <button class="btn-uf" data-uf="UF7"><span class="tag">UF7</span>Laravel<span class="uf-count" id="count-UF7"></span></button>
-        <button class="btn-uf" data-uf="UF8"><span class="tag">UF8</span>Apps Híbridas<span class="uf-count" id="count-UF8"></span></button>
-        <button class="btn-uf" data-uf="UF9"><span class="tag">UF9</span>Examen global<span class="uf-count" id="count-UF9"></span></button>
+        <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>Seguridad pasiva y CPD<span class="uf-count" id="count-UF1"></span></button>
+        <button class="btn-uf" data-uf="UF2-UF3"><span class="tag">UF2-3</span>Almacenamiento y Backup<span class="uf-count" id="count-UF2-UF3"></span></button>
+        <button class="btn-uf" data-uf="UF4"><span class="tag">UF4</span>Fundamentos Ciberseguridad<span class="uf-count" id="count-UF4"></span></button>
+        <button class="btn-uf" data-uf="UF5"><span class="tag">UF5</span>Seguridad en Redes<span class="uf-count" id="count-UF5"></span></button>
+        <button class="btn-uf" data-uf="UF6"><span class="tag">UF6</span>Ciberseguridad y Redes<span class="uf-count" id="count-UF6"></span></button>
+        <button class="btn-uf" data-uf="UF7"><span class="tag">UF7</span>Criptografía<span class="uf-count" id="count-UF7"></span></button>
+        <button class="btn-uf" data-uf="UF8"><span class="tag">UF8</span>Legislación Informática<span class="uf-count" id="count-UF8"></span></button>
       </div>
       <p class="section-label">Número de preguntas</p>
       <div class="cantidad-grid">
@@ -96,8 +94,9 @@
     </div>
   </div>
 </main>
-<script src="dwes_preguntas.js"></script>
+<script src="ciberseguridad_preguntas.js"></script>
 <script>
+  const BANCO = PREGUNTAS;
   document.addEventListener('DOMContentLoaded', () => {
     Object.keys(BANCO).forEach(uf => {
       const el = document.getElementById('count-' + uf);
@@ -105,7 +104,7 @@
     });
   });
 </script>
-<script>window.QUIZ_KEY = "dwes";</script>
+<script>window.QUIZ_KEY = "ciber";</script>
 <script src="../quiz_app.js"></script>
 </body>
 </html>

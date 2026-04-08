@@ -1,135 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Despliegue — Batería de Examen</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="despliegue_style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Despliegue — Repaso · UAX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../quiz_shared.css"/>
+  <style>
+    :root {
+      --accent:            #7B52D3;
+      --accent-bright:     #B794FF;
+      --accent-bg:         rgba(155,109,255,0.12);
+      --accent-start-text: #F5F0E8;
+    }
+  </style>
 </head>
 <body>
-
-<header>
-  <div class="header-inner">
-    <div class="header-logo">
-      <a href="../index.html" class="back-link" title="Volver al inicio">
-        <svg viewBox="0 0 14 14" fill="none"><path d="M12 7H2M7 2L2 7l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <span class="logo-pill">0614</span>
-      <span class="header-slash">/</span>
-      <span class="header-sub">Despliegue de Aplicaciones Web</span>
-    </div>
-    <div class="header-count">
-      <span id="total-preguntas-badge">—</span>
-      <span class="count-label">preguntas</span>
-    </div>
-  </div>
+<header class="header">
+  <a href="../index.html" class="btn-back">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Inicio
+  </a>
+  <span class="header-title">DESPLIEGUE</span>
+  <span class="header-tag">0614 · UAX</span>
 </header>
-
-<div id="panel-configuracion">
-  <div class="hero">
-    <p class="hero-eyebrow">0614 · Despliegue · UAX DAW</p>
-    <h1 class="hero-title">Repasa.<br>Practica.<br>Aprueba.</h1>
-    <p class="hero-desc">88 preguntas sobre servicios de red, DNS, LDAP, Docker, HTTP/HTTPS, Tomcat, FTP/SFTP, Git y documentación de software.</p>
-  </div>
-
-  <div class="config-card">
-    <div class="config-section">
-      <div class="section-label">Unidad formativa</div>
-      <div class="tema-grid">
-        <button class="tema-btn activo" data-tema="todos"><span class="btn-tag">ALL</span><span>Todas</span></button>
-        <button class="tema-btn" data-tema="UF1"><span class="btn-tag">UF1</span><span>Servicios de Red</span></button>
-        <button class="tema-btn" data-tema="UF2"><span class="btn-tag">UF2</span><span>Servidores Web</span></button>
-        <button class="tema-btn" data-tema="UF3"><span class="btn-tag">UF3</span><span>Serv. de Aplicaciones</span></button>
-        <button class="tema-btn" data-tema="UF4"><span class="btn-tag">UF4</span><span>Transferencia de Archivos</span></button>
-        <button class="tema-btn" data-tema="UF5"><span class="btn-tag">UF5</span><span>Documentación y Git</span></button>
-      </div>
-    </div>
-
-    <div class="config-bottom">
-      <div class="chips-row" id="temas-info"></div>
-      <div class="config-row">
-        <div class="select-wrap">
-          <label for="num-preguntas">Nº de preguntas</label>
-          <div class="select-inner">
-            <select id="num-preguntas">
-              <option value="10">10 preguntas</option>
-              <option value="20" selected>20 preguntas</option>
-              <option value="30">30 preguntas</option>
-              <option value="40">40 preguntas</option>
-              <option value="999">Todas las disponibles</option>
-            </select>
-            <svg class="select-arrow" viewBox="0 0 16 16" fill="none">
-              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        <button id="btn-comenzar">
-          <span>Comenzar</span>
-          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="barra-progreso">
-  <div class="progress-inner">
-    <div class="prog-label" id="prog-label">1 / 20</div>
-    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <div class="prog-score">✓ <b id="score-live">0</b> correctas</div>
-  </div>
-</div>
-
-<div id="zona-quiz">
-  <div class="q-card">
-    <div class="q-meta">
-      <span class="q-num" id="q-num">Pregunta 1 de 20</span>
-      <span class="q-tag" id="q-tag">UF1</span>
-    </div>
-    <div class="q-text" id="q-text"></div>
-    <div class="q-options" id="q-options"></div>
-    <div class="q-feedback" id="q-feedback"></div>
-    <div class="q-explanation" id="q-explanation"></div>
-    <div class="q-nav">
-      <button class="btn-nav" id="btn-anterior">
-        <svg viewBox="0 0 20 20" fill="none"><path d="M16 10H4M9 5L4 10l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Anterior
+<main class="main">
+  <div id="panel-config">
+    <div class="config-card">
+      <h1 class="config-title">Despliegue de Aplicaciones Web</h1>
+      <p class="config-sub">ELIGE UNIDADES Y NÚMERO DE PREGUNTAS</p>
+      <p class="section-label">Unidades formativas</p>
+            <button class="btn-todo" id="btn-todo">
+        <span class="todo-icon">★</span> Todo el temario
       </button>
-      <button class="btn-nav primary" id="btn-siguiente" disabled>
-        Siguiente
-        <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+      <div class="uf-grid">
+        <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>DNS y dominios<span class="uf-count" id="count-UF1"></span></button>
+        <button class="btn-uf" data-uf="UF2"><span class="tag">UF2</span>Servidores web (Apache/Nginx)<span class="uf-count" id="count-UF2"></span></button>
+        <button class="btn-uf" data-uf="UF3"><span class="tag">UF3</span>FTP, SSH y acceso remoto<span class="uf-count" id="count-UF3"></span></button>
+        <button class="btn-uf" data-uf="UF4"><span class="tag">UF4</span>Docker y contenedores<span class="uf-count" id="count-UF4"></span></button>
+        <button class="btn-uf" data-uf="UF5"><span class="tag">UF5</span>CI/CD y despliegue cloud<span class="uf-count" id="count-UF5"></span></button>
+      </div>
+      <p class="section-label">Número de preguntas</p>
+      <div class="cantidad-grid">
+        <button class="btn-cantidad" data-n="10">10</button>
+        <button class="btn-cantidad" data-n="20">20</button>
+        <button class="btn-cantidad" data-n="30">30</button>
+      </div>
+      <div style="font-family:var(--font-m);font-size:0.7rem;color:var(--muted);margin-bottom:1.25rem;text-align:right" id="pool-info"></div>
+      <button class="btn-start" id="btn-start">Comenzar cuestionario →</button>
     </div>
   </div>
-</div>
-
-<div id="zona-resultados">
-  <div class="res-card">
-    <div class="res-top">
-      <div>
-        <div class="res-score" id="res-nota">—</div>
-        <div class="res-fraction" id="res-fraction">0 de 0 correctas</div>
-      </div>
+  <div id="panel-quiz">
+    <div class="quiz-meta">
+      <span class="quiz-counter" id="quiz-counter">Pregunta 1 de 10</span>
+      <span class="quiz-live-score"><span class="lsc-ok" id="lsc-ok">✓ 0</span><span class="lsc-ko" id="lsc-ko">✗ 0</span></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="q-card">
+      <div class="q-card-header"><span class="q-uf-pill" id="q-uf-pill">UF1</span><span class="q-num" id="q-num">1/10</span></div>
+      <div class="q-body"><p class="q-text" id="q-text"></p></div>
+      <div class="options" id="options"></div>
+      <div class="explanation" id="explanation"></div>
+    </div>
+    <div class="quiz-nav"><button class="btn-nav" id="btn-siguiente">Siguiente →</button></div>
+  </div>
+  <div id="panel-results">
+    <div class="results-card">
+      <p class="res-eyebrow">RESULTADO FINAL</p>
+      <div class="res-pct" id="res-pct">0%</div>
+      <div class="nota-final"><span class="nota-num" id="nota-num">0.0</span><span id="nota-label" style="font-family:var(--font-m);font-size:0.8rem;color:var(--muted)"></span></div>
       <div class="res-badge" id="res-badge">—</div>
-    </div>
-    <div class="res-track"><div class="res-fill" id="res-fill" style="width:0%"></div></div>
-    <div class="res-stats">
-      <div class="stat"><div class="stat-n" id="res-correctas" style="color:var(--ok)">0</div><div class="stat-l">Correctas</div></div>
-      <div class="stat"><div class="stat-n" id="res-incorrectas" style="color:var(--ko)">0</div><div class="stat-l">Incorrectas</div></div>
-      <div class="stat"><div class="stat-n" id="res-sin-resp" style="color:var(--muted)">0</div><div class="stat-l">Sin resp.</div></div>
-    </div>
-    <div class="res-actions">
-      <button class="btn-res primary" id="btn-repetir">↺ Repetir mismo</button>
-      <button class="btn-res" id="btn-nuevo">⟳ Nuevo cuestionario</button>
-      <button class="btn-res ghost" id="btn-volver">← Volver</button>
+      <div class="res-stats">
+        <div class="stat"><div class="stat-n" id="res-ok" style="color:var(--accent-bright)">0</div><div class="stat-l">Correctas</div></div>
+        <div class="stat"><div class="stat-n" id="res-ko" style="color:var(--ko-text)">0</div><div class="stat-l">Incorrectas</div></div>
+        <div class="stat"><div class="stat-n" id="res-sinresp" style="color:var(--muted)">0</div><div class="stat-l">Sin resp.</div></div>
+      </div>
+      <div class="recomendaciones">
+        <div class="rec-title">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          Análisis y recomendaciones
+        </div>
+        <div class="rec-items" id="rec-items"></div>
+      </div>
+      <div class="res-actions">
+        <button class="btn-res primary" id="btn-repetir">↺ Repetir mismo test</button>
+        <button class="btn-res" id="btn-nuevo">⟳ Nuevo cuestionario</button>
+        <button class="btn-res ghost" id="btn-volver">← Volver al inicio</button>
+      </div>
     </div>
   </div>
-</div>
-
+</main>
 <script src="despliegue_preguntas.js"></script>
-<script src="despliegue_app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    Object.keys(BANCO).forEach(uf => {
+      const el = document.getElementById('count-' + uf);
+      if (el) el.textContent = BANCO[uf].length;
+    });
+  });
+</script>
+<script>window.QUIZ_KEY = "despliegue";</script>
+<script src="../quiz_app.js"></script>
 </body>
 </html>

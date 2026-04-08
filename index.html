@@ -1,235 +1,603 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Batería de Examen — UAX DAW</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap"
+    rel="stylesheet" />
   <style>
     :root {
-      --bg:        #0E0D0B;
-      --surface:   #1A1814;
-      --surface-2: #201E18;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #F2EDE4;
-      --text-2:    #A09880;
-      --text-3:    #5A5344;
-      --amber:     #F5A623;
-      --amber-glow: rgba(245,166,35,0.10);
-      --violet:    #9B6DFF;
-      --violet-glow: rgba(155,109,255,0.10);
-      --lime:      #A3E635;
-      --lime-glow: rgba(163,230,53,0.10);
-      --radius:    16px;
-      --display:   'Syne', sans-serif;
-      --mono:      'DM Mono', monospace;
-      --sans:      'DM Sans', sans-serif;
+      --bg: #0a0908;
+      --surface: #141210;
+      --surface-2: #1c1a17;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-2: rgba(255, 255, 255, 0.13);
+      --text: #f5f0e8;
+      --text-2: #a09880;
+      --text-3: #5a5344;
+      --amber: #f5a623;
+      --amber-dim: rgba(245, 166, 35, 0.12);
+      --violet: #b794ff;
+      --violet-dim: rgba(155, 109, 255, 0.12);
+      --lime: #a3e635;
+      --lime-dim: rgba(163, 230, 53, 0.12);
+      --radius: 14px;
+      --font-d: "Bricolage Grotesque", sans-serif;
+      --font-m: "IBM Plex Mono", monospace;
+      --font-s: "Lato", sans-serif;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background: var(--bg); color: var(--text);
-      font-family: var(--sans); min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-s);
+      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* HEADER */
     header {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(14,13,11,0.88);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 9, 8, 0.92);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
+
     .header-inner {
-      max-width: 980px; margin: 0 auto; padding: 0 24px;
-      height: 56px; display: flex; align-items: center; gap: 12px;
-    }
-    .header-badge {
-      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
-      background: var(--surface-2); border: 1px solid var(--border);
-      color: var(--text-2); padding: 3px 10px; border-radius: 5px;
-    }
-    .header-title {
-      font-family: var(--mono); font-size: 0.72rem;
-      color: var(--text-3); letter-spacing: 0.05em;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    /* HERO */
-    .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 64px; }
+    .header-badge {
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      padding: 3px 10px;
+      border-radius: 5px;
+    }
+
+    .header-title {
+      font-family: var(--font-m);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+    }
+
+    .hero {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 64px 24px 44px;
+    }
+
     .hero-eyebrow {
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--text-3); margin-bottom: 20px;
+      font-family: var(--font-m);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 16px;
     }
+
     .hero-title {
-      font-family: var(--display);
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 800; line-height: 1.04; letter-spacing: -0.025em;
-      color: var(--text); margin-bottom: 20px;
+      font-family: var(--font-d);
+      font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 18px;
     }
+
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #f5a623 0%, #b794ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
     .hero-desc {
-      font-size: 1rem; line-height: 1.7;
-      color: var(--text-2); max-width: 500px;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-2);
+      max-width: 500px;
+    }
+
+    /* PROGRESS */
+    .progress-section {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+
+    .progress-section-title {
+      font-family: var(--font-m);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 14px;
+    }
+
+    .progress-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .progress-card {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .progress-card-label {
+      font-family: var(--font-m);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .progress-card-label.amber {
+      color: var(--amber);
+    }
+
+    .progress-card-label.violet {
+      color: var(--violet);
+    }
+
+    .progress-card-label.lime {
+      color: var(--lime);
+    }
+
+    .progress-bar-wrap {
+      height: 5px;
+      background: var(--surface-2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    .progress-bar-fill.amber {
+      background: var(--amber);
+    }
+
+    .progress-bar-fill.violet {
+      background: var(--violet);
+    }
+
+    .progress-bar-fill.lime {
+      background: var(--lime);
+    }
+
+    .progress-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-pct {
+      font-family: var(--font-d);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .progress-detail {
+      font-family: var(--font-m);
+      font-size: 0.58rem;
+      color: var(--text-3);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .progress-empty {
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      color: var(--text-3);
+      font-style: italic;
     }
 
     /* GRID */
     .grid {
-      max-width: 980px; margin: 0 auto;
-      padding: 0 24px 80px;
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px 72px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
 
-    /* CARD */
     .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px 24px;
-      display: flex; flex-direction: column; gap: 18px;
-      text-decoration: none; color: inherit;
-      transition: all 0.2s ease; position: relative; overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
+
     .card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 2px; opacity: 0; transition: opacity 0.2s;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
     }
-    .card:not(.card-disabled):hover {
-      background: var(--surface-2); transform: translateY(-3px);
+
+    .card:hover {
+      background: var(--surface-2);
+      transform: translateY(-2px);
     }
-    .card:not(.card-disabled):hover::before { opacity: 1; }
 
-    .card-dwes::before { background: var(--amber); }
-    .card-dwes:hover { border-color: rgba(245,166,35,0.3) !important; box-shadow: 0 16px 48px rgba(245,166,35,0.10); }
+    .card:hover::before {
+      opacity: 1;
+    }
 
-    .card-despliegue::before { background: var(--violet); }
-    .card-despliegue:hover { border-color: rgba(155,109,255,0.3) !important; box-shadow: 0 16px 48px rgba(155,109,255,0.10); }
+    .card-dwes::before {
+      background: var(--amber);
+    }
 
-    .card-ciber::before { background: var(--lime); }
-    .card-disabled { opacity: 0.45; pointer-events: none; }
+    .card-despliegue::before {
+      background: var(--violet);
+    }
+
+    .card-ciber::before {
+      background: var(--lime);
+    }
+
+    .card-dwes:hover {
+      border-color: rgba(245, 166, 35, 0.25);
+      box-shadow: 0 12px 40px rgba(245, 166, 35, 0.08);
+    }
+
+    .card-despliegue:hover {
+      border-color: rgba(155, 109, 255, 0.25);
+      box-shadow: 0 12px 40px rgba(155, 109, 255, 0.08);
+    }
+
+    .card-ciber:hover {
+      border-color: rgba(163, 230, 53, 0.25);
+      box-shadow: 0 12px 40px rgba(163, 230, 53, 0.08);
+    }
 
     .card-code {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 4px;
+      font-family: var(--font-m);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
       width: fit-content;
+      border: 1px solid;
     }
-    .card-dwes .card-code { background: var(--amber-glow); color: var(--amber); border: 1px solid rgba(245,166,35,0.2); }
-    .card-despliegue .card-code { background: var(--violet-glow); color: var(--violet); border: 1px solid rgba(155,109,255,0.2); }
-    .card-ciber .card-code { background: var(--lime-glow); color: var(--lime); border: 1px solid rgba(163,230,53,0.2); }
 
-    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-    .wip {
-      font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text-3);
-      background: var(--surface-2); border: 1px solid var(--border);
-      padding: 3px 8px; border-radius: 4px; white-space: nowrap; margin-top: 2px;
+    .card-dwes .card-code {
+      background: var(--amber-dim);
+      color: var(--amber);
+      border-color: rgba(245, 166, 35, 0.2);
+    }
+
+    .card-despliegue .card-code {
+      background: var(--violet-dim);
+      color: var(--violet);
+      border-color: rgba(155, 109, 255, 0.2);
+    }
+
+    .card-ciber .card-code {
+      background: var(--lime-dim);
+      color: var(--lime);
+      border-color: rgba(163, 230, 53, 0.2);
     }
 
     .card-title {
-      font-family: var(--display); font-size: 1.3rem; font-weight: 700;
-      letter-spacing: -0.01em; line-height: 1.2;
+      font-family: var(--font-d);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
     }
-    .card-desc { font-size: 0.83rem; line-height: 1.65; color: var(--text-2); flex: 1; }
+
+    .card-desc {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--text-2);
+      flex: 1;
+    }
 
     .card-meta {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 16px; border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
     }
-    .card-uf-list { display: flex; gap: 4px; flex-wrap: wrap; }
-    .card-uf {
-      font-family: var(--mono); font-size: 0.54rem; color: var(--text-3);
-      background: var(--surface-2); padding: 2px 6px;
-      border-radius: 3px; border: 1px solid var(--border);
-    }
-    .card-arrow {
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 1px solid var(--border); display: flex;
-      align-items: center; justify-content: center;
-      color: var(--text-3); transition: all 0.2s; flex-shrink: 0;
-    }
-    .card-dwes:hover .card-arrow { border-color: var(--amber); color: var(--amber); background: var(--amber-glow); }
-    .card-despliegue:hover .card-arrow { border-color: var(--violet); color: var(--violet); background: var(--violet-glow); }
-    .card-arrow svg { width: 13px; height: 13px; }
 
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 28px 24px; text-align: center; }
-    footer p { font-family: var(--mono); font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.06em; }
+    .card-stats {
+      font-family: var(--font-m);
+      font-size: 0.6rem;
+      color: var(--text-3);
+      letter-spacing: 0.06em;
+    }
+
+    .card-stats span {
+      color: var(--text-2);
+    }
+
+    .card-arrow {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--border-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .card-dwes:hover .card-arrow {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: var(--amber-dim);
+    }
+
+    .card-despliegue:hover .card-arrow {
+      border-color: var(--violet);
+      color: var(--violet);
+      background: var(--violet-dim);
+    }
+
+    .card-ciber:hover .card-arrow {
+      border-color: var(--lime);
+      color: var(--lime);
+      background: var(--lime-dim);
+    }
+
+    .card-arrow svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: var(--font-m);
+      font-size: 0.62rem;
+      color: var(--text-3);
+      letter-spacing: 0.06em;
+    }
+
+    footer a {
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--text);
+    }
 
     @media (max-width: 768px) {
-      .grid { grid-template-columns: 1fr; }
-      .hero { padding: 56px 20px 48px; }
-      .hero-title { font-size: 2.6rem; }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 48px 18px 36px;
+      }
+
+      .progress-section {
+        padding: 0 18px 32px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <div class="header-inner">
+      <span class="header-badge">0613–0615 · UAX DAW</span>
+      <span class="header-title">Batería de examen</span>
+    </div>
+  </header>
 
-<header>
-  <div class="header-inner">
-    <span class="header-badge">0613–0615 · UAX DAW</span>
-    <span class="header-title">Batería de examen</span>
+  <div class="hero">
+    <p class="hero-eyebrow">2º DAW — UAX · 2025–2026</p>
+    <h1 class="hero-title">Repasa.<br /><em>Aprueba.</em><br />Repite.</h1>
+    <p class="hero-desc">
+      Tests por unidad formativa, preguntas mezcladas y análisis de
+      resultados.
+    </p>
   </div>
-</header>
 
-<div class="hero">
-  <p class="hero-eyebrow">2º DAW — UAX · 2025–2026</p>
-  <h1 class="hero-title">Elige tu<br>asignatura.</h1>
-  <p class="hero-desc">Preguntas por unidad formativa, mezcla aleatoria y explicación tras cada respuesta. Selecciona el módulo que quieres repasar.</p>
-</div>
-
-<div class="grid">
-
-  <a class="card card-dwes" href="dwes/index.html">
-    <div class="card-code">0613 · DWES</div>
-    <div class="card-title">Desarrollo Web Entorno Servidor</div>
-    <div class="card-desc">PHP, Laravel, ORM Eloquent, servicios REST, apps híbridas y servidores en la nube.</div>
-    <div class="card-meta">
-      <div class="card-uf-list">
-        <span class="card-uf">UF1</span><span class="card-uf">UF2</span><span class="card-uf">UF3</span>
-        <span class="card-uf">UF4</span><span class="card-uf">UF5</span><span class="card-uf">UF6</span>
-        <span class="card-uf">UF7</span><span class="card-uf">UF8</span><span class="card-uf">UF9</span>
+  <div class="progress-section">
+    <p class="progress-section-title">Tu progreso acumulado</p>
+    <div class="progress-cards">
+      <div class="progress-card">
+        <div class="progress-card-label amber">0613 · DWES</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill amber" id="bar-dwes"></div>
+        </div>
+        <div class="progress-stats">
+          <div class="progress-pct" id="pct-dwes">—</div>
+          <div class="progress-detail" id="detail-dwes">
+            <span class="progress-empty">Sin tests aún</span>
+          </div>
+        </div>
       </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="progress-card">
+        <div class="progress-card-label violet">0614 · Despliegue</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill violet" id="bar-despliegue"></div>
+        </div>
+        <div class="progress-stats">
+          <div class="progress-pct" id="pct-despliegue">—</div>
+          <div class="progress-detail" id="detail-despliegue">
+            <span class="progress-empty">Sin tests aún</span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-card-label lime">0615 · Ciberseguridad</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill lime" id="bar-ciber"></div>
+        </div>
+        <div class="progress-stats">
+          <div class="progress-pct" id="pct-ciber">—</div>
+          <div class="progress-detail" id="detail-ciber">
+            <span class="progress-empty">Sin tests aún</span>
+          </div>
+        </div>
       </div>
     </div>
-  </a>
+  </div>
 
-  <a class="card card-despliegue" href="despliegue/index.html">
-    <div class="card-code">0614 · Despliegue</div>
-    <div class="card-title">Despliegue de Aplicaciones Web</div>
-    <div class="card-desc">DNS, LDAP, Docker, HTTP/HTTPS, Tomcat, FTP/SFTP, Git y documentación de software.</div>
-    <div class="card-meta">
-      <div class="card-uf-list">
-        <span class="card-uf">UF1</span><span class="card-uf">UF2</span><span class="card-uf">UF3</span>
-        <span class="card-uf">UF4</span><span class="card-uf">UF5</span>
+  <div class="grid">
+    <a class="card card-dwes" href="dwes/index.html">
+      <div class="card-code">0613 · DWES</div>
+      <div class="card-title">Desarrollo Web Entorno Servidor</div>
+      <div class="card-desc">
+        PHP, Laravel, ORM Eloquent, servicios REST, apps híbridas y servidores
+        en la nube.
       </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="card-meta">
+        <div class="card-stats">9 UFs · <span>227+ preguntas</span></div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
       </div>
-    </div>
-  </a>
-
-  <div class="card card-ciber card-disabled">
-    <div class="card-header">
+    </a>
+    <a class="card card-despliegue" href="despliegue/index.html">
+      <div class="card-code">0614 · Despliegue</div>
+      <div class="card-title">Despliegue de Aplicaciones Web</div>
+      <div class="card-desc">
+        DNS, Docker, HTTP/HTTPS, Tomcat, FTP/SFTP, Git, CI/CD y documentación
+        de software.
+      </div>
+      <div class="card-meta">
+        <div class="card-stats">5 UFs · <span>88+ preguntas</span></div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+      </div>
+    </a>
+    <a class="card card-ciber" href="ciberseguridad/index.html">
       <div class="card-code">0615 · Ciberseguridad</div>
-      <span class="wip">Próximamente</span>
-    </div>
-    <div class="card-title">Ciberseguridad y Hardening</div>
-    <div class="card-desc">El temario está en preparación. Disponible en cuanto esté completo.</div>
-    <div class="card-meta">
-      <div class="card-uf-list">
-        <span class="card-uf">UF1</span><span class="card-uf">UF2</span><span class="card-uf">···</span>
+      <div class="card-title">Ciberseguridad y Hardening</div>
+      <div class="card-desc">
+        CPD, almacenamiento, seguridad de redes, criptografía y legislación
+        informática.
       </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="card-meta">
+        <div class="card-stats">7 UFs · <span>210 preguntas</span></div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
 
-</div>
+  <footer>
+    <p>
+      UAX · 2º DAW · 2025–2026 &nbsp;·&nbsp; Realizado por
+      <a href="https://github.com/ATKLA" target="_blank" rel="noopener">ATKLA</a>
+    </p>
+  </footer>
 
-<footer>
-  <p>UAX · 2º DAW · 2025–2026</p>
-</footer>
-
+  <script>
+    function loadProgress() {
+      const asignaturas = [
+        { key: "dwes", id: "dwes" },
+        { key: "despliegue", id: "despliegue" },
+        { key: "ciber", id: "ciber" },
+      ];
+      asignaturas.forEach(function (a) {
+        var raw = localStorage.getItem("quiz_stats_" + a.key);
+        if (!raw) return;
+        try {
+          var stats = JSON.parse(raw);
+          var ok = stats.ok,
+            total = stats.total,
+            tests = stats.tests;
+          if (!total || total === 0) return;
+          var pct = Math.round((ok / total) * 100);
+          document.getElementById("bar-" + a.id).style.width = pct + "%";
+          document.getElementById("pct-" + a.id).textContent = pct + "%";
+          document.getElementById("detail-" + a.id).innerHTML =
+            ok +
+            "/" +
+            total +
+            " correctas<br>" +
+            tests +
+            " test" +
+            (tests !== 1 ? "s" : "") +
+            " realizad" +
+            (tests !== 1 ? "os" : "o");
+        } catch (e) { }
+      });
+    }
+    loadProgress();
+  </script>
 </body>
+
 </html>

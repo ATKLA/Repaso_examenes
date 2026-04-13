@@ -120,20 +120,27 @@
       // Modo test normal
       S.ufsSeleccionadas.forEach(uf => { total += (BANCO[uf] || []).length; });
     } else if (S.modo === 'codigo') {
-      // Modo código: contar ejercicios disponibles
+      // Modo código: contar ejercicios disponibles según categoría
       if (typeof EJERCICIOS_CODIGO !== 'undefined') {
-        const categorias = Object.values(EJERCICIOS_CODIGO).flat();
+        const category = window.CODIGO_CATEGORY || 'all';
         
-        // Filtrar por UFs seleccionadas
-        S.ufsSeleccionadas.forEach(uf => {
-          categorias.forEach(ejercicio => {
-            if (ejercicio.tema === uf) total++;
+        if (category === 'all') {
+          // Todos los ejercicios
+          Object.values(EJERCICIOS_CODIGO).forEach(arr => {
+            total += arr.length;
           });
-        });
-        
-        // Si no hay filtro por UF, contar todos
-        if (total === 0) {
-          total = categorias.length;
+        } else if (category === 'php') {
+          // Solo ejercicios de PHP
+          total += (EJERCICIOS_CODIGO.PHP_ERRORES || []).length;
+          total += (EJERCICIOS_CODIGO.PHP_AUTOCOMPLETAR || []).length;
+          total += (EJERCICIOS_CODIGO.PHP_QUE_HACE || []).length;
+        } else if (category === 'laravel') {
+          // Solo ejercicios de Laravel
+          total += (EJERCICIOS_CODIGO.LARAVEL_ERRORES || []).length;
+          total += (EJERCICIOS_CODIGO.LARAVEL_AUTOCOMPLETAR || []).length;
+        } else if (category === 'mongodb') {
+          // Solo ejercicios de MongoDB
+          total += (EJERCICIOS_CODIGO.MONGODB_SINTAXIS || []).length;
         }
       }
     }
@@ -147,7 +154,7 @@
 
   // ── Arrancar ──────────────────────────────────────────────
   function arrancar() {
-    if (S.ufsSeleccionadas.length === 0) return;
+    if (S.ufsSeleccionadas.length === 0 && S.modo === 'test') return;
 
     let pool = [];
     
@@ -160,24 +167,35 @@
       S.preguntas = pool.map(mezclarOpciones);
       
     } else if (S.modo === 'codigo') {
-      // Modo código
+      // Modo código: filtrar por categoría
       if (typeof EJERCICIOS_CODIGO !== 'undefined') {
-        // Recoger todos los ejercicios de todas las categorías
-        Object.values(EJERCICIOS_CODIGO).forEach(categoria => {
-          categoria.forEach(ejercicio => {
-            // Filtrar por UF si aplica
-            if (S.ufsSeleccionadas.includes(ejercicio.tema)) {
-              pool.push({ ...ejercicio, _uf: ejercicio.tema });
-            }
-          });
-        });
+        const category = window.CODIGO_CATEGORY || 'all';
         
-        // Si no hay filtro específico o no hay resultados, usar todos
-        if (pool.length === 0) {
+        if (category === 'all') {
+          // Todos los ejercicios
           Object.values(EJERCICIOS_CODIGO).forEach(categoria => {
             categoria.forEach(ejercicio => {
-              pool.push({ ...ejercicio, _uf: ejercicio.tema || 'CÓDIGO' });
+              pool.push({ ...ejercicio, _uf: ejercicio.lenguaje || 'CÓDIGO' });
             });
+          });
+        } else if (category === 'php') {
+          // Solo PHP
+          ['PHP_ERRORES', 'PHP_AUTOCOMPLETAR', 'PHP_QUE_HACE'].forEach(cat => {
+            (EJERCICIOS_CODIGO[cat] || []).forEach(ejercicio => {
+              pool.push({ ...ejercicio, _uf: 'PHP' });
+            });
+          });
+        } else if (category === 'laravel') {
+          // Solo Laravel
+          ['LARAVEL_ERRORES', 'LARAVEL_AUTOCOMPLETAR'].forEach(cat => {
+            (EJERCICIOS_CODIGO[cat] || []).forEach(ejercicio => {
+              pool.push({ ...ejercicio, _uf: 'Laravel' });
+            });
+          });
+        } else if (category === 'mongodb') {
+          // Solo MongoDB
+          (EJERCICIOS_CODIGO.MONGODB_SINTAXIS || []).forEach(ejercicio => {
+            pool.push({ ...ejercicio, _uf: 'MongoDB' });
           });
         }
         

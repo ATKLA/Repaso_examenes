@@ -1,12 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════
 // EJERCICIOS DE CÓDIGO — DWES 0613
-// PHP, Laravel y MongoDB - Análisis y corrección de código
+// PHP (30), Laravel (30), MongoDB (10) - Total: 70 ejercicios
 // ═══════════════════════════════════════════════════════════════════
 
 const EJERCICIOS_CODIGO = {
 
   // ─────────────────────────────────────────────────────────────
-  // TIPO 1: IDENTIFICAR ERRORES EN PHP
+  // PHP - IDENTIFICAR ERRORES (10 ejercicios)
   // ─────────────────────────────────────────────────────────────
   PHP_ERRORES: [
     {
@@ -16,17 +16,16 @@ const EJERCICIOS_CODIGO = {
       enunciado: '¿Dónde está el error en este código?',
       codigo: `<?php
 $productos = ['manzana', 'pera', 'naranja'];
-echo "Total de productos: " . count($productos);
 echo "Primer producto: " . $productos[1];
 ?>`,
       opciones: [
         'count() no existe en PHP',
-        'Los arrays en PHP empiezan en índice 1, no 0',
-        'El primer producto es $productos[0], no $productos[1]',
-        'No se puede concatenar con el operador punto'
+        'Los arrays en PHP empiezan en índice 1',
+        'El primer producto es $productos[0], no [1]',
+        'No se puede concatenar con punto'
       ],
       correcta: 2,
-      explicacion: 'Los arrays en PHP son 0-indexed. $productos[0] = "manzana", $productos[1] = "pera". El código imprime "pera" en lugar de "manzana".'
+      explicacion: 'Los arrays en PHP son 0-indexed. $productos[0]="manzana", $productos[1]="pera". Imprime "pera" en lugar de "manzana".'
     },
     {
       tipo: 'error',
@@ -38,43 +37,37 @@ function calcularTotal($precio, $cantidad) {
     $total = $precio * cantidad;
     return $total;
 }
-echo calcularTotal(10, 5);
 ?>`,
       opciones: [
-        'Falta el símbolo $ antes de cantidad',
+        'Falta $ antes de cantidad',
         'La función no puede tener dos parámetros',
-        'El return debe ir antes de calcular el total',
+        'El return debe ir antes del cálculo',
         'No hay error'
       ],
       correcta: 0,
-      explicacion: 'En PHP todas las variables deben llevar el símbolo $. Debe ser: $total = $precio * $cantidad;'
+      explicacion: 'En PHP todas las variables llevan $. Debe ser: $total = $precio * $cantidad;'
     },
     {
       tipo: 'error',
       lenguaje: 'PHP',
       tema: 'UF3',
-      enunciado: 'Identifica el problema en este código:',
+      enunciado: 'Identifica el problema:',
       codigo: `<?php
 class Producto {
     private $nombre;
-    
     public function setNombre($nombre) {
         this->nombre = $nombre;
-    }
-    
-    public function getNombre() {
-        return $this->nombre;
     }
 }
 ?>`,
       opciones: [
-        'Las propiedades private no pueden tener setters',
-        'Falta $this en setNombre(), debe ser $this->nombre',
-        'Los métodos públicos deben declararse con function public',
-        'El constructor está mal definido'
+        'private no puede tener setters',
+        'Falta $this, debe ser $this->nombre',
+        'Debe ser function public',
+        'El constructor está mal'
       ],
       correcta: 1,
-      explicacion: 'En PHP se usa $this->propiedad, no this->propiedad. El $ es obligatorio tanto para la pseudovariable $this como para las variables normales.'
+      explicacion: 'En PHP se usa $this->propiedad. El $ es obligatorio.'
     },
     {
       tipo: 'error',
@@ -82,636 +75,815 @@ class Producto {
       tema: 'UF4',
       enunciado: '¿Qué falla en esta consulta PDO?',
       codigo: `<?php
-$pdo = new PDO("mysql:host=localhost;dbname=tienda", "root", "");
 $sql = "SELECT * FROM productos WHERE precio > :precio";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
-$resultados = $stmt->fetchAll();
 ?>`,
       opciones: [
-        'No se puede usar fetchAll() con prepared statements',
-        'Falta bindear el parámetro :precio antes de execute()',
-        'prepare() solo funciona con INSERT/UPDATE',
-        'No hay error en el código'
+        'No se puede usar fetchAll() con prepare',
+        'Falta bindear :precio antes de execute()',
+        'prepare() solo funciona con INSERT',
+        'No hay error'
       ],
       correcta: 1,
-      explicacion: 'Los parámetros nombrados (:precio) deben vincularse con bindParam() o pasarse en execute([":precio" => $valor]). Sin vincular, la consulta falla.'
+      explicacion: 'Los parámetros :precio deben vincularse: execute([":precio" => $valor]).'
     },
     {
       tipo: 'error',
       lenguaje: 'PHP',
       tema: 'UF3',
-      enunciado: 'Encuentra el error en este código de herencia:',
+      enunciado: 'Error en herencia:',
       codigo: `<?php
 class Vehiculo {
     protected $marca;
-    
     public function __construct($marca) {
         $this->marca = $marca;
     }
 }
-
 class Coche extends Vehiculo {
-    private $puertas;
-    
     public function __construct($marca, $puertas) {
         $this->puertas = $puertas;
     }
 }
 ?>`,
       opciones: [
-        'No se puede extender una clase con propiedades protected',
-        'Falta llamar al constructor padre con parent::__construct($marca)',
-        'private $puertas debe ser protected',
-        'El constructor de Vehiculo debe ser protected'
+        'No se puede extender con protected',
+        'Falta parent::__construct($marca)',
+        '$puertas debe ser protected',
+        'Constructor padre debe ser protected'
       ],
       correcta: 1,
-      explicacion: 'Cuando una clase hija tiene constructor, debe llamar explícitamente al constructor padre con parent::__construct($marca) si quiere inicializar las propiedades heredadas.'
+      explicacion: 'La clase hija debe llamar parent::__construct($marca) para inicializar propiedades heredadas.'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: '¿Qué falla en el bucle?',
+      codigo: `<?php
+$nums = [1, 2, 3, 4, 5];
+for ($i = 0; $i <= count($nums); $i++) {
+    echo $nums[$i];
+}
+?>`,
+      opciones: [
+        'for no existe, debe usar foreach',
+        'count() debe ir fuera del for',
+        'Debe ser $i < count($nums), no <=',
+        'No se puede usar índice numérico'
+      ],
+      correcta: 2,
+      explicacion: 'Array tiene índices 0-4. Con <= intenta acceder a [5] que no existe.'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Error en función:',
+      codigo: `<?php
+function sumar($a, $b) {
+    $resultado = $a + $b;
+}
+$total = sumar(5, 3);
+?>`,
+      opciones: [
+        'Falta return $resultado',
+        'No puede tener dos parámetros',
+        'No se puede asignar función a variable',
+        'echo no funciona con variables'
+      ],
+      correcta: 0,
+      explicacion: 'Calcula pero no devuelve. Necesita return $resultado;'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Problema aquí:',
+      codigo: `<?php
+$edad = "25";
+if ($edad = 18) {
+    echo "Mayor";
+}
+?>`,
+      opciones: [
+        'No se comparan strings con números',
+        'Usa = (asignación) en lugar de ==',
+        'if no acepta strings',
+        'Falta punto y coma'
+      ],
+      correcta: 1,
+      explicacion: '= asigna. Para comparar: == o ===. Correcto: if ($edad == 18)'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Error en array:',
+      codigo: `<?php
+$arr = ["nombre" => "Laura"];
+echo $arr->nombre;
+?>`,
+      opciones: [
+        'Arrays asociativos no existen',
+        'Debe usar $arr["nombre"]',
+        'echo no concatena arrays',
+        'Falta definir clase'
+      ],
+      correcta: 1,
+      explicacion: '-> es para objetos. Arrays usan []: $arr["nombre"]'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'PHP',
+      tema: 'UF3',
+      enunciado: 'Error en clase:',
+      codigo: `<?php
+class Usuario {
+    public $nombre;
+    function __construct($nombre) {
+        nombre = $nombre;
+    }
+}
+?>`,
+      opciones: [
+        'Constructores no tienen parámetros',
+        'Falta $this-> antes de nombre',
+        'public va después del nombre',
+        'Debe llamarse Usuario()'
+      ],
+      correcta: 1,
+      explicacion: 'Debe usar $this->nombre. Sin $this-> crea variable local.'
     }
   ],
 
   // ─────────────────────────────────────────────────────────────
-  // TIPO 2: AUTOCOMPLETAR CÓDIGO PHP
+  // PHP - AUTOCOMPLETAR (10 ejercicios)
   // ─────────────────────────────────────────────────────────────
   PHP_AUTOCOMPLETAR: [
     {
       tipo: 'autocompletar',
       lenguaje: 'PHP',
       tema: 'UF2',
-      enunciado: 'Completa el código para dividir la cadena por comas:',
-      codigo: `<?php
-$texto = "manzana,pera,naranja,plátano";
-$frutas = ______($texto, ",");
-print_r($frutas);
-?>`,
-      opciones: [
-        'split()',
-        'explode()',
-        'str_split()',
-        'divide()'
-      ],
+      enunciado: 'Dividir cadena por comas:',
+      codigo: `$frutas = ______(",", $texto);`,
+      opciones: ['split()', 'explode()', 'str_split()', 'divide()'],
       correcta: 1,
-      explicacion: 'explode($separador, $cadena) divide una cadena en un array usando el separador indicado. split() está deprecada. str_split() divide cada carácter.'
+      explicacion: 'explode($sep, $str) divide cadena en array.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'PHP',
       tema: 'UF4',
-      enunciado: 'Completa para preparar una consulta SQL con PDO:',
-      codigo: `<?php
-$pdo = new PDO("mysql:host=localhost;dbname=tienda", "root", "");
-$sql = "INSERT INTO productos (nombre, precio) VALUES (:nombre, :precio)";
-$stmt = $pdo->______($sql);
-$stmt->execute([':nombre' => 'Portátil', ':precio' => 799]);
-?>`,
-      opciones: [
-        'query()',
-        'exec()',
-        'prepare()',
-        'bind()'
-      ],
+      enunciado: 'Preparar consulta PDO:',
+      codigo: `$stmt = $pdo->______($sql);`,
+      opciones: ['query()', 'exec()', 'prepare()', 'bind()'],
       correcta: 2,
-      explicacion: 'prepare() prepara la consulta con parámetros para prevenir SQL injection. query() ejecuta directamente sin preparar. exec() solo devuelve filas afectadas.'
+      explicacion: 'prepare() prepara consulta con parámetros.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'PHP',
       tema: 'UF3',
-      enunciado: 'Completa el código para acceder a una propiedad del objeto:',
-      codigo: `<?php
-class Usuario {
-    public $nombre = "Laura";
-}
-$user = new Usuario();
-echo $user______nombre;
-?>`,
-      opciones: [
-        '.',
-        '->',
-        '::',
-        '[]'
-      ],
+      enunciado: 'Acceder a propiedad de objeto:',
+      codigo: `echo $user______nombre;`,
+      opciones: ['.', '->', '::', '[""]'],
       correcta: 1,
-      explicacion: 'El operador -> accede a propiedades y métodos de un objeto. El operador :: se usa para acceso estático. El punto es para concatenación de strings.'
+      explicacion: '-> accede a propiedades y métodos de objetos.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'PHP',
       tema: 'UF2',
-      enunciado: 'Completa para verificar si un valor existe en el array:',
-      codigo: `<?php
-$colores = ['rojo', 'azul', 'verde'];
-if (______('azul', $colores)) {
-    echo "El color existe";
-}
-?>`,
-      opciones: [
-        'array_exists()',
-        'in_array()',
-        'array_search()',
-        'isset()'
-      ],
+      enunciado: 'Verificar si valor existe:',
+      codigo: `if (______('azul', $colores))`,
+      opciones: ['array_exists()', 'in_array()', 'array_search()', 'isset()'],
       correcta: 1,
-      explicacion: 'in_array($valor, $array) devuelve true si el valor existe. array_search() devuelve la clave. isset() verifica si una variable está definida.'
+      explicacion: 'in_array($valor, $array) verifica existencia.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'PHP',
       tema: 'UF4',
-      enunciado: 'Completa para obtener todos los resultados de la consulta:',
-      codigo: `<?php
-$pdo = new PDO("mysql:host=localhost;dbname=tienda", "root", "");
-$stmt = $pdo->query("SELECT * FROM productos");
-$productos = $stmt->______();
-?>`,
-      opciones: [
-        'getAll()',
-        'fetchAll()',
-        'results()',
-        'rows()'
-      ],
+      enunciado: 'Obtener todos los resultados:',
+      codigo: `$productos = $stmt->______();`,
+      opciones: ['getAll()', 'fetchAll()', 'results()', 'rows()'],
       correcta: 1,
-      explicacion: 'fetchAll() devuelve todas las filas como array de arrays. fetch() devuelve solo la siguiente fila. fetchColumn() devuelve una columna específica.'
+      explicacion: 'fetchAll() devuelve todas las filas.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Unir array en cadena:',
+      codigo: `$frase = ______(' ', $palabras);`,
+      opciones: ['join()', 'concat()', 'implode()', 'merge()'],
+      correcta: 2,
+      explicacion: 'implode($sep, $arr) une array en string.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Ordenar array:',
+      codigo: `______ ($numeros);`,
+      opciones: ['order()', 'sort()', 'arrange()', 'organize()'],
+      correcta: 1,
+      explicacion: 'sort() ordena array ascendentemente.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Longitud de cadena:',
+      codigo: `$len = ______($texto);`,
+      opciones: ['length()', 'size()', 'strlen()', 'count()'],
+      correcta: 2,
+      explicacion: 'strlen() cuenta caracteres en string.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Convertir a minúsculas:',
+      codigo: `$min = ______($texto);`,
+      opciones: ['toLowerCase()', 'strtolower()', 'lower()', 'toLower()'],
+      correcta: 1,
+      explicacion: 'strtolower() convierte a minúsculas.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'PHP',
+      tema: 'UF3',
+      enunciado: 'Llamar constructor padre:',
+      codigo: `______::__construct($nombre);`,
+      opciones: ['super', 'parent', 'base', 'Item'],
+      correcta: 1,
+      explicacion: 'parent::__construct() llama al constructor padre.'
     }
   ],
 
   // ─────────────────────────────────────────────────────────────
-  // TIPO 3: ¿QUÉ HACE ESTE CÓDIGO?
+  // PHP - QUÉ HACE (10 ejercicios)
   // ─────────────────────────────────────────────────────────────
   PHP_QUE_HACE: [
     {
       tipo: 'que_hace',
       lenguaje: 'PHP',
       tema: 'UF2',
-      enunciado: '¿Qué salida produce este código?',
-      codigo: `<?php
-$numeros = [1, 2, 3, 4, 5];
-$resultado = array_map(function($n) {
-    return $n * 2;
-}, $numeros);
-print_r($resultado);
-?>`,
-      opciones: [
-        'Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 [4] => 5 )',
-        'Array ( [0] => 2 [1] => 4 [2] => 6 [3] => 8 [4] => 10 )',
-        '30',
-        'Error: array_map no existe'
-      ],
+      enunciado: '¿Qué salida produce?',
+      codigo: `$nums = [1,2,3];
+$r = array_map(fn($n) => $n*2, $nums);
+print_r($r);`,
+      opciones: ['[1,2,3]', '[2,4,6]', '6', 'Error'],
       correcta: 1,
-      explicacion: 'array_map() aplica la función a cada elemento. En este caso multiplica cada número por 2, devolviendo [2, 4, 6, 8, 10].'
+      explicacion: 'array_map() multiplica cada elemento por 2.'
     },
     {
       tipo: 'que_hace',
       lenguaje: 'PHP',
       tema: 'UF2',
-      enunciado: '¿Cuál es el valor de $resultado?',
-      codigo: `<?php
-$a = 10;
-$b = 5;
-$resultado = $a > $b ? "Mayor" : "Menor";
-echo $resultado;
-?>`,
-      opciones: [
-        'Mayor',
-        'Menor',
-        'true',
-        '10'
-      ],
+      enunciado: 'Valor de $resultado:',
+      codigo: `$a = 10; $b = 5;
+$resultado = $a > $b ? "Mayor" : "Menor";`,
+      opciones: ['Mayor', 'Menor', 'true', '10'],
       correcta: 0,
-      explicacion: 'El operador ternario evalúa la condición ($a > $b es true) y devuelve el primer valor "Mayor". Si fuera false devolvería "Menor".'
+      explicacion: 'Operador ternario: condición true devuelve "Mayor".'
     },
     {
       tipo: 'que_hace',
       lenguaje: 'PHP',
       tema: 'UF3',
-      enunciado: '¿Qué imprime este código?',
-      codigo: `<?php
-class Contador {
+      enunciado: '¿Qué imprime?',
+      codigo: `class Contador {
     private static $count = 0;
-    
-    public static function incrementar() {
-        self::$count++;
-    }
-    
-    public static function getValor() {
-        return self::$count;
-    }
+    public static function inc() { self::$count++; }
+    public static function get() { return self::$count; }
 }
-
-Contador::incrementar();
-Contador::incrementar();
-echo Contador::getValor();
-?>`,
-      opciones: [
-        '0',
-        '1',
-        '2',
-        'Error: no se puede acceder a métodos estáticos'
-      ],
+Contador::inc();
+Contador::inc();
+echo Contador::get();`,
+      opciones: ['0', '1', '2', 'Error'],
       correcta: 2,
-      explicacion: 'Las propiedades static se comparten entre todas las instancias. Se incrementa dos veces (0+1+1=2). Se accede con :: (Clase::metodo()).'
+      explicacion: 'Propiedad static compartida, incrementa 2 veces: 0+1+1=2'
     },
     {
       tipo: 'que_hace',
       lenguaje: 'PHP',
       tema: 'UF2',
-      enunciado: '¿Qué devuelve este código?',
-      codigo: `<?php
-$texto = "   Hola Mundo   ";
-$resultado = trim($texto);
-echo strlen($resultado);
-?>`,
-      opciones: [
-        '16',
-        '10',
-        '11',
-        '15'
-      ],
+      enunciado: '¿Qué devuelve?',
+      codigo: `$t = "   Hola   ";
+echo strlen(trim($t));`,
+      opciones: ['11', '4', '10', '7'],
       correcta: 1,
-      explicacion: 'trim() elimina los espacios al inicio y final. "   Hola Mundo   " se convierte en "Hola Mundo" (10 caracteres). strlen() cuenta caracteres.'
+      explicacion: 'trim() quita espacios: "Hola" = 4 caracteres.'
     },
     {
       tipo: 'que_hace',
       lenguaje: 'PHP',
       tema: 'UF2',
-      enunciado: '¿Qué salida produce?',
-      codigo: `<?php
-$array = [1, 2, 3, 4, 5];
-$filtrado = array_filter($array, function($n) {
-    return $n % 2 == 0;
-});
-print_r($filtrado);
-?>`,
-      opciones: [
-        'Array ( [0] => 1 [1] => 3 [2] => 5 )',
-        'Array ( [1] => 2 [3] => 4 )',
-        'Array ( [0] => 2 [1] => 4 )',
-        'Array ( )'
-      ],
+      enunciado: 'Salida del código:',
+      codigo: `$arr = [1,2,3,4,5];
+$f = array_filter($arr, fn($n) => $n % 2 == 0);
+print_r($f);`,
+      opciones: ['[1,3,5]', '[1=>2, 3=>4]', '[2,4]', '[]'],
       correcta: 1,
-      explicacion: 'array_filter() filtra elementos que cumplan la condición ($n % 2 == 0 = pares). Mantiene las claves originales [1]=>2, [3]=>4.'
+      explicacion: 'array_filter() filtra pares, mantiene índices originales.'
+    },
+    {
+      tipo: 'que_hace',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: '¿Qué imprime?',
+      codigo: `$x = "5"; $y = 10;
+echo $x + $y;`,
+      opciones: ['510', '15', 'Error', '5+10'],
+      correcta: 1,
+      explicacion: 'PHP convierte "5" a 5 para sumar: 5+10=15'
+    },
+    {
+      tipo: 'que_hace',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Resultado:',
+      codigo: `$arr = ["a"=>1, "b"=>2];
+echo count($arr);`,
+      opciones: ['0', '2', '3', 'Error'],
+      correcta: 1,
+      explicacion: 'count() cuenta pares clave-valor: 2 elementos.'
+    },
+    {
+      tipo: 'que_hace',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Salida:',
+      codigo: `$arr = [1,2,3];
+array_push($arr, 4, 5);
+echo count($arr);`,
+      opciones: ['3', '4', '5', '7'],
+      correcta: 2,
+      explicacion: 'array_push() añade 4 y 5: total 5 elementos.'
+    },
+    {
+      tipo: 'que_hace',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: '¿Imprime?',
+      codigo: `$a = 0; $b = "0";
+if ($a == $b) echo "Iguales";
+else echo "Diferentes";`,
+      opciones: ['Iguales', 'Diferentes', 'Error', 'true'],
+      correcta: 0,
+      explicacion: '== compara valores: 0 == "0" es true. === compara tipo+valor.'
+    },
+    {
+      tipo: 'que_hace',
+      lenguaje: 'PHP',
+      tema: 'UF2',
+      enunciado: 'Devuelve:',
+      codigo: `$nums = [3,1,4,1,5];
+echo max($nums);`,
+      opciones: ['1', '3', '4', '5'],
+      correcta: 3,
+      explicacion: 'max() devuelve valor máximo del array: 5'
     }
   ],
 
   // ─────────────────────────────────────────────────────────────
-  // TIPO 4: LARAVEL - IDENTIFICAR ERRORES
+  // LARAVEL - ERRORES (10 ejercicios)
   // ─────────────────────────────────────────────────────────────
   LARAVEL_ERRORES: [
     {
       tipo: 'error',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: '¿Qué error tiene esta ruta de Laravel?',
+      enunciado: 'Error en ruta:',
       codigo: `Route::get('/productos', function() {
     $productos = Producto::all();
     return view('productos.index', $productos);
 });`,
       opciones: [
-        'Route::get no existe en Laravel',
-        'Producto::all() debe usar DB::table()',
-        'Debe pasar datos a la vista con compact() o un array: ["productos" => $productos]',
-        'No se puede retornar una vista desde una ruta'
+        'Route::get no existe',
+        'Producto::all() debe usar DB',
+        'Debe pasar datos con compact() o array',
+        'No se puede retornar vista'
       ],
       correcta: 2,
-      explicacion: 'Las vistas reciben datos como array asociativo: view("productos.index", ["productos" => $productos]) o con compact("productos").'
+      explicacion: 'Vistas reciben array: view("...", ["productos" => $productos])'
     },
     {
       tipo: 'error',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Identifica el problema en este modelo Eloquent:',
-      codigo: `class Producto extends Model {
-    protected $table = 'productos';
-    protected $fillable = ['nombre', 'precio'];
-}
-
-// En el controlador:
-$producto = new Producto();
+      enunciado: 'Error en modelo:',
+      codigo: `$producto = new Producto();
 $producto->nombre = 'Portátil';
-$producto->precio = 799;
 $producto->store();`,
       opciones: [
-        'El modelo debe llamarse ProductoModel',
+        'Modelo debe llamarse ProductoModel',
         'fillable solo acepta un elemento',
-        'El método correcto es save(), no store()',
-        'No se puede usar new Producto() con Eloquent'
+        'El método correcto es save()',
+        'No se puede usar new'
       ],
       correcta: 2,
-      explicacion: 'En Eloquent se usa save() para guardar un modelo. store() se usa en controladores como nombre de método para manejar la petición POST.'
+      explicacion: 'En Eloquent se usa save(), no store().'
     },
     {
       tipo: 'error',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: '¿Qué falla en esta migración de Laravel?',
-      codigo: `public function up() {
-    Schema::create('productos', function (Blueprint $table) {
-        $table->id();
-        $table->string('nombre');
-        $table->decimal('precio');
-        $table->timestamp();
-    });
-}`,
+      enunciado: 'Error en migración:',
+      codigo: `Schema::create('productos', function ($table) {
+    $table->id();
+    $table->decimal('precio');
+    $table->timestamp();
+});`,
       opciones: [
-        'decimal() debe especificar precisión: decimal("precio", 8, 2)',
-        'No se puede usar string() en migraciones',
-        'timestamp() debe llamarse timestamps() para created_at y updated_at',
-        'Ambas a y c son correctas'
+        'decimal() necesita precisión: decimal("precio",8,2)',
+        'No se puede usar string()',
+        'timestamp() debe ser timestamps()',
+        'Ambas a y c'
       ],
       correcta: 3,
-      explicacion: 'decimal() necesita precisión: decimal("precio", 8, 2). timestamps() (plural) crea created_at y updated_at automáticamente.'
+      explicacion: 'decimal() necesita precisión y timestamps() (plural) crea created_at/updated_at.'
     },
     {
       tipo: 'error',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Encuentra el error en este controlador:',
-      codigo: `class ProductoController extends Controller {
-    public function index() {
-        $productos = Producto::all();
-        return view('productos.index', compact('productos'));
-    }
-    
-    public function show($id) {
-        $producto = Producto::find($id);
-        return view('productos.show', compact('producto'));
-    }
+      enunciado: 'Error en controlador:',
+      codigo: `public function show($id) {
+    $producto = Producto::find($id);
+    return view('show', compact('producto'));
 }`,
       opciones: [
-        'compact() solo funciona con un parámetro',
-        'Falta validar que $producto no sea null en show() antes de pasar a la vista',
-        'Controller debe escribirse con c minúscula',
-        'No hay error, el código es correcto'
+        'compact() solo acepta un parámetro',
+        'Falta validar que $producto no sea null',
+        'Controller con c minúscula',
+        'No hay error'
       ],
       correcta: 1,
-      explicacion: 'Si no existe un producto con ese ID, find() devuelve null y la vista fallará. Se debe validar con findOrFail() o verificar if($producto).'
+      explicacion: 'find() devuelve null si no existe. Usar findOrFail() o validar.'
     },
     {
       tipo: 'error',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: '¿Qué está mal en esta validación de Laravel?',
-      codigo: `public function store(Request $request) {
-    $validado = $request->validate([
-        'nombre' => 'required|max:255',
-        'email' => 'required|email|unique',
-        'precio' => 'required|numeric'
-    ]);
-    
-    Producto::create($validado);
-}`,
+      enunciado: 'Error en validación:',
+      codigo: `$validado = $request->validate([
+    'email' => 'required|email|unique'
+]);`,
       opciones: [
-        'validate() solo acepta un campo a la vez',
-        'unique debe especificar la tabla: unique:productos,email',
-        'numeric no existe, debe usar integer',
-        'No se puede usar create() con datos validados'
+        'validate() solo acepta un campo',
+        'unique necesita tabla: unique:usuarios,email',
+        'numeric no existe',
+        'No se puede usar create()'
       ],
       correcta: 1,
-      explicacion: 'La regla unique necesita la tabla: "email" => "required|email|unique:usuarios,email". Sin especificar tabla, Laravel no sabe dónde verificar la unicidad.'
+      explicacion: 'unique debe especificar tabla: unique:usuarios,email'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Error en update:',
+      codigo: `$producto = Producto::find($id);
+$producto->nombre = $request->nombre;
+$producto->update();`,
+      opciones: [
+        'Falta validar datos',
+        'update() no necesita params, usar save()',
+        'find() debe ser findOrFail()',
+        'Todas correctas'
+      ],
+      correcta: 1,
+      explicacion: 'Tras modificar propiedades usar save(). update() usa array.'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Error en Route:',
+      codigo: `Route::resource('productos', ProductoController);`,
+      opciones: [
+        'resource no existe',
+        'Falta ::class',
+        'resource solo GET',
+        'Debe especificar rutas manualmente'
+      ],
+      correcta: 1,
+      explicacion: 'Laravel 8+: ProductoController::class'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Error en Blade:',
+      codigo: `@foreach ($productos as $producto)
+    <p>{{ producto->nombre }}</p>
+@endforeach`,
+      opciones: [
+        '@foreach no existe',
+        'Falta $ antes de producto',
+        'Debe usar {!! !!}',
+        'endforeach con ;'
+      ],
+      correcta: 1,
+      explicacion: 'Variables PHP llevan $: {{ $producto->nombre }}'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Error en where:',
+      codigo: `$productos = Producto::where('precio', 100)->get();`,
+      opciones: [
+        'where() solo un parámetro',
+        'Correcto, busca precio = 100',
+        'get() antes de where()',
+        'Falta operador: where("precio","=",100)'
+      ],
+      correcta: 1,
+      explicacion: 'where() asume = por defecto. where("campo", valor) es válido.'
+    },
+    {
+      tipo: 'error',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Error en redirect:',
+      codigo: `return redirect('productos.index');`,
+      opciones: [
+        'Debe ser redirect()->route("productos.index")',
+        'redirect no existe',
+        'Debe usar view()',
+        'Falta return'
+      ],
+      correcta: 0,
+      explicacion: 'Para ruta nombrada: redirect()->route("nombre")'
     }
   ],
 
   // ─────────────────────────────────────────────────────────────
-  // TIPO 5: LARAVEL - AUTOCOMPLETAR
+  // LARAVEL - AUTOCOMPLETAR (10 ejercicios)
   // ─────────────────────────────────────────────────────────────
   LARAVEL_AUTOCOMPLETAR: [
     {
       tipo: 'autocompletar',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Completa para crear una ruta POST:',
+      enunciado: 'Crear ruta POST:',
       codigo: `Route::______('/productos', [ProductoController::class, 'store']);`,
-      opciones: [
-        'get',
-        'post',
-        'create',
-        'send'
-      ],
+      opciones: ['get', 'post', 'create', 'send'],
       correcta: 1,
-      explicacion: 'Route::post() define una ruta que solo acepta peticiones POST. Route::get() para GET, Route::put() para PUT, Route::delete() para DELETE.'
+      explicacion: 'Route::post() para peticiones POST.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Completa para obtener un registro por ID o lanzar 404:',
+      enunciado: 'Obtener por ID o 404:',
       codigo: `$producto = Producto::______($id);`,
-      opciones: [
-        'get($id)',
-        'find($id)',
-        'findOrFail($id)',
-        'where("id", $id)->first()'
-      ],
+      opciones: ['get($id)', 'find($id)', 'findOrFail($id)', 'where("id",$id)'],
       correcta: 2,
-      explicacion: 'findOrFail() lanza una excepción 404 si no encuentra el registro. find() devuelve null. get() devuelve colección, no un solo modelo.'
+      explicacion: 'findOrFail() lanza 404 si no encuentra.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Completa para redireccionar a una ruta nombrada:',
+      enunciado: 'Redireccionar a ruta nombrada:',
       codigo: `return redirect()->______('productos.index');`,
-      opciones: [
-        'to()',
-        'route()',
-        'view()',
-        'url()'
-      ],
+      opciones: ['to()', 'route()', 'view()', 'url()'],
       correcta: 1,
-      explicacion: 'route("nombre") redirige a una ruta nombrada. to() usa URL relativa. url() genera URL absoluta. view() renderiza una vista.'
+      explicacion: 'route() redirige a ruta nombrada.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Completa para validar datos de request:',
-      codigo: `$datos = $request->______([
-    'nombre' => 'required|max:255',
-    'precio' => 'required|numeric'
-]);`,
-      opciones: [
-        'check()',
-        'validate()',
-        'verify()',
-        'rules()'
-      ],
+      enunciado: 'Validar datos:',
+      codigo: `$datos = $request->______(['nombre' => 'required']);`,
+      opciones: ['check()', 'validate()', 'verify()', 'rules()'],
       correcta: 1,
-      explicacion: 'validate() valida los datos y lanza excepción si falla. Devuelve los datos validados. validated() también funciona pero solo devuelve datos validados.'
+      explicacion: 'validate() valida y devuelve datos.'
     },
     {
       tipo: 'autocompletar',
       lenguaje: 'Laravel',
       tema: 'UF7',
-      enunciado: 'Completa para crear timestamps en migración:',
-      codigo: `Schema::create('productos', function (Blueprint $table) {
-    $table->id();
-    $table->string('nombre');
-    $table->______();
-});`,
-      opciones: [
-        'timestamp()',
-        'timestamps()',
-        'created_at()',
-        'dates()'
-      ],
+      enunciado: 'Crear timestamps en migración:',
+      codigo: `$table->______();`,
+      opciones: ['timestamp()', 'timestamps()', 'created_at()', 'dates()'],
       correcta: 1,
-      explicacion: 'timestamps() (plural) crea automáticamente las columnas created_at y updated_at. timestamp() (singular) crea una sola columna de tipo timestamp.'
+      explicacion: 'timestamps() crea created_at y updated_at.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Filtrar con where:',
+      codigo: `$productos = Producto::______('precio', '>', 100)->get();`,
+      opciones: ['filter()', 'where()', 'find()', 'search()'],
+      correcta: 1,
+      explicacion: 'where() filtra consultas Eloquent.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Token CSRF en formulario:',
+      codigo: `<form method="POST">
+    ______
+</form>`,
+      opciones: ['@token', '@csrf', '@security', '@form'],
+      correcta: 1,
+      explicacion: '@csrf genera campo de token CSRF.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Crear enlace a ruta:',
+      codigo: `<a href="{{ ______('productos.show', $producto->id) }}">`,
+      opciones: ['url()', 'route()', 'link()', 'path()'],
+      correcta: 1,
+      explicacion: 'route() genera URL de ruta nombrada.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Pasar variables a vista:',
+      codigo: `return view('index', ______('productos'));`,
+      opciones: ['with()', 'pass()', 'compact()', 'send()'],
+      correcta: 2,
+      explicacion: 'compact() convierte variables en array.'
+    },
+    {
+      tipo: 'autocompletar',
+      lenguaje: 'Laravel',
+      tema: 'UF7',
+      enunciado: 'Mensaje flash con redirección:',
+      codigo: `return redirect()->route('index')->______('success', 'Guardado');`,
+      opciones: ['flash()', 'message()', 'with()', 'session()'],
+      correcta: 2,
+      explicacion: 'with() añade datos flash a la sesión.'
     }
   ],
 
   // ─────────────────────────────────────────────────────────────
-  // TIPO 6: MONGODB - SINTAXIS
+  // MONGODB - SINTAXIS (10 ejercicios - solo CRUD y operadores)
   // ─────────────────────────────────────────────────────────────
   MONGODB_SINTAXIS: [
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se encuentra un documento por su campo "nombre" en MongoDB?',
-      codigo: `// Buscar productos con nombre "Portátil"`,
+      enunciado: 'Buscar producto por nombre:',
+      codigo: `// Buscar nombre "Portátil"`,
       opciones: [
         'db.productos.find({nombre: "Portátil"})',
-        'db.productos.search(nombre = "Portátil")',
-        'db.productos.where("nombre", "Portátil")',
-        'SELECT * FROM productos WHERE nombre = "Portátil"'
+        'db.productos.search(nombre="Portátil")',
+        'db.productos.where("nombre","Portátil")',
+        'SELECT * FROM productos WHERE nombre="Portátil"'
       ],
       correcta: 0,
-      explicacion: 'find({campo: valor}) busca documentos que coincidan con los criterios. find() sin parámetros devuelve todos. findOne() devuelve solo el primero.'
+      explicacion: 'find({campo: valor}) busca documentos.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se inserta un documento en MongoDB?',
-      codigo: `// Insertar un nuevo producto`,
+      enunciado: 'Insertar documento:',
+      codigo: `// Insertar producto`,
       opciones: [
-        'db.productos.add({nombre: "Ratón", precio: 15})',
-        'db.productos.insertOne({nombre: "Ratón", precio: 15})',
-        'db.productos.create({nombre: "Ratón", precio: 15})',
-        'INSERT INTO productos VALUES ("Ratón", 15)'
+        'db.productos.add({nombre:"Ratón"})',
+        'db.productos.insertOne({nombre:"Ratón"})',
+        'db.productos.create({nombre:"Ratón"})',
+        'INSERT INTO productos VALUES("Ratón")'
       ],
       correcta: 1,
-      explicacion: 'insertOne() inserta un documento. insertMany() inserta varios. El _id se genera automáticamente si no se especifica.'
+      explicacion: 'insertOne() inserta documento. _id se genera auto.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se actualiza un documento en MongoDB?',
-      codigo: `// Actualizar el precio de un producto`,
+      enunciado: 'Actualizar precio:',
+      codigo: `// Actualizar precio a 20`,
       opciones: [
-        'db.productos.update({nombre: "Ratón"}, {precio: 20})',
-        'db.productos.updateOne({nombre: "Ratón"}, {$set: {precio: 20}})',
-        'db.productos.modify({nombre: "Ratón"}, {precio: 20})',
-        'UPDATE productos SET precio = 20 WHERE nombre = "Ratón"'
+        'db.productos.update({nombre:"Ratón"},{precio:20})',
+        'db.productos.updateOne({nombre:"Ratón"},{$set:{precio:20}})',
+        'db.productos.modify({nombre:"Ratón"},{precio:20})',
+        'UPDATE productos SET precio=20 WHERE nombre="Ratón"'
       ],
       correcta: 1,
-      explicacion: 'updateOne() con $set actualiza campos específicos sin reemplazar todo el documento. updateMany() actualiza múltiples documentos.'
+      explicacion: 'updateOne() con $set actualiza campos sin reemplazar todo.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se eliminaun documento en MongoDB?',
-      codigo: `// Eliminar productos con precio > 1000`,
+      enunciado: 'Eliminar documento:',
+      codigo: `// Eliminar precio > 1000`,
       opciones: [
-        'db.productos.remove({precio: {$gt: 1000}})',
-        'db.productos.deleteOne({precio: {$gt: 1000}})',
-        'db.productos.drop({precio: {$gt: 1000}})',
-        'DELETE FROM productos WHERE precio > 1000'
+        'db.productos.remove({precio:{$gt:1000}})',
+        'db.productos.deleteOne({precio:{$gt:1000}})',
+        'db.productos.drop({precio:{$gt:1000}})',
+        'DELETE FROM productos WHERE precio>1000'
       ],
       correcta: 1,
-      explicacion: 'deleteOne() elimina el primer documento que coincida. deleteMany() elimina todos los que coincidan. $gt = greater than (mayor que).'
+      explicacion: 'deleteOne() elimina primero que coincida. $gt = mayor que.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se hace una consulta con operadores de comparación?',
-      codigo: `// Buscar productos con precio entre 10 y 50`,
+      enunciado: 'Consulta con rango:',
+      codigo: `// Precio entre 10 y 50`,
       opciones: [
-        'db.productos.find({precio: {$gte: 10, $lte: 50}})',
-        'db.productos.find({precio >= 10 AND precio <= 50})',
-        'db.productos.where("precio").between(10, 50)',
-        'db.productos.find({precio: [10, 50]})'
+        'db.productos.find({precio:{$gte:10,$lte:50}})',
+        'db.productos.find({precio>=10 AND precio<=50})',
+        'db.productos.where("precio").between(10,50)',
+        'db.productos.find({precio:[10,50]})'
       ],
       correcta: 0,
-      explicacion: '$gte = greater than or equal (>=). $lte = less than or equal (<=). $gt = >, $lt = <, $eq = ==, $ne = !=.'
+      explicacion: '$gte = >=, $lte = <=, $gt = >, $lt = <'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se proyectan solo ciertos campos en MongoDB?',
-      codigo: `// Obtener solo nombre y precio de todos los productos`,
+      enunciado: 'Proyección de campos:',
+      codigo: `// Solo nombre y precio`,
       opciones: [
-        'db.productos.find({}, {nombre: 1, precio: 1, _id: 0})',
-        'db.productos.find().select("nombre", "precio")',
-        'db.productos.find({campos: ["nombre", "precio"]})',
-        'SELECT nombre, precio FROM productos'
+        'db.productos.find({},{nombre:1,precio:1,_id:0})',
+        'db.productos.find().select("nombre","precio")',
+        'db.productos.find({campos:["nombre","precio"]})',
+        'SELECT nombre,precio FROM productos'
       ],
       correcta: 0,
-      explicacion: 'El segundo parámetro de find() es la proyección. 1 = incluir, 0 = excluir. _id se incluye por defecto, hay que excluirlo explícitamente con _id: 0.'
+      explicacion: 'Segundo parámetro de find(): 1=incluir, 0=excluir.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se ordenan los resultados en MongoDB?',
-      codigo: `// Ordenar productos por precio descendente`,
+      enunciado: 'Ordenar resultados:',
+      codigo: `// Ordenar por precio descendente`,
       opciones: [
-        'db.productos.find().sort({precio: -1})',
-        'db.productos.find().orderBy("precio", "DESC")',
-        'db.productos.find({}, {sort: {precio: -1}})',
+        'db.productos.find().sort({precio:-1})',
+        'db.productos.find().orderBy("precio","DESC")',
+        'db.productos.find({},{sort:{precio:-1}})',
         'db.productos.find() ORDER BY precio DESC'
       ],
       correcta: 0,
-      explicacion: 'sort({campo: 1}) ordena ascendente. sort({campo: -1}) ordena descendente. Se puede ordenar por múltiples campos: sort({precio: -1, nombre: 1}).'
+      explicacion: 'sort({campo:1}) ascendente, sort({campo:-1}) descendente.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se limitan los resultados en MongoDB?',
-      codigo: `// Obtener solo los 10 primeros productos`,
+      enunciado: 'Limitar resultados:',
+      codigo: `// Primeros 10 productos`,
       opciones: [
         'db.productos.find().limit(10)',
-        'db.productos.find({$limit: 10})',
+        'db.productos.find({$limit:10})',
         'db.productos.find().take(10)',
         'db.productos.find() LIMIT 10'
       ],
       correcta: 0,
-      explicacion: 'limit(n) limita los resultados. skip(n) salta los primeros n documentos. Se combinan para paginación: .skip(10).limit(10) (página 2).'
+      explicacion: 'limit(n) limita resultados. skip(n) salta primeros n.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se cuenta el número de documentos?',
-      codigo: `// Contar cuántos productos tienen precio > 100`,
+      enunciado: 'Contar documentos:',
+      codigo: `// Contar precio > 100`,
       opciones: [
-        'db.productos.countDocuments({precio: {$gt: 100}})',
-        'db.productos.count({precio: {$gt: 100}})',
-        'db.productos.find({precio: {$gt: 100}}).length()',
-        'COUNT(*) FROM productos WHERE precio > 100'
+        'db.productos.countDocuments({precio:{$gt:100}})',
+        'db.productos.count({precio:{$gt:100}})',
+        'db.productos.find({precio:{$gt:100}}).length()',
+        'COUNT(*) FROM productos WHERE precio>100'
       ],
       correcta: 0,
-      explicacion: 'countDocuments() cuenta documentos que coincidan con el filtro. estimatedDocumentCount() cuenta todos (más rápido pero aproximado). count() está deprecado.'
+      explicacion: 'countDocuments() cuenta con filtro.'
     },
     {
       tipo: 'sintaxis',
       lenguaje: 'MongoDB',
       tema: 'UF8',
-      enunciado: '¿Cómo se usa el operador $in en MongoDB?',
-      codigo: `// Buscar productos de las categorías "Electrónica" o "Informática"`,
+      enunciado: 'Operador $in:',
+      codigo: `// Categoría Electrónica o Informática`,
       opciones: [
-        'db.productos.find({categoria: {$in: ["Electrónica", "Informática"]}})',
-        'db.productos.find({categoria: ["Electrónica", "Informática"]})',
-        'db.productos.find({categoria: "Electrónica" || "Informática"})',
-        'db.productos.where("categoria").in(["Electrónica", "Informática"])'
+        'db.productos.find({categoria:{$in:["Electrónica","Informática"]}})',
+        'db.productos.find({categoria:["Electrónica","Informática"]})',
+        'db.productos.find({categoria:"Electrónica"||"Informática"})',
+        'db.productos.where("categoria").in(["Electrónica","Informática"])'
       ],
       correcta: 0,
-      explicacion: '$in busca documentos donde el campo esté en el array especificado. $nin hace lo contrario (not in). Similar a WHERE campo IN (valor1, valor2) en SQL.'
+      explicacion: '$in busca donde campo está en array. $nin = not in.'
     }
   ]
 };

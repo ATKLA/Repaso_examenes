@@ -1,14 +1,16 @@
 // ============================================================
-// QUIZ UAX — Lógica compartida v2
+// QUIZ UAX — Lógica compartida v2 (+ Modo Código)
 // Requiere: window.BANCO (objeto UF->array), window.UFS (array config)
+// Opcional: window.EJERCICIOS_CODIGO (ejercicios de código)
 // ============================================================
 
 (function () {
   // ── Estado ──────────────────────────────────────────────
   const S = {
+    modo: 'test',        // 'test' o 'codigo'
     ufsSeleccionadas: [],
     cantidad: 10,
-    preguntas: [],       // {p, ops, ok, exp, _uf, _shuffled_ok}
+    preguntas: [],       // {p, ops, ok, exp, _uf, _shuffled_ok} o {codigo, lenguaje, ...}
     idx: 0,
     respuestas: [],      // null | true | false
     respondida: false,
@@ -42,6 +44,17 @@
     const total = Object.values(BANCO).flat().length;
     const badge = $('total-badge');
     if (badge) badge.textContent = total + ' preguntas';
+
+    // Botones de modo (test / codigo)
+    const btnsModo = document.querySelectorAll('.btn-mode');
+    btnsModo.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btnsModo.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        S.modo = btn.dataset.mode;
+        actualizarContadores();
+      });
+    });
 
     // Botón "Todo el temario"
     const btnTodo = $('btn-todo');
@@ -102,9 +115,34 @@
 
   function actualizarContadores() {
     let total = 0;
-    S.ufsSeleccionadas.forEach(uf => { total += (BANCO[uf] || []).length; });
+    
+    if (S.modo === 'test') {
+      // Modo test normal
+      S.ufsSeleccionadas.forEach(uf => { total += (BANCO[uf] || []).length; });
+    } else if (S.modo === 'codigo') {
+      // Modo código: contar ejercicios disponibles
+      if (typeof EJERCICIOS_CODIGO !== 'undefined') {
+        const categorias = Object.values(EJERCICIOS_CODIGO).flat();
+        
+        // Filtrar por UFs seleccionadas
+        S.ufsSeleccionadas.forEach(uf => {
+          categorias.forEach(ejercicio => {
+            if (ejercicio.tema === uf) total++;
+          });
+        });
+        
+        // Si no hay filtro por UF, contar todos
+        if (total === 0) {
+          total = categorias.length;
+        }
+      }
+    }
+    
     const inf = $('pool-info');
-    if (inf) inf.textContent = total + ' preguntas disponibles';
+    if (inf) {
+      const tipo = S.modo === 'codigo' ? 'ejercicios' : 'preguntas';
+      inf.textContent = total + ' ' + tipo + ' disponibles';
+    }
   }
 
   // ── Arrancar ──────────────────────────────────────────────
@@ -112,12 +150,53 @@
     if (S.ufsSeleccionadas.length === 0) return;
 
     let pool = [];
-    S.ufsSeleccionadas.forEach(uf => {
-      (BANCO[uf] || []).forEach(q => pool.push({ ...q, _uf: uf }));
-    });
+    
+    if (S.modo === 'test') {
+      // Modo test normal
+      S.ufsSeleccionadas.forEach(uf => {
+        (BANCO[uf] || []).forEach(q => pool.push({ ...q, _uf: uf }));
+      });
+      pool = sh(pool).slice(0, Math.min(S.cantidad, pool.length));
+      S.preguntas = pool.map(mezclarOpciones);
+      
+    } else if (S.modo === 'codigo') {
+      // Modo código
+      if (typeof EJERCICIOS_CODIGO !== 'undefined') {
+        // Recoger todos los ejercicios de todas las categorías
+        Object.values(EJERCICIOS_CODIGO).forEach(categoria => {
+          categoria.forEach(ejercicio => {
+            // Filtrar por UF si aplica
+            if (S.ufsSeleccionadas.includes(ejercicio.tema)) {
+              pool.push({ ...ejercicio, _uf: ejercicio.tema });
+            }
+          });
+        });
+        
+        // Si no hay filtro específico o no hay resultados, usar todos
+        if (pool.length === 0) {
+          Object.values(EJERCICIOS_CODIGO).forEach(categoria => {
+            categoria.forEach(ejercicio => {
+              pool.push({ ...ejercicio, _uf: ejercicio.tema || 'CÓDIGO' });
+            });
+          });
+        }
+        
+        pool = sh(pool).slice(0, Math.min(S.cantidad, pool.length));
+        
+        // En modo código también mezclamos opciones
+        S.preguntas = pool.map(q => {
+          // Normalizar estructura: enunciado -> p, opciones -> ops, correcta -> ok, explicacion -> exp
+          return mezclarOpciones({
+            ...q,
+            p: q.enunciado,
+            ops: q.opciones,
+            ok: q.correcta,
+            exp: q.explicacion
+          });
+        });
+      }
+    }
 
-    pool = sh(pool).slice(0, Math.min(S.cantidad, pool.length));
-    S.preguntas   = pool.map(mezclarOpciones);
     S.idx         = 0;
     S.respuestas  = Array(S.preguntas.length).fill(null);
     S.respondida  = false;
@@ -145,9 +224,19 @@
     $('lsc-ko').textContent = `✗ ${ko}`;
 
     // Pregunta
-    $('q-uf-pill').textContent = q._uf;
+    $('q-uf-pill').textContent = q._uf || 'CÓDIGO';
     $('q-num').textContent     = `${S.idx + 1}/${n}`;
     $('q-text').textContent    = q.p;
+
+    // Mostrar/ocultar bloque de código según el modo
+    const codeContainer = $('code-container');
+    if (S.modo === 'codigo' && q.codigo) {
+      codeContainer.style.display = 'block';
+      $('code-language').textContent = q.lenguaje || 'PHP';
+      $('code-block').textContent = q.codigo;
+    } else {
+      codeContainer.style.display = 'none';
+    }
 
     const exp = $('explanation');
     exp.textContent = q.exp || '';
@@ -260,13 +349,15 @@
 
       recCont.innerHTML = '';
       if (pct === 100) {
-        recCont.innerHTML = `<div class="rec-item"><div class="rec-dot ok"></div><span>¡Perfecto! Dominas todos los conceptos de <strong>${nombre}</strong>. Prueba con más preguntas o cambia de UF.</span></div>`;
+        const tipoTexto = S.modo === 'codigo' ? 'ejercicios de código' : 'conceptos';
+        recCont.innerHTML = `<div class="rec-item"><div class="rec-dot ok"></div><span>¡Perfecto! Dominas todos los ${tipoTexto} de <strong>${nombre}</strong>. Prueba con más preguntas o cambia de UF.</span></div>`;
       } else if (fallos.length === 0) {
         recCont.innerHTML = `<div class="rec-item"><div class="rec-dot ok"></div><span>Sin fallos registrados en esta sesión.</span></div>`;
       } else {
+        const tipoTexto = S.modo === 'codigo' ? 'ejercicios' : 'conceptos';
         const intro = document.createElement('div');
         intro.className = 'rec-item';
-        intro.innerHTML = `<div class="rec-dot warn"></div><span>Repasa estos conceptos de <strong>${nombre}</strong>:</span>`;
+        intro.innerHTML = `<div class="rec-dot warn"></div><span>Repasa estos ${tipoTexto} de <strong>${nombre}</strong>:</span>`;
         recCont.appendChild(intro);
 
         fallos.slice(0, 5).forEach(f => {
@@ -330,7 +421,8 @@
 
   // ── Guardar progreso ───────────────────────────────────────
   function guardarProgreso(ok, total) {
-    const key = 'quiz_stats_' + (window.QUIZ_KEY || 'unknown');
+    const suffix = S.modo === 'codigo' ? '_codigo' : '';
+    const key = 'quiz_stats_' + (window.QUIZ_KEY || 'unknown') + suffix;
     let stats = { ok: 0, total: 0, tests: 0 };
     try {
       const raw = localStorage.getItem(key);

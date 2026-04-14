@@ -96,12 +96,14 @@
 </main>
 <script src="ciberseguridad_preguntas.js"></script>
 <script>
-  const BANCO = PREGUNTAS;
   document.addEventListener('DOMContentLoaded', () => {
     Object.keys(BANCO).forEach(uf => {
       const el = document.getElementById('count-' + uf);
       if (el) el.textContent = BANCO[uf].length;
     });
+    // UF2-UF3 es la suma de ambas
+    const uf2_3 = document.getElementById('count-UF2-UF3');
+    if (uf2_3) uf2_3.textContent = BANCO.UF2.length + BANCO.UF3.length;
   });
 </script>
 <script>window.QUIZ_KEY = "ciber";</script>

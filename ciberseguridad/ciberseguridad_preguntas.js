@@ -2004,8 +2004,7 @@ const BANCO = {
       ok: 1,
       exp: "El criptojacking instala software que usa la CPU/GPU de la víctima para minar criptomonedas en beneficio del atacante sin que lo sepa. Constituye uso no autorizado de equipos (art. 256 CP) y puede considerarse también daño informático si perjudica al sistema."
     }
-  ],
-
+  ]
 };
 
 // Configuración de UFs para el selector

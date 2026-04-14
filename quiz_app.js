@@ -92,7 +92,11 @@
 
     // Seleccionar primera UF por defecto + cantidad 10
     const primer = document.querySelector('.btn-uf');
-    if (primer) { primer.classList.add('active'); S.ufsSeleccionadas = [primer.dataset.uf]; }
+    if (primer) { 
+      primer.classList.add('active'); 
+      const uf = primer.dataset.uf;
+      S.ufsSeleccionadas = uf.includes('-') ? uf.split('-') : [uf];
+    }
     const c10 = document.querySelector('.btn-cantidad[data-n="10"]');
     if (c10) { c10.classList.add('active'); S.cantidad = 10; }
     actualizarContadores();
@@ -100,15 +104,23 @@
 
   function toggleUF(btn) {
     const uf = btn.dataset.uf;
+    
+    // Expandir UFs compuestas (ej: "UF2-UF3" → ["UF2", "UF3"])
+    const ufsExpanded = uf.includes('-') ? uf.split('-') : [uf];
+    
     if (btn.classList.contains('active')) {
       // Deselect only if there's more than one selected
-      if (S.ufsSeleccionadas.length > 1) {
+      if (S.ufsSeleccionadas.length > ufsExpanded.length) {
         btn.classList.remove('active');
-        S.ufsSeleccionadas = S.ufsSeleccionadas.filter(u => u !== uf);
+        S.ufsSeleccionadas = S.ufsSeleccionadas.filter(u => !ufsExpanded.includes(u));
       }
     } else {
       btn.classList.add('active');
-      S.ufsSeleccionadas.push(uf);
+      ufsExpanded.forEach(u => {
+        if (!S.ufsSeleccionadas.includes(u)) {
+          S.ufsSeleccionadas.push(u);
+        }
+      });
     }
     actualizarContadores();
   }
@@ -246,14 +258,16 @@
     $('q-num').textContent     = `${S.idx + 1}/${n}`;
     $('q-text').textContent    = q.p;
 
-    // Mostrar/ocultar bloque de código según el modo
+    // Mostrar/ocultar bloque de código según el modo (solo si existe el contenedor)
     const codeContainer = $('code-container');
-    if (S.modo === 'codigo' && q.codigo) {
-      codeContainer.style.display = 'block';
-      $('code-language').textContent = q.lenguaje || 'PHP';
-      $('code-block').textContent = q.codigo;
-    } else {
-      codeContainer.style.display = 'none';
+    if (codeContainer) {
+      if (S.modo === 'codigo' && q.codigo) {
+        codeContainer.style.display = 'block';
+        $('code-language').textContent = q.lenguaje || 'PHP';
+        $('code-block').textContent = q.codigo;
+      } else {
+        codeContainer.style.display = 'none';
+      }
     }
 
     const exp = $('explanation');

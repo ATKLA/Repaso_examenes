@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DWES — Repaso · UAX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../quiz_shared.css"/>
+  <style>
+    :root {
+      --accent:            #D18A00;
+      --accent-bright:     #F5A623;
+      --accent-bg:         rgba(245,166,35,0.12);
+      --accent-start-text: #0A0908;
+    }
+    
+    /* Estilos para el bloque de código */
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 1rem 0;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .code-label {
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .mode-selector {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 0.5rem;
+    }
+    
+    .btn-mode {
+      flex: 1;
+      padding: 0.75rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.375rem;
+      color: var(--muted);
+      font-family: var(--font-m);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-mode:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+    
+    .btn-mode.active {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent-bright);
+    }
+
+    /* Selector de categorías de código */
+    .category-selector {
+      display: none;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-selector.visible {
+      display: flex;
+    }
+
+    .btn-category {
+      flex: 1;
+      padding: 0.75rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.375rem;
+      color: var(--muted);
+      font-family: var(--font-m);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .btn-category:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
+    .btn-category.active {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent-bright);
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <a href="../index.html" class="btn-back">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Inicio
+  </a>
+  <span class="header-title">DWES</span>
+  <span class="header-tag">0613 · UAX</span>
+</header>
+<main class="main">
+  <div id="panel-config">
+    <div class="config-card">
+      <h1 class="config-title">Desarrollo Web Entorno Servidor</h1>
+      <p class="config-sub">ELIGE MODO Y UNIDADES</p>
+      
+      <!-- SELECTOR DE MODO -->
+      <p class="section-label">Modo de práctica</p>
+      <div class="mode-selector">
+        <button class="btn-mode active" data-mode="test">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;margin-right:4px">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          Test tipo test
+        </button>
+        <button class="btn-mode" data-mode="codigo">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;margin-right:4px">
+            <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+          Ejercicios de código
+        </button>
+      </div>
+
+      <!-- SELECTOR DE CATEGORÍAS DE CÓDIGO (solo visible en modo código) -->
+      <div id="category-section" style="display:none;">
+        <p class="section-label">Categoría de ejercicios</p>
+        <div class="category-selector visible">
+          <button class="btn-category active" data-category="all">
+            <div style="font-weight:700;margin-bottom:2px;">Todo</div>
+            <div style="font-size:0.7rem;opacity:0.7;">70 ejercicios</div>
+          </button>
+          <button class="btn-category" data-category="php">
+            <div style="font-weight:700;margin-bottom:2px;">PHP</div>
+            <div style="font-size:0.7rem;opacity:0.7;">30 ejercicios</div>
+          </button>
+          <button class="btn-category" data-category="laravel">
+            <div style="font-weight:700;margin-bottom:2px;">Laravel</div>
+            <div style="font-size:0.7rem;opacity:0.7;">30 ejercicios</div>
+          </button>
+          <button class="btn-category" data-category="mongodb">
+            <div style="font-weight:700;margin-bottom:2px;">MongoDB</div>
+            <div style="font-size:0.7rem;opacity:0.7;">10 ejercicios</div>
+          </button>
+        </div>
+      </div>
+      
+      <!-- SELECTOR DE UFs (solo visible en modo test) -->
+      <div id="uf-section">
+        <p class="section-label">Unidades formativas</p>
+        <button class="btn-todo" id="btn-todo">
+          <span class="todo-icon">★</span> Todo el temario
+        </button>
+        <div class="uf-grid">
+          <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>Introducción al lado servidor<span class="uf-count" id="count-UF1"></span></button>
+          <button class="btn-uf" data-uf="UF2"><span class="tag">UF2</span>PHP Básico<span class="uf-count" id="count-UF2"></span></button>
+          <button class="btn-uf" data-uf="UF3"><span class="tag">UF3</span>PHP Avanzado<span class="uf-count" id="count-UF3"></span></button>
+          <button class="btn-uf" data-uf="UF4"><span class="tag">UF4</span>Bases de datos con PHP<span class="uf-count" id="count-UF4"></span></button>
+          <button class="btn-uf" data-uf="UF5"><span class="tag">UF5</span>MVC y Frameworks<span class="uf-count" id="count-UF5"></span></button>
+          <button class="btn-uf" data-uf="UF6"><span class="tag">UF6</span>Servicios REST<span class="uf-count" id="count-UF6"></span></button>
+          <button class="btn-uf" data-uf="UF7"><span class="tag">UF7</span>Laravel<span class="uf-count" id="count-UF7"></span></button>
+          <button class="btn-uf" data-uf="UF8"><span class="tag">UF8</span>Apps Híbridas<span class="uf-count" id="count-UF8"></span></button>
+          <button class="btn-uf" data-uf="UF9"><span class="tag">UF9</span>Examen global<span class="uf-count" id="count-UF9"></span></button>
+        </div>
+      </div>
+
+      <p class="section-label">Número de preguntas</p>
+      <div class="cantidad-grid">
+        <button class="btn-cantidad" data-n="10">10</button>
+        <button class="btn-cantidad" data-n="20">20</button>
+        <button class="btn-cantidad" data-n="30">30</button>
+      </div>
+      <div style="font-family:var(--font-m);font-size:0.7rem;color:var(--muted);margin-bottom:1.25rem;text-align:right" id="pool-info"></div>
+      <button class="btn-start" id="btn-start">Comenzar cuestionario →</button>
+    </div>
+  </div>
+  <div id="panel-quiz">
+    <div class="quiz-meta">
+      <span class="quiz-counter" id="quiz-counter">Pregunta 1 de 10</span>
+      <span class="quiz-live-score"><span class="lsc-ok" id="lsc-ok">✓ 0</span><span class="lsc-ko" id="lsc-ko">✗ 0</span></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="q-card">
+      <div class="q-card-header"><span class="q-uf-pill" id="q-uf-pill">UF1</span><span class="q-num" id="q-num">1/10</span></div>
+      <div class="q-body">
+        <p class="q-text" id="q-text"></p>
+        <!-- Bloque de código (solo visible en modo código) -->
+        <div id="code-container" style="display:none;">
+          <div class="code-label" id="code-language">PHP</div>
+          <pre class="code-block"><code id="code-block"></code></pre>
+        </div>
+      </div>
+      <div class="options" id="options"></div>
+      <div class="explanation" id="explanation"></div>
+    </div>
+    <div class="quiz-nav"><button class="btn-nav" id="btn-siguiente">Siguiente →</button></div>
+  </div>
+  <div id="panel-results">
+    <div class="results-card">
+      <p class="res-eyebrow">RESULTADO FINAL</p>
+      <div class="res-pct" id="res-pct">0%</div>
+      <div class="nota-final"><span class="nota-num" id="nota-num">0.0</span><span id="nota-label" style="font-family:var(--font-m);font-size:0.8rem;color:var(--muted)"></span></div>
+      <div class="res-badge" id="res-badge">—</div>
+      <div class="res-stats">
+        <div class="stat"><div class="stat-n" id="res-ok" style="color:var(--accent-bright)">0</div><div class="stat-l">Correctas</div></div>
+        <div class="stat"><div class="stat-n" id="res-ko" style="color:var(--ko-text)">0</div><div class="stat-l">Incorrectas</div></div>
+        <div class="stat"><div class="stat-n" id="res-sinresp" style="color:var(--muted)">0</div><div class="stat-l">Sin resp.</div></div>
+      </div>
+      <div class="recomendaciones">
+        <div class="rec-title">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          Análisis y recomendaciones
+        </div>
+        <div class="rec-items" id="rec-items"></div>
+      </div>
+      <div class="res-actions">
+        <button class="btn-res primary" id="btn-repetir">↺ Repetir mismo test</button>
+        <button class="btn-res" id="btn-nuevo">⟳ Nuevo cuestionario</button>
+        <button class="btn-res ghost" id="btn-volver">← Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="dwes_preguntas.js"></script>
+<script src="dwes_ejercicios_codigo.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Contar preguntas de test por UF
+    Object.keys(BANCO).forEach(uf => {
+      const el = document.getElementById('count-' + uf);
+      if (el) el.textContent = BANCO[uf].length;
+    });
+    
+    // Gestión de selección de modo (test vs código)
+    const btnsModo = document.querySelectorAll('.btn-mode');
+    const ufSection = document.getElementById('uf-section');
+    const categorySection = document.getElementById('category-section');
+    
+    btnsModo.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btnsModo.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const modo = btn.dataset.mode;
+        window.MODO_EJERCICIO = modo;
+        
+        // Mostrar/ocultar secciones según el modo
+        if (modo === 'codigo') {
+          ufSection.style.display = 'none';
+          categorySection.style.display = 'block';
+        } else {
+          ufSection.style.display = 'block';
+          categorySection.style.display = 'none';
+        }
+      });
+    });
+    
+    // Gestión de selección de categorías de código
+    const btnsCategory = document.querySelectorAll('.btn-category');
+    btnsCategory.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btnsCategory.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        window.CODIGO_CATEGORY = btn.dataset.category;
+      });
+    });
+    
+    // Valores por defecto
+    window.MODO_EJERCICIO = 'test';
+    window.CODIGO_CATEGORY = 'all';
+  });
+</script>
+<script>window.QUIZ_KEY = "dwes";</script>
+<script src="../quiz_app.js"></script>
+</body>
+</html>

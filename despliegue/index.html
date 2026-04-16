@@ -15,6 +15,160 @@
       --accent-bg:         rgba(155,109,255,0.12);
       --accent-start-text: #F5F0E8;
     }
+
+    /* Selector de modos */
+    .mode-selector {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.5rem;
+    }
+
+    .btn-mode {
+      flex: 1;
+      padding: 0.75rem;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.375rem;
+      color: var(--muted);
+      font-family: var(--font-m);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .btn-mode:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .btn-mode.active {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent-bright);
+    }
+
+    /* Estilos para el modo Temario */
+    #temario-section {
+      display: none;
+    }
+
+    #temario-section.visible {
+      display: block;
+    }
+
+    .temario-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .temario-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .temario-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .temario-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: var(--accent-bg);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-bright);
+      font-family: var(--font-m);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .temario-content {
+      flex: 1;
+    }
+
+    .temario-uf {
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--accent-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .temario-title {
+      font-family: var(--font-m);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .temario-pages {
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .temario-arrow {
+      flex-shrink: 0;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .temario-item:hover .temario-arrow {
+      color: var(--accent-bright);
+      transform: translateX(4px);
+    }
+
+    .temario-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .temario-header-title {
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .temario-count {
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--accent-bright);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -30,26 +184,61 @@
   <div id="panel-config">
     <div class="config-card">
       <h1 class="config-title">Despliegue de Aplicaciones Web</h1>
-      <p class="config-sub">ELIGE UNIDADES Y NÚMERO DE PREGUNTAS</p>
-      <p class="section-label">Unidades formativas</p>
-            <button class="btn-todo" id="btn-todo">
-        <span class="todo-icon">★</span> Todo el temario
-      </button>
-      <div class="uf-grid">
-        <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>DNS y dominios<span class="uf-count" id="count-UF1"></span></button>
-        <button class="btn-uf" data-uf="UF2"><span class="tag">UF2</span>Servidores web (Apache/Nginx)<span class="uf-count" id="count-UF2"></span></button>
-        <button class="btn-uf" data-uf="UF3"><span class="tag">UF3</span>FTP, SSH y acceso remoto<span class="uf-count" id="count-UF3"></span></button>
-        <button class="btn-uf" data-uf="UF4"><span class="tag">UF4</span>Docker y contenedores<span class="uf-count" id="count-UF4"></span></button>
-        <button class="btn-uf" data-uf="UF5"><span class="tag">UF5</span>CI/CD y despliegue cloud<span class="uf-count" id="count-UF5"></span></button>
+      <p class="config-sub">ELIGE MODO Y UNIDADES</p>
+
+      <!-- SELECTOR DE MODO (Temario vs Test) -->
+      <p class="section-label">Modo de práctica</p>
+      <div class="mode-selector">
+        <button class="btn-mode" data-mode="temario">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+          Temario
+        </button>
+        <button class="btn-mode active" data-mode="test">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          Ejercicios test
+        </button>
       </div>
-      <p class="section-label">Número de preguntas</p>
-      <div class="cantidad-grid">
-        <button class="btn-cantidad" data-n="10">10</button>
-        <button class="btn-cantidad" data-n="20">20</button>
-        <button class="btn-cantidad" data-n="30">30</button>
+
+      <!-- SECCIÓN DE TEMARIO (solo visible en modo temario) -->
+      <div id="temario-section">
+        <div class="temario-header">
+          <span class="temario-header-title">Unidades formativas</span>
+          <span class="temario-count">5 documentos</span>
+        </div>
+        <div class="temario-grid" id="temario-grid">
+          <!-- Los PDFs se insertarán aquí dinámicamente -->
+        </div>
       </div>
-      <div style="font-family:var(--font-m);font-size:0.7rem;color:var(--muted);margin-bottom:1.25rem;text-align:right" id="pool-info"></div>
-      <button class="btn-start" id="btn-start">Comenzar cuestionario →</button>
+
+      <!-- SELECTOR DE UFs (solo visible en modo test) -->
+      <div id="uf-section">
+        <p class="section-label">Unidades formativas</p>
+        <button class="btn-todo" id="btn-todo">
+          <span class="todo-icon">★</span> Todo el temario
+        </button>
+        <div class="uf-grid">
+          <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>DNS y dominios<span class="uf-count" id="count-UF1"></span></button>
+          <button class="btn-uf" data-uf="UF2"><span class="tag">UF2</span>Servidores web (Apache/Nginx)<span class="uf-count" id="count-UF2"></span></button>
+          <button class="btn-uf" data-uf="UF3"><span class="tag">UF3</span>FTP, SSH y acceso remoto<span class="uf-count" id="count-UF3"></span></button>
+          <button class="btn-uf" data-uf="UF4"><span class="tag">UF4</span>Docker y contenedores<span class="uf-count" id="count-UF4"></span></button>
+          <button class="btn-uf" data-uf="UF5"><span class="tag">UF5</span>CI/CD y despliegue cloud<span class="uf-count" id="count-UF5"></span></button>
+        </div>
+      </div>
+
+      <div id="quiz-controls">
+        <p class="section-label">Número de preguntas</p>
+        <div class="cantidad-grid">
+          <button class="btn-cantidad" data-n="10">10</button>
+          <button class="btn-cantidad" data-n="20">20</button>
+          <button class="btn-cantidad" data-n="30">30</button>
+        </div>
+        <div style="font-family:var(--font-m);font-size:0.7rem;color:var(--muted);margin-bottom:1.25rem;text-align:right" id="pool-info"></div>
+        <button class="btn-start" id="btn-start">Comenzar cuestionario →</button>
+      </div>
     </div>
   </div>
   <div id="panel-quiz">
@@ -93,11 +282,38 @@
   </div>
 </main>
 <script src="despliegue_preguntas.js"></script>
+<script src="despliegue_temario.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // Contar preguntas de test por UF
     Object.keys(BANCO).forEach(uf => {
       const el = document.getElementById('count-' + uf);
       if (el) el.textContent = BANCO[uf].length;
+    });
+
+    // Gestión de selección de modo (test vs temario)
+    const btnsModo = document.querySelectorAll('.btn-mode');
+    const ufSection = document.getElementById('uf-section');
+    const temarioSection = document.getElementById('temario-section');
+    const quizControls = document.getElementById('quiz-controls');
+
+    btnsModo.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btnsModo.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const modo = btn.dataset.mode;
+
+        // Mostrar/ocultar secciones según el modo
+        if (modo === 'temario') {
+          ufSection.style.display = 'none';
+          temarioSection.classList.add('visible');
+          quizControls.style.display = 'none';
+        } else {
+          ufSection.style.display = 'block';
+          temarioSection.classList.remove('visible');
+          quizControls.style.display = 'block';
+        }
+      });
     });
   });
 </script>

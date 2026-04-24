@@ -1,5 +1,5 @@
 // ============================================================
-// QUIZ UAX — Lógica compartida v2 (+ Modo Código)
+// QUIZ — Lógica compartida v2 (+ Modo Código)
 // Requiere: window.BANCO (objeto UF->array), window.UFS (array config)
 // Opcional: window.EJERCICIOS_CODIGO (ejercicios de código)
 // ============================================================

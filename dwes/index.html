@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DWES — Repaso · UAX</title>
+  <title>DWES — Repaso</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -117,117 +117,6 @@
       color: var(--accent-bright);
     }
 
-    /* Estilos para el modo Temario */
-    #temario-section {
-      display: none;
-    }
-
-    #temario-section.visible {
-      display: block;
-    }
-
-    .temario-grid {
-      display: grid;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .temario-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.5rem;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .temario-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--accent);
-      transform: translateX(4px);
-    }
-
-    .temario-icon {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      background: var(--accent-bg);
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-bright);
-      font-family: var(--font-m);
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .temario-content {
-      flex: 1;
-    }
-
-    .temario-uf {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--accent-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem;
-    }
-
-    .temario-title {
-      font-family: var(--font-m);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.25rem;
-    }
-
-    .temario-pages {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
-
-    .temario-arrow {
-      flex-shrink: 0;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-
-    .temario-item:hover .temario-arrow {
-      color: var(--accent-bright);
-      transform: translateX(4px);
-    }
-
-    .temario-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .temario-header-title {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .temario-count {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--accent-bright);
-      font-weight: 600;
-    }
   </style>
 </head>
 
@@ -240,7 +129,7 @@
       Inicio
     </a>
     <span class="header-title">DWES</span>
-    <span class="header-tag">0613 · UAX</span>
+    <span class="header-tag">0613</span>
   </header>
   <main class="main">
     <div id="panel-config">
@@ -251,13 +140,6 @@
         <!-- SELECTOR DE MODO -->
         <p class="section-label">Modo de práctica</p>
         <div class="mode-selector">
-          <button class="btn-mode" data-mode="temario">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            Temario
-          </button>
           <button class="btn-mode active" data-mode="test">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path
@@ -296,38 +178,13 @@
           </div>
         </div>
 
-        <!-- SECCIÓN DE TEMARIO (solo visible en modo temario) -->
-        <div id="temario-section">
-          <div class="temario-header">
-            <span class="temario-header-title">Unidades formativas</span>
-            <span class="temario-count">9 documentos</span>
-          </div>
-
-          <!-- TEÓRICA PRÁCTICA — fija arriba, antes de las UFs -->
-          <a href="DWES Teoria Practica.html" class="temario-item" style="margin-bottom:0.75rem;border-color:var(--accent);background:var(--accent-bg);">
-            <div class="temario-icon" style="background:var(--accent);color:#0A0908;font-size:0.6rem;letter-spacing:0.03em;text-align:center;line-height:1.3">GUÍA<br>MSTRA</div>
-            <div class="temario-content">
-              <div class="temario-uf">Guía Maestra</div>
-              <div class="temario-title">Teórica Práctica</div>
-              <div class="temario-pages">PHP · PDO · Laravel · MongoDB</div>
-            </div>
-            <div class="temario-arrow">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-              </svg>
-            </div>
-          </a>
-
-          <div class="temario-grid" id="temario-grid">
-            <!-- Los PDFs se insertarán aquí dinámicamente -->
-          </div>
         </div>
 
         <!-- SELECTOR DE UFs (solo visible en modo test) -->
         <div id="uf-section">
           <p class="section-label">Unidades formativas</p>
           <button class="btn-todo" id="btn-todo">
-            <span class="todo-icon">★</span> Todo el temario
+            <span class="todo-icon">★</span> Todas las UFs
           </button>
           <div class="uf-grid">
             <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>Introducción al lado servidor<span
@@ -431,8 +288,7 @@
   </main>
   <script src="dwes_preguntas.js"></script>
   <script src="dwes_ejercicios_codigo.js"></script>
-  <script src="dwes_temario.js"></script>
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Contar preguntas de test por UF
       Object.keys(BANCO).forEach(uf => {
@@ -440,11 +296,10 @@
         if (el) el.textContent = BANCO[uf].length;
       });
 
-      // Gestión de selección de modo (test vs temario vs código)
+      // Gestión de selección de modo (test vs código)
       const btnsModo = document.querySelectorAll('.btn-mode');
       const ufSection = document.getElementById('uf-section');
       const categorySection = document.getElementById('category-section');
-      const temarioSection = document.getElementById('temario-section');
       const quizControls = document.getElementById('quiz-controls');
 
       btnsModo.forEach(btn => {
@@ -458,17 +313,13 @@
           if (modo === 'codigo') {
             ufSection.style.display = 'none';
             categorySection.style.display = 'block';
-            temarioSection.classList.remove('visible');
             quizControls.style.display = 'block';
-          } else if (modo === 'temario') {
             ufSection.style.display = 'none';
             categorySection.style.display = 'none';
-            temarioSection.classList.add('visible');
             quizControls.style.display = 'none';
           } else {
             ufSection.style.display = 'block';
             categorySection.style.display = 'none';
-            temarioSection.classList.remove('visible');
             quizControls.style.display = 'block';
           }
         });

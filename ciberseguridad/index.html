@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ciberseguridad — Repaso · UAX</title>
+  <title>Ciberseguridad — Repaso</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -58,203 +58,6 @@
       color: var(--accent-bright);
     }
 
-    /* Estilos para el modo Temario */
-    #temario-section {
-      display: none;
-    }
-
-    #temario-section.visible {
-      display: block;
-    }
-
-    .temario-grid {
-      display: grid;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .temario-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.5rem;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .temario-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--accent);
-      transform: translateX(4px);
-    }
-
-    .temario-icon {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      background: var(--accent-bg);
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-bright);
-      font-family: var(--font-m);
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .temario-content {
-      flex: 1;
-    }
-
-    .temario-uf {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--accent-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem;
-    }
-
-    .temario-title {
-      font-family: var(--font-m);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.25rem;
-    }
-
-    .temario-pages {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
-
-    .temario-arrow {
-      flex-shrink: 0;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-
-    .temario-item:hover .temario-arrow {
-      color: var(--accent-bright);
-      transform: translateX(4px);
-    }
-
-    .temario-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .temario-header-title {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .temario-count {
-      font-family: var(--font-m);
-      font-size: 0.7rem;
-      color: var(--accent-bright);
-      background: var(--accent-bg);
-      border: 1px solid var(--accent);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-
-    /* Sección expandible de apuntes */
-    .temario-expandable {
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .temario-expandable.expanded .temario-arrow svg {
-      transform: rotate(180deg);
-    }
-
-    .temario-expanded {
-      display: none;
-      padding-left: 1rem;
-      margin-top: -0.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .temario-item-small {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 0.375rem;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.2s;
-      margin-top: 0.5rem;
-    }
-
-    .temario-item-small:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: var(--accent);
-      transform: translateX(4px);
-    }
-
-    .temario-icon-small {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      background: rgba(163, 230, 53, 0.1);
-      border-radius: 0.375rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: #A3E635;
-    }
-
-    .temario-icon-profesor {
-      background: rgba(163, 230, 53, 0.15) !important;
-    }
-
-    .temario-content-small {
-      flex: 1;
-    }
-
-    .temario-title-small {
-      font-family: var(--font-m);
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.125rem;
-    }
-
-    .temario-pages-small {
-      font-family: var(--font-m);
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    .temario-arrow-small {
-      flex-shrink: 0;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-
-    .temario-item-small:hover .temario-arrow-small {
-      color: var(--accent-bright);
-      transform: translateX(4px);
-    }
   </style>
 </head>
 
@@ -267,7 +70,7 @@
       Inicio
     </a>
     <span class="header-title">CIBERSEGURIDAD</span>
-    <span class="header-tag">UAX</span>
+    <span class="header-tag">Ciber</span>
   </header>
   <main class="main">
     <div id="panel-config">
@@ -278,13 +81,6 @@
         <!-- SELECTOR DE MODO (Temario vs Test) -->
         <p class="section-label">Modo de práctica</p>
         <div class="mode-selector">
-          <button class="btn-mode" data-mode="temario">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            Temario
-          </button>
           <button class="btn-mode active" data-mode="test">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path
@@ -293,23 +89,11 @@
             Ejercicios test
           </button>
         </div>
-
-        <!-- SECCIÓN DE TEMARIO (solo visible en modo temario) -->
-        <div id="temario-section">
-          <div class="temario-header">
-            <span class="temario-header-title">Unidades formativas</span>
-            <span class="temario-count">8 documentos</span>
-          </div>
-          <div class="temario-grid" id="temario-grid">
-            <!-- Los PDFs se insertarán aquí dinámicamente -->
-          </div>
-        </div>
-
-        <!-- SELECTOR DE UFs (solo visible en modo test) -->
+<!-- SELECTOR DE UFs (solo visible en modo test) -->
         <div id="uf-section">
           <p class="section-label">Unidades formativas</p>
           <button class="btn-todo" id="btn-todo">
-            <span class="todo-icon">★</span> Todo el temario
+            <span class="todo-icon">★</span> Todas las UFs
           </button>
           <div class="uf-grid">
             <button class="btn-uf" data-uf="UF1"><span class="tag">UF1</span>Seguridad pasiva y CPD<span
@@ -403,8 +187,7 @@
     </div>
   </main>
   <script src="ciberseguridad_preguntas.js"></script>
-  <script src="ciberseguridad_temario.js"></script>
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Contar preguntas de test por UF
       Object.keys(BANCO).forEach(uf => {
@@ -414,8 +197,6 @@
       // UF2-UF3 es la suma de ambas
       const uf2_3 = document.getElementById('count-UF2-UF3');
       if (uf2_3) uf2_3.textContent = BANCO.UF2.length + BANCO.UF3.length;
-
-      // Gestión de selección de modo (test vs temario)
       const btnsModo = document.querySelectorAll('.btn-mode');
       const ufSection = document.getElementById('uf-section');
       const temarioSection = document.getElementById('temario-section');

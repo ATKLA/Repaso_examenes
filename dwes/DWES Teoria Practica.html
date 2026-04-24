@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DWES — Teórica Práctica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent:        #D18A00;
+  --accent-bright: #F5A623;
+  --accent-bg:     rgba(245,166,35,0.12);
+  --bg:            #0A0908;
+  --surface:       #141210;
+  --surface-2:     #1C1A17;
+  --surface-3:     #242118;
+  --border:        rgba(255,255,255,0.09);
+  --border-2:      rgba(255,255,255,0.15);
+  --text:          #F5F0E8;
+  --text-2:        #C8BEA8;
+  --muted:         #8A7F6C;
+  --font-d:        'Bricolage Grotesque', system-ui, sans-serif;
+  --font-s:        'Lato', system-ui, sans-serif;
+  --font-m:        'IBM Plex Mono', monospace;
+  --radius:        10px;
+  --radius-lg:     14px;
+  --sidebar-w:     230px;
+}
+html { font-size: 16px; }
+body {
+  font-family: var(--font-s);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
+  display: flex; flex-direction: column;
+}
+
+/* HEADER */
+.header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 24px; height: 52px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,9,8,0.92);
+  backdrop-filter: blur(16px);
+  position: sticky; top: 0; z-index: 200; flex-shrink: 0;
+}
+.btn-back {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--muted); text-decoration: none;
+  font-family: var(--font-m); font-size: 0.72rem;
+  letter-spacing: 0.04em; transition: color 0.2s;
+}
+.btn-back:hover { color: var(--accent-bright); }
+.btn-back:hover svg { transform: translateX(-3px); }
+.btn-back svg { transition: transform 0.2s; }
+.header-title {
+  font-family: var(--font-d); font-size: 0.88rem;
+  font-weight: 700; letter-spacing: 0.06em;
+}
+.header-pill {
+  font-family: var(--font-m); font-size: 0.62rem;
+  letter-spacing: 0.08em; color: var(--accent-bright);
+  background: var(--accent-bg); border: 1px solid var(--accent);
+  padding: 2px 8px; border-radius: 4px;
+}
+.header-tag {
+  margin-left: auto; font-family: var(--font-m); font-size: 0.66rem;
+  letter-spacing: 0.1em; color: var(--accent-bright);
+  background: var(--accent-bg); border: 1px solid var(--accent);
+  padding: 2px 8px; border-radius: 4px;
+}
+
+/* LAYOUT */
+.layout { display: flex; flex: 1; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--surface); border-right: 1px solid var(--border);
+  position: sticky; top: 52px;
+  height: calc(100vh - 52px); overflow-y: auto;
+  padding: 20px 0 40px;
+}
+.nav-group-label {
+  padding: 16px 16px 6px;
+  font-family: var(--font-m); font-size: 0.6rem; font-weight: 600;
+  color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 16px; font-family: var(--font-m);
+  font-size: 0.72rem; color: var(--muted);
+  text-decoration: none; cursor: pointer;
+  border-left: 2px solid transparent; transition: all 0.15s;
+}
+.nav-item:hover { color: var(--text); background: var(--surface-2); }
+.nav-item.active {
+  color: var(--accent-bright); font-weight: 600;
+  border-left-color: var(--accent); background: var(--accent-bg);
+}
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* MAIN */
+.main { flex: 1; padding: 32px 40px 80px; max-width: 820px; min-width: 0; }
+
+/* HERO */
+.hero {
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 36px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -80px; right: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip {
+  background: var(--surface-2); border: 1px solid var(--border-2);
+  border-radius: 20px; padding: 2px 10px;
+  font-family: var(--font-m); font-size: 0.65rem; font-weight: 600;
+  color: var(--muted); letter-spacing: 0.04em;
+}
+.chip.accent { background: var(--accent-bg); border-color: var(--accent); color: var(--accent-bright); }
+.hero h1 {
+  font-family: var(--font-d); font-size: 1.8rem; font-weight: 800;
+  letter-spacing: -0.02em; margin-bottom: 6px;
+}
+.hero p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+/* SECTION */
+.section { scroll-margin-top: 70px; }
+.section + .section { margin-top: 44px; }
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 6px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-2);
+}
+.section-desc {
+  font-size: 0.875rem; color: var(--muted);
+  margin-bottom: 20px; line-height: 1.65;
+}
+.section-badge {
+  font-family: var(--font-m); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 4px;
+}
+.badge-mvc     { background: var(--surface-3); color: var(--muted); border: 1px solid var(--border-2); }
+.badge-php     { background: rgba(160,100,240,0.12); color: #c084fc; border: 1px solid rgba(160,100,240,0.3); }
+.badge-pdo     { background: rgba(56,150,240,0.12);  color: #7bb8f5; border: 1px solid rgba(56,150,240,0.3); }
+.badge-laravel { background: rgba(240,80,60,0.12);   color: #f87b6a; border: 1px solid rgba(240,80,60,0.3); }
+.badge-mongo   { background: rgba(60,210,100,0.12);  color: #6ee7a0; border: 1px solid rgba(60,210,100,0.3); }
+.badge-exam    { background: var(--accent-bg); color: var(--accent-bright); border: 1px solid var(--accent); }
+.section-header h2 {
+  font-family: var(--font-d); font-size: 1.25rem; font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* SUB-SECTIONS */
+.sub-section { margin-bottom: 28px; }
+.sub-section h3 {
+  font-family: var(--font-m); font-size: 0.66rem; font-weight: 600;
+  color: var(--accent-bright); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.sub-desc {
+  font-size: 0.84rem; color: var(--text-2); margin-bottom: 10px; line-height: 1.65;
+}
+
+/* MVC */
+.mvc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
+.mvc-card {
+  background: var(--surface-2); border: 1px solid var(--border-2);
+  border-radius: var(--radius); padding: 16px;
+}
+.mvc-card h4 { font-family: var(--font-d); font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.mvc-card .mvc-role { font-family: var(--font-m); font-size: 0.68rem; color: var(--muted); margin-bottom: 8px; }
+.mvc-card ul { padding-left: 14px; }
+.mvc-card ul li { font-size: 0.8rem; color: var(--text-2); line-height: 1.65; }
+.mvc-icon { font-size: 1.25rem; margin-bottom: 8px; }
+.mvc-m { border-left: 3px solid rgba(56,150,240,0.5); }
+.mvc-v { border-left: 3px solid rgba(60,210,100,0.5); }
+.mvc-c { border-left: 3px solid rgba(240,80,60,0.5); }
+.flow-line {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 6px; margin-top: 12px;
+  font-family: var(--font-m); font-size: 0.7rem; color: var(--muted);
+}
+.flow-line span {
+  color: var(--accent-bright); font-weight: 600;
+  background: var(--accent-bg); padding: 2px 8px;
+  border-radius: 4px; border: 1px solid var(--accent);
+}
+
+/* CODE BLOCKS — sin scroll horizontal */
+.code-block-wrap { border-radius: var(--radius); overflow: hidden; margin-bottom: 10px; }
+.code-label {
+  background: #0d0d0b; color: var(--muted);
+  font-family: var(--font-m); font-size: 0.65rem;
+  padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; gap: 7px; letter-spacing: 0.04em;
+}
+.code-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.dot-php    { background: #c084fc; }
+.dot-bash   { background: #6ee7a0; }
+.dot-blade  { background: #f87b6a; }
+.dot-mongo  { background: #6ee7a0; }
+pre { margin: 0 !important; border-radius: 0 !important; }
+pre code.hljs {
+  font-family: var(--font-m) !important;
+  font-size: 0.81rem !important;
+  line-height: 1.65 !important;
+  padding: 16px !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  overflow-x: hidden !important;
+}
+
+/* STEP NUMBERS */
+.step-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.step {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 11px 14px;
+}
+.step-num {
+  background: var(--surface-3); color: var(--accent-bright);
+  border: 1px solid var(--accent); width: 22px; height: 22px;
+  border-radius: 50%; font-family: var(--font-m); font-size: 0.65rem;
+  font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-content { font-size: 0.845rem; color: var(--text-2); line-height: 1.6; }
+.step-content strong { color: var(--text); }
+
+/* CALLOUTS */
+.callout {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 16px; border-radius: var(--radius);
+  font-size: 0.85rem; margin: 10px 0; line-height: 1.65;
+}
+.callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.callout-safe { background: rgba(60,210,100,0.07); border: 1px solid rgba(60,210,100,0.25); color: var(--text-2); }
+.callout-warn { background: var(--accent-bg); border: 1px solid rgba(245,166,35,0.35); color: var(--text-2); }
+.callout-info { background: rgba(56,150,240,0.07); border: 1px solid rgba(56,150,240,0.25); color: var(--text-2); }
+.callout-tip  { background: rgba(160,100,240,0.07); border: 1px solid rgba(160,100,240,0.25); color: var(--text-2); }
+.callout-err  { background: rgba(224,82,82,0.07); border: 1px solid rgba(224,82,82,0.25); color: var(--text-2); }
+
+/* TABLES */
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border-2); margin: 10px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+th {
+  background: var(--surface-2); padding: 9px 14px;
+  text-align: left; font-family: var(--font-m); font-weight: 600;
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted); border-bottom: 1px solid var(--border-2);
+}
+td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-2); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface-2); color: var(--text); }
+td code {
+  font-family: var(--font-m); font-size: 0.76rem;
+  background: var(--surface-3); padding: 1px 5px;
+  border-radius: 3px; color: var(--accent-bright);
+}
+ic { color: var(--accent-bright); font-style: normal; font-family: var(--font-m); font-size: 0.82rem; }
+
+/* DIVIDER */
+.divider {
+  height: 1px; background: var(--border); margin: 24px 0;
+}
+
+/* RESUMEN */
+.resumen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.resumen-card {
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.resumen-card h4 {
+  font-family: var(--font-m); font-size: 0.62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.resumen-card p { font-family: var(--font-m); font-size: 0.76rem; color: var(--text-2); line-height: 1.75; }
+
+/* CONSEJOS */
+.consejos-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.consejos-list li {
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: var(--radius); padding: 12px 16px;
+  font-size: 0.875rem; color: var(--text-2);
+  display: flex; gap: 12px; align-items: flex-start;
+  transition: border-color 0.15s;
+}
+.consejos-list li:hover { border-color: var(--accent); }
+.consejo-num {
+  background: var(--accent); color: #0A0908;
+  width: 20px; height: 20px; border-radius: 50%;
+  font-family: var(--font-m); font-size: 0.65rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: var(--radius-lg); padding: 24px;
+  text-align: center; margin-top: 28px;
+}
+.footer p { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+.footer span { font-size: 0.82rem; color: var(--muted); }
+
+/* INLINE CODE */
+.ic {
+  font-family: var(--font-m); font-size: 0.82rem;
+  background: var(--surface-3); padding: 1px 6px;
+  border-radius: 3px; color: var(--accent-bright);
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+
+@media (max-width: 720px) {
+  .sidebar { display: none; }
+  .main { padding: 20px 16px 60px; }
+  .mvc-grid { grid-template-columns: 1fr; }
+  .resumen-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="index.html" class="btn-back">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+    </svg>
+    DWES
+  </a>
+  <span class="header-title">Teórica Práctica</span>
+  <span class="header-pill">Guía Maestra</span>
+  <span class="header-tag">0613 · UAX</span>
+</header>
+
+<div class="layout">
+
+<nav class="sidebar">
+  <div class="nav-group-label">Contenidos</div>
+  <a class="nav-item active" href="#mvc"><span class="nav-dot" style="background:var(--muted)"></span>1. MVC</a>
+  <a class="nav-item" href="#php"><span class="nav-dot" style="background:#c084fc"></span>2. PHP Básico</a>
+  <a class="nav-item" href="#pdo"><span class="nav-dot" style="background:#7bb8f5"></span>3. Conexión PDO</a>
+  <a class="nav-item" href="#laravel"><span class="nav-dot" style="background:#f87b6a"></span>4. Laravel</a>
+  <a class="nav-item" href="#mongodb"><span class="nav-dot" style="background:#6ee7a0"></span>5. MongoDB</a>
+  <a class="nav-item" href="#resumen"><span class="nav-dot" style="background:var(--accent-bright)"></span>6. Resumen Examen</a>
+</nav>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-chips">
+      <span class="chip accent">PHP</span>
+      <span class="chip accent">Laravel</span>
+      <span class="chip accent">MongoDB</span>
+      <span class="chip">PDO</span><span class="chip">MVC</span>
+    </div>
+    <h1>Guía Maestra DWES</h1>
+    <p>Conceptos clave explicados paso a paso, con código comentado y ejemplos reales. Todo lo que necesitas para el examen — PHP, PDO, Laravel completo y MongoDB con sintaxis de Compass.</p>
+  </div>
+
+  <!-- ══════════════════════════ 1. MVC ══════════════════════════ -->
+  <section class="section" id="mvc">
+    <div class="section-header">
+      <span class="section-badge badge-mvc">Arquitectura</span>
+      <h2>1. Modelo Vista Controlador</h2>
+    </div>
+    <p class="section-desc">
+      MVC es un <strong>patrón de diseño</strong> que divide la aplicación en 3 capas independientes. El objetivo es que cada parte haga una sola cosa: los datos son responsabilidad del Modelo, la presentación de la Vista, y la lógica de negocio del Controlador. Esto hace el código más limpio, fácil de mantener y reutilizable.
+    </p>
+
+    <div class="mvc-grid">
+      <div class="mvc-card mvc-m">
+        <div class="mvc-icon">🗄️</div>
+        <h4>Modelo</h4>
+        <div class="mvc-role">¿Qué hace? → Gestiona los datos</div>
+        <ul>
+          <li>Conecta con la base de datos</li>
+          <li>Define la estructura de los datos</li>
+          <li>Contiene la lógica de negocio</li>
+          <li><strong>No sabe nada de la Vista</strong></li>
+        </ul>
+      </div>
+      <div class="mvc-card mvc-v">
+        <div class="mvc-icon">🖥️</div>
+        <h4>Vista</h4>
+        <div class="mvc-role">¿Qué hace? → Muestra los datos</div>
+        <ul>
+          <li>Solo HTML, CSS, JS</li>
+          <li>Recibe datos del Controlador</li>
+          <li>No toma decisiones</li>
+          <li><strong>Sin lógica de negocio</strong></li>
+        </ul>
+      </div>
+      <div class="mvc-card mvc-c">
+        <div class="mvc-icon">⚙️</div>
+        <h4>Controlador</h4>
+        <div class="mvc-role">¿Qué hace? → Conecta todo</div>
+        <ul>
+          <li>Recibe la petición del usuario</li>
+          <li>Decide qué Modelo usar</li>
+          <li>Pasa datos a la Vista</li>
+          <li><strong>Es el intermediario</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="flow-line">
+      Usuario → <span>Controlador</span> → <span>Modelo</span> → <span>Controlador</span> → <span>Vista</span> → Usuario
+    </div>
+
+    <div class="callout callout-warn" style="margin-top:14px">
+      <span class="callout-icon">💡</span>
+      <span>En el examen: si te preguntan qué capa hace X, piensa — ¿es datos? Modelo. ¿Es interfaz? Vista. ¿Es lógica/decisión? Controlador.</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ 2. PHP ══════════════════════════ -->
+  <section class="section" id="php">
+    <div class="section-header">
+      <span class="section-badge badge-php">PHP</span>
+      <h2>2. PHP Básico</h2>
+    </div>
+    <p class="section-desc">PHP es un lenguaje de servidor: el código se ejecuta en el servidor y devuelve HTML al navegador. Todo el código va entre <span class="ic">&lt;?php</span> y <span class="ic">?&gt;</span>. Las variables siempre empiezan por <span class="ic">$</span>.</p>
+
+    <div class="sub-section">
+      <h3>2.1 Variables y Arrays</h3>
+      <p class="sub-desc">Una <strong>variable</strong> guarda un valor. Un <strong>array</strong> guarda varios valores. El array asociativo usa clave→valor, como un diccionario.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — variables_arrays.php</div>
+        <pre><code class="language-php">&lt;?php
+// Variables — tipo automático según el valor asignado
+$nombre = "Laura";     // string
+$edad   = 25;          // int
+$precio = 19.99;       // float
+$activo = true;        // bool
+
+// Array INDEXADO — acceso por posición numérica (0, 1, 2...)
+$numeros = [1, 2, 3];
+echo $numeros[0];      // 1
+
+// Array ASOCIATIVO — acceso por clave de texto
+$persona = [
+    'nombre' => 'Laura',
+    'edad'   => 25
+];
+echo $persona['nombre'];  // Laura
+
+// Concatenar cadenas con punto .
+echo "Hola, " . $nombre . "!";  // Hola, Laura!
+
+// Interpolación dentro de comillas dobles
+echo "Hola, $nombre!";          // Hola, Laura!
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>2.2 Estructuras de Control</h3>
+      <p class="sub-desc">Permiten tomar decisiones (<strong>if</strong>) y repetir acciones (<strong>foreach</strong>). El foreach es el más habitual en PHP para recorrer resultados de base de datos.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — estructuras.php</div>
+        <pre><code class="language-php">&lt;?php
+// IF / ELSE — toma decisiones
+if ($edad >= 18) {
+    echo "Mayor de edad";
+} elseif ($edad >= 16) {
+    echo "Casi mayor";
+} else {
+    echo "Menor de edad";
+}
+
+// FOREACH — recorre cada elemento del array
+// Útil para arrays de resultados de BD
+foreach ($numeros as $numero) {
+    echo $numero;           // imprime 1, 2, 3
+}
+
+// FOREACH con clave => valor
+// Útil para arrays asociativos
+foreach ($persona as $clave => $valor) {
+    echo "$clave: $valor";  // nombre: Laura / edad: 25
+}
+
+// FOR clásico — cuando necesitas el índice
+for ($i = 0; $i &lt; 3; $i++) {
+    echo $i;  // 0, 1, 2
+}
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>2.3 Funciones</h3>
+      <p class="sub-desc">Una función agrupa código reutilizable. Le das un nombre, puede recibir parámetros y devolver un resultado con <span class="ic">return</span>. PHP 7+ permite declarar los tipos de los parámetros.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — funciones.php</div>
+        <pre><code class="language-php">&lt;?php
+// Función básica — recibe parámetro, devuelve string
+function saludar($nombre) {
+    return "Hola, " . $nombre;
+}
+echo saludar("Laura");  // Hola, Laura
+
+// Función tipada (PHP 7+)
+// int $a, int $b → solo acepta enteros
+// : int → solo puede devolver entero
+function sumar(int $a, int $b): int {
+    return $a + $b;
+}
+echo sumar(3, 4);  // 7
+
+// Función con parámetro por defecto
+function despedir($nombre = "amigo") {
+    return "Hasta luego, " . $nombre;
+}
+echo despedir();         // Hasta luego, amigo
+echo despedir("Laura");  // Hasta luego, Laura
+?&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ 3. PDO ══════════════════════════ -->
+  <section class="section" id="pdo">
+    <div class="section-header">
+      <span class="section-badge badge-pdo">PDO</span>
+      <h2>3. Conexión PDO</h2>
+    </div>
+    <p class="section-desc">
+      <strong>PDO (PHP Data Objects)</strong> es la forma moderna de conectar PHP con bases de datos. Funciona con MySQL, PostgreSQL, SQLite y más. Su ventaja principal es que usa <strong>consultas preparadas</strong>, que protegen contra inyección SQL.
+    </p>
+
+    <div class="sub-section">
+      <h3>Flujo de trabajo PDO — de memoria</h3>
+      <div class="step-list">
+        <div class="step"><span class="step-num">1</span><div class="step-content"><strong>new PDO()</strong> — crea la conexión con los datos del servidor y la base de datos.</div></div>
+        <div class="step"><span class="step-num">2</span><div class="step-content"><strong>prepare($sql)</strong> — prepara la consulta SQL con marcadores de posición (<span class="ic">:param</span>) en lugar de los valores reales.</div></div>
+        <div class="step"><span class="step-num">3</span><div class="step-content"><strong>execute([...])</strong> — ejecuta la consulta sustituyendo los marcadores por los valores reales de forma segura.</div></div>
+        <div class="step"><span class="step-num">4</span><div class="step-content"><strong>fetchAll() / fetch()</strong> — obtiene los resultados como array. Solo para SELECT.</div></div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>3.1 Conexión básica</h3>
+      <p class="sub-desc">La conexión se hace en un bloque <span class="ic">try/catch</span>. Si algo falla, PDO lanza una excepción que puedes capturar en lugar de mostrar un error feo.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — conexion.php</div>
+        <pre><code class="language-php">&lt;?php
+$host   = 'localhost';   // servidor donde está MySQL
+$dbname = 'biblioteca';  // nombre de la base de datos
+$user   = 'root';
+$pass   = '';
+
+try {
+    // DSN = Data Source Name: tipo:host=...;dbname=...
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$dbname;charset=utf8",
+        $user,
+        $pass
+    );
+
+    // ERRMODE_EXCEPTION: lanza excepciones en vez de errores silenciosos
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    echo "¡Conexión exitosa!";
+
+} catch (PDOException $e) {
+    // Si algo falla, muestra el error y para la ejecución
+    die("Error de conexión: " . $e->getMessage());
+}
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>3.2 SELECT — consultar datos</h3>
+      <p class="sub-desc">Para leer datos. Si la consulta no tiene condiciones, usa <span class="ic">query()</span>. Si tiene condiciones con variables, <strong>siempre</strong> usa <span class="ic">prepare() + execute()</span>.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — select.php</div>
+        <pre><code class="language-php">&lt;?php
+// SELECT simple — sin parámetros, se puede usar query()
+$stmt   = $pdo->query("SELECT * FROM libros");
+$libros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// FETCH_ASSOC → devuelve array con nombres de columna como claves
+
+foreach ($libros as $libro) {
+    echo $libro['titulo'] . " - " . $libro['autor'];
+}
+
+// SELECT con WHERE — SIEMPRE consulta preparada
+// :autor es un marcador de posición, no el valor real
+$sql  = "SELECT * FROM libros WHERE autor = :autor";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['autor' => 'García Márquez']); // aquí va el valor real
+$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Obtener solo una fila
+$stmt = $pdo->prepare("SELECT * FROM libros WHERE id = :id");
+$stmt->execute(['id' => 1]);
+$libro = $stmt->fetch(PDO::FETCH_ASSOC);  // fetch() → solo una fila
+?&gt;</code></pre>
+      </div>
+      <div class="callout callout-safe">
+        <span class="callout-icon">🔒</span>
+        <span><strong>¿Por qué prepare + execute?</strong> Si concatenaras la variable directamente en el SQL (<span class="ic">"WHERE autor = '$autor'"</span>), un usuario podría inyectar código SQL malicioso. Con <span class="ic">:param</span>, PDO escapa automáticamente el valor.</span>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>3.3 INSERT — insertar datos</h3>
+      <p class="sub-desc">Añade una nueva fila. Con <span class="ic">lastInsertId()</span> obtienes el ID autogenerado del registro que acabas de insertar.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — insert.php</div>
+        <pre><code class="language-php">&lt;?php
+$sql = "INSERT INTO libros (titulo, autor, precio)
+        VALUES (:titulo, :autor, :precio)";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    'titulo' => 'Cien años de soledad',
+    'autor'  => 'García Márquez',
+    'precio' => 25.50
+]);
+
+// Obtiene el ID del registro recién insertado
+echo "Libro creado con ID: " . $pdo->lastInsertId();
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>3.4 UPDATE — actualizar datos</h3>
+      <p class="sub-desc">Modifica filas existentes. Con <span class="ic">rowCount()</span> sabes cuántas filas se han actualizado. Siempre incluye <span class="ic">WHERE</span> o actualizarás TODA la tabla.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — update.php</div>
+        <pre><code class="language-php">&lt;?php
+$sql  = "UPDATE libros SET precio = :precio WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['precio' => 29.99, 'id' => 1]);
+
+echo "Filas actualizadas: " . $stmt->rowCount();
+// rowCount() → número de filas afectadas por la consulta
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>3.5 DELETE — eliminar datos</h3>
+      <p class="sub-desc">Elimina filas. <strong>¡Cuidado!</strong> Sin <span class="ic">WHERE</span> borra toda la tabla.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — delete.php</div>
+        <pre><code class="language-php">&lt;?php
+$sql  = "DELETE FROM libros WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['id' => 5]);
+
+echo "Filas eliminadas: " . $stmt->rowCount();
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>3.6 Clase Database (buena práctica)</h3>
+      <p class="sub-desc">En proyectos reales, la conexión se separa en su propio archivo para no repetirla en cada script. Se crea una clase con un método que devuelve el objeto <span class="ic">$pdo</span>.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>config/database.php</div>
+        <pre><code class="language-php">&lt;?php
+class Database {
+    // Datos de conexión como propiedades privadas
+    private $host     = 'localhost';
+    private $dbname   = 'biblioteca';
+    private $username = 'root';
+    private $password = '';
+
+    public function getConnection() {
+        try {
+            $pdo = new PDO(
+                "mysql:host={$this->host};dbname={$this->dbname};charset=utf8",
+                $this->username,
+                $this->password
+            );
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $pdo;  // devuelve el objeto PDO listo para usar
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+}
+?&gt;</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — usar_database.php</div>
+        <pre><code class="language-php">&lt;?php
+require_once 'config/database.php';  // carga la clase
+
+$database = new Database();
+$pdo      = $database->getConnection();  // obtiene la conexión
+
+// A partir de aquí, $pdo está listo
+$stmt = $pdo->query("SELECT * FROM libros");
+?&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ 4. LARAVEL ══════════════════════════ -->
+  <section class="section" id="laravel">
+    <div class="section-header">
+      <span class="section-badge badge-laravel">Laravel</span>
+      <h2>4. Laravel — CRUD Completo</h2>
+    </div>
+    <p class="section-desc">
+      Laravel es un <strong>framework PHP</strong> que implementa MVC automáticamente. En lugar de escribir SQL a mano, usas clases (Eloquent ORM) que representan las tablas. Sigue el principio de <em>convención sobre configuración</em>: si respetas los nombres, Laravel hace el resto solo.
+    </p>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">📌</span>
+      <span><strong>Regla de nombres clave:</strong> el Modelo es <strong>singular</strong> (<span class="ic">Libro</span>), la tabla y las rutas son <strong>plural</strong> (<span class="ic">libros</span>). Laravel lo detecta automáticamente.</span>
+    </div>
+
+    <div class="sub-section" style="margin-top:16px">
+      <h3>4.1 Crear Proyecto</h3>
+      <p class="sub-desc">Composer descarga Laravel y crea la estructura de carpetas. El archivo <span class="ic">.env</span> contiene la configuración sensible (credenciales de BD, etc.).</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-bash"></span>bash — terminal</div>
+        <pre><code class="language-bash"># Crea un nuevo proyecto llamado 'biblioteca'
+composer create-project laravel/laravel biblioteca
+
+cd biblioteca  # entra en la carpeta del proyecto
+
+# Editar .env con los datos de tu base de datos:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=biblioteca
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Arrancar el servidor local (http://localhost:8000)
+php artisan serve</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>4.2 Migración — crear la tabla</h3>
+      <p class="sub-desc">Una <strong>migración</strong> es un archivo PHP que define la estructura de una tabla. En vez de crear la tabla a mano en MySQL, la defines en código y Laravel la crea con <span class="ic">php artisan migrate</span>. Así el esquema queda versionado.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
+        <pre><code class="language-bash"># Crear el archivo de migración
+php artisan make:migration create_libros_table
+
+# Ejecutar todas las migraciones pendientes (crea las tablas)
+php artisan migrate</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>database/migrations/xxxx_create_libros_table.php</div>
+        <pre><code class="language-php">&lt;?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    // up() → se ejecuta al hacer migrate (CREA la tabla)
+    public function up(): void
+    {
+        Schema::create('libros', function (Blueprint $table) {
+            $table->id();                            // INT, PK, autoincremental
+            $table->string('titulo');                // VARCHAR(255)
+            $table->string('autor');                 // VARCHAR(255)
+            $table->decimal('precio', 8, 2);         // DECIMAL: 8 dígitos, 2 decimales
+            $table->integer('stock');                // INT
+            $table->text('descripcion')->nullable(); // TEXT, acepta NULL
+            $table->timestamps();                    // crea created_at y updated_at
+        });
+    }
+
+    // down() → se ejecuta al hacer migrate:rollback (ELIMINA la tabla)
+    public function down(): void
+    {
+        Schema::dropIfExists('libros');
+    }
+};
+?&gt;</code></pre>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Método Blueprint</th><th>Tipo SQL equivalente</th><th>Cuándo usarlo</th></tr></thead>
+          <tbody>
+            <tr><td><code>$table->id()</code></td><td>BIGINT PK AUTO_INCREMENT</td><td>Siempre como primera columna</td></tr>
+            <tr><td><code>->string('campo')</code></td><td>VARCHAR(255)</td><td>Textos cortos: nombre, título, email</td></tr>
+            <tr><td><code>->text('campo')</code></td><td>TEXT</td><td>Textos largos: descripción, contenido</td></tr>
+            <tr><td><code>->integer('campo')</code></td><td>INT</td><td>Números enteros: stock, edad</td></tr>
+            <tr><td><code>->decimal('campo', 8, 2)</code></td><td>DECIMAL(8,2)</td><td>Precios, importes con decimales</td></tr>
+            <tr><td><code>->boolean('campo')</code></td><td>TINYINT(1)</td><td>Verdadero/falso: activo, publicado</td></tr>
+            <tr><td><code>->timestamps()</code></td><td>DATETIME created_at + updated_at</td><td>Siempre al final si quieres auditoría</td></tr>
+            <tr><td><code>->nullable()</code></td><td>Modificador: permite NULL</td><td>Campos opcionales</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>4.3 Modelo — representar la tabla</h3>
+      <p class="sub-desc">El <strong>Modelo</strong> es una clase PHP que representa la tabla en la base de datos. Cada instancia del modelo es una fila. Eloquent ORM te permite hacer consultas sin escribir SQL.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
+        <pre><code class="language-bash">php artisan make:model Libro</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>app/Models/Libro.php</div>
+        <pre><code class="language-php">&lt;?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Libro extends Model
+{
+    // $table → nombre de la tabla (opcional si sigue la convención: Libro → libros)
+    protected $table = 'libros';
+
+    // $fillable → campos que se pueden asignar con create() o update()
+    // OBLIGATORIO para usar asignación masiva (evita vulnerabilidades)
+    protected $fillable = [
+        'titulo',
+        'autor',
+        'precio',
+        'stock',
+        'descripcion'
+    ];
+
+    // Ejemplos de uso del modelo (no van en el archivo, son para referencia):
+    // Libro::all()              → SELECT * FROM libros
+    // Libro::find(1)            → SELECT * FROM libros WHERE id = 1
+    // Libro::findOrFail(1)      → igual pero lanza error 404 si no existe
+    // Libro::where('autor','X') → SELECT * FROM libros WHERE autor = 'X'
+    // Libro::create([...])      → INSERT INTO libros (...)
+}
+?&gt;</code></pre>
+      </div>
+      <div class="callout callout-tip">
+        <span class="callout-icon">⚡</span>
+        <span><strong>$fillable</strong> es obligatorio si usas <span class="ic">Libro::create()</span> o <span class="ic">$libro->update()</span>. Sin él, Laravel rechaza la asignación masiva por seguridad.</span>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>4.4 Controlador — la lógica de cada acción</h3>
+      <p class="sub-desc">El <strong>Controlador</strong> maneja cada acción del usuario. Con <span class="ic">--resource</span>, Artisan genera automáticamente los 7 métodos CRUD estándar.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
+        <pre><code class="language-bash">php artisan make:controller LibroController --resource</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>app/Http/Controllers/LibroController.php</div>
+        <pre><code class="language-php">&lt;?php
+namespace App\Http\Controllers;
+
+use App\Models\Libro;
+use Illuminate\Http\Request;
+
+class LibroController extends Controller
+{
+    // index() → GET /libros — muestra la lista completa
+    public function index()
+    {
+        $libros = Libro::all();  // obtiene todos los libros
+        return view('libros.index', compact('libros'));
+        // compact('libros') → pasa $libros a la vista
+    }
+
+    // create() → GET /libros/create — muestra el formulario de creación
+    public function create()
+    {
+        return view('libros.create');
+    }
+
+    // store() → POST /libros — guarda el nuevo libro
+    public function store(Request $request)
+    {
+        // validate() comprueba los datos. Si falla, redirige con errores.
+        $request->validate([
+            'titulo' => 'required|max:255',  // obligatorio, máx 255 chars
+            'autor'  => 'required',
+            'precio' => 'required|numeric',  // obligatorio, debe ser número
+            'stock'  => 'required|integer',
+        ]);
+
+        Libro::create($request->only(
+            'titulo', 'autor', 'precio', 'stock', 'descripcion'
+        ));
+
+        // redirect()->route() redirige a la ruta por su nombre
+        // with('success',...) pasa un mensaje flash a la vista
+        return redirect()->route('libros.index')
+                         ->with('success', 'Libro creado correctamente');
+    }
+
+    // show() → GET /libros/{id} — muestra un libro específico
+    public function show($id)
+    {
+        $libro = Libro::findOrFail($id);  // 404 si no existe
+        return view('libros.show', compact('libro'));
+    }
+
+    // edit() → GET /libros/{id}/edit — muestra el formulario de edición
+    public function edit($id)
+    {
+        $libro = Libro::findOrFail($id);
+        return view('libros.edit', compact('libro'));
+    }
+
+    // update() → PUT /libros/{id} — guarda los cambios
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'autor'  => 'required',
+            'precio' => 'required|numeric',
+            'stock'  => 'required|integer',
+        ]);
+
+        $libro = Libro::findOrFail($id);
+        $libro->update($request->only(
+            'titulo', 'autor', 'precio', 'stock', 'descripcion'
+        ));
+
+        return redirect()->route('libros.index')
+                         ->with('success', 'Libro actualizado');
+    }
+
+    // destroy() → DELETE /libros/{id} — elimina el libro
+    public function destroy($id)
+    {
+        Libro::findOrFail($id)->delete();
+        return redirect()->route('libros.index')
+                         ->with('success', 'Libro eliminado');
+    }
+}
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>4.5 Rutas — mapear URLs a métodos</h3>
+      <p class="sub-desc"><span class="ic">Route::resource</span> genera automáticamente las 7 rutas del CRUD con una sola línea. Es el equivalente a definir las 7 rutas individualmente.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>routes/web.php</div>
+        <pre><code class="language-php">&lt;?php
+use App\Http\Controllers\LibroController;
+use Illuminate\Support\Facades\Route;
+
+// Una sola línea genera las 7 rutas CRUD
+Route::resource('libros', LibroController::class);
+?&gt;</code></pre>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Verbo HTTP</th><th>URL</th><th>Método</th><th>Nombre de ruta</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td>GET</td><td><code>/libros</code></td><td>index</td><td><code>libros.index</code></td><td>Lista todos los libros</td></tr>
+            <tr><td>GET</td><td><code>/libros/create</code></td><td>create</td><td><code>libros.create</code></td><td>Formulario nuevo libro</td></tr>
+            <tr><td>POST</td><td><code>/libros</code></td><td>store</td><td><code>libros.store</code></td><td>Guarda nuevo libro</td></tr>
+            <tr><td>GET</td><td><code>/libros/{id}</code></td><td>show</td><td><code>libros.show</code></td><td>Detalle de un libro</td></tr>
+            <tr><td>GET</td><td><code>/libros/{id}/edit</code></td><td>edit</td><td><code>libros.edit</code></td><td>Formulario editar</td></tr>
+            <tr><td>PUT/PATCH</td><td><code>/libros/{id}</code></td><td>update</td><td><code>libros.update</code></td><td>Guarda cambios</td></tr>
+            <tr><td>DELETE</td><td><code>/libros/{id}</code></td><td>destroy</td><td><code>libros.destroy</code></td><td>Elimina el libro</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>4.6 Vistas Blade — HTML dinámico</h3>
+      <p class="sub-desc">Blade es el motor de plantillas de Laravel. Permite mezclar HTML con directivas PHP especiales. Los archivos tienen extensión <span class="ic">.blade.php</span> y viven en <span class="ic">resources/views/</span>.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-blade"></span>resources/views/libros/index.blade.php — lista completa</div>
+        <pre><code class="language-html">&lt;!-- Mensajes flash (vienen del controlador con with('success',...)) --&gt;
+@if(session('success'))
+    &lt;div class="alert"&gt;{{ session('success') }}&lt;/div&gt;
+@endif
+
+&lt;a href="{{ route('libros.create') }}"&gt;Añadir Libro&lt;/a&gt;
+
+&lt;table&gt;
+    @foreach($libros as $libro)
+    &lt;tr&gt;
+        &lt;td&gt;{{ $libro-&gt;titulo }}&lt;/td&gt;
+        &lt;td&gt;{{ $libro-&gt;autor }}&lt;/td&gt;
+        &lt;td&gt;{{ number_format($libro-&gt;precio, 2) }} €&lt;/td&gt;
+        &lt;td&gt;
+            &lt;a href="{{ route('libros.edit', $libro-&gt;id) }}"&gt;Editar&lt;/a&gt;
+
+            &lt;!-- Los formularios solo aceptan GET y POST.
+                 @method('DELETE') simula el verbo DELETE. --&gt;
+            &lt;form action="{{ route('libros.destroy', $libro-&gt;id) }}"
+                  method="POST"&gt;
+                @csrf
+                @method('DELETE')
+                &lt;button type="submit"&gt;Eliminar&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+    @endforeach
+&lt;/table&gt;</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-blade"></span>resources/views/libros/create.blade.php — formulario nuevo</div>
+        <pre><code class="language-html">&lt;!-- $errors contiene los errores de validate() del controlador --&gt;
+@if ($errors-&gt;any())
+    &lt;ul&gt;
+        @foreach ($errors-&gt;all() as $error)
+            &lt;li&gt;{{ $error }}&lt;/li&gt;
+        @endforeach
+    &lt;/ul&gt;
+@endif
+
+&lt;form action="{{ route('libros.store') }}" method="POST"&gt;
+    @csrf  {{-- Token CSRF: obligatorio en todo formulario POST --}}
+
+    &lt;!-- old('campo') recupera el valor previo si hubo error de validación --&gt;
+    &lt;input type="text" name="titulo" value="{{ old('titulo') }}"&gt;
+    &lt;input type="text" name="autor"  value="{{ old('autor') }}"&gt;
+    &lt;input type="number" step="0.01" name="precio" value="{{ old('precio') }}"&gt;
+    &lt;input type="number" name="stock" value="{{ old('stock') }}"&gt;
+    &lt;textarea name="descripcion"&gt;{{ old('descripcion') }}&lt;/textarea&gt;
+
+    &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Directiva Blade</th><th>Qué hace exactamente</th></tr></thead>
+          <tbody>
+            <tr><td><code>{{ $variable }}</code></td><td>Muestra el valor <strong>escapando HTML</strong> (protege contra XSS)</td></tr>
+            <tr><td><code>{!! $variable !!}</code></td><td>Muestra el valor <strong>sin escapar</strong> (solo para HTML de confianza)</td></tr>
+            <tr><td><code>@foreach / @endforeach</code></td><td>Bucle para recorrer arrays y colecciones Eloquent</td></tr>
+            <tr><td><code>@if / @elseif / @else / @endif</code></td><td>Condicional estándar</td></tr>
+            <tr><td><code>@csrf</code></td><td>Genera token de seguridad — <strong>obligatorio en todo POST</strong></td></tr>
+            <tr><td><code>@method('DELETE')</code></td><td>Simula verbos HTTP (PUT, PATCH, DELETE) que los formularios no soportan</td></tr>
+            <tr><td><code>route('nombre', $id)</code></td><td>Genera la URL de una ruta por su nombre</td></tr>
+            <tr><td><code>old('campo')</code></td><td>Repuebla el campo si hubo error de validación</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>4.7 Comandos Artisan de referencia</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>php artisan serve</code></td><td>Inicia servidor local en http://localhost:8000</td></tr>
+            <tr><td><code>php artisan migrate</code></td><td>Ejecuta todas las migraciones pendientes</td></tr>
+            <tr><td><code>php artisan migrate:fresh</code></td><td>Elimina todas las tablas y vuelve a ejecutar las migraciones</td></tr>
+            <tr><td><code>php artisan migrate:rollback</code></td><td>Deshace la última migración</td></tr>
+            <tr><td><code>php artisan route:list</code></td><td>Lista todas las rutas con su método, URL y nombre</td></tr>
+            <tr><td><code>php artisan make:model X</code></td><td>Crea app/Models/X.php</td></tr>
+            <tr><td><code>php artisan make:model X -m</code></td><td>Crea modelo Y su migración a la vez</td></tr>
+            <tr><td><code>php artisan make:controller X --resource</code></td><td>Crea controlador con los 7 métodos CRUD</td></tr>
+            <tr><td><code>php artisan make:migration create_X_table</code></td><td>Crea archivo de migración</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ 5. MONGODB ══════════════════════════ -->
+  <section class="section" id="mongodb">
+    <div class="section-header">
+      <span class="section-badge badge-mongo">MongoDB</span>
+      <h2>5. MongoDB — CRUD Completo</h2>
+    </div>
+    <p class="section-desc">
+      MongoDB es una base de datos <strong>NoSQL orientada a documentos</strong>. En vez de tablas con filas, tienes <strong>colecciones</strong> con <strong>documentos</strong> (objetos JSON). Cada documento puede tener campos distintos. No hay esquema fijo.
+    </p>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">🧭</span>
+      <span>Esta sección muestra la sintaxis en los <strong>dos formatos</strong> que debes conocer: <strong>MongoDB Compass / Shell</strong> (lo que practicas en clase con <span class="ic">db.coleccion.método()</span>) y <strong>PHP con la librería oficial</strong>.</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sub-section">
+      <h3>5.1 Conexión en PHP</h3>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-bash"></span>bash — instalar librería</div>
+        <pre><code class="language-bash">composer require mongodb/mongodb</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — conexion_mongo.php</div>
+        <pre><code class="language-php">&lt;?php
+require 'vendor/autoload.php';
+use MongoDB\Client;
+
+// Conectar al servidor MongoDB (puerto por defecto: 27017)
+$cliente   = new Client("mongodb://localhost:27017");
+
+// Seleccionar la base de datos
+$db        = $cliente->biblioteca;
+
+// Seleccionar la colección (equivale a tabla en SQL)
+$coleccion = $db->libros;
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>5.2 INSERT — insertar documentos</h3>
+      <p class="sub-desc">Los documentos son arrays asociativos PHP / objetos JSON. Pueden contener arrays anidados dentro. MongoDB genera automáticamente el <span class="ic">_id</span> único.</p>
+
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+        <pre><code class="language-javascript">// Insertar uno
+db.libros.insertOne({
+  titulo: "Don Quijote",
+  autor: "Cervantes",
+  precio: 15.99,
+  categorias: ["Clásico", "Novela"]
+})
+
+// Insertar varios
+db.libros.insertMany([
+  { titulo: "La Regenta", autor: "Clarín",  precio: 18.50 },
+  { titulo: "El árbol",   autor: "Baroja",  precio: 12.00 }
+])</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — insert_mongo.php</div>
+        <pre><code class="language-php">&lt;?php
+// insertOne() → inserta un documento
+$resultado = $coleccion->insertOne([
+    'titulo'     => 'Don Quijote',
+    'autor'      => 'Cervantes',
+    'precio'     => 15.99,
+    'categorias' => ['Clásico', 'Novela']  // array dentro del documento
+]);
+echo "ID insertado: " . $resultado->getInsertedId();
+
+// insertMany() → inserta varios documentos de una vez
+$resultado = $coleccion->insertMany([
+    ['titulo' => 'La Regenta', 'autor' => 'Clarín', 'precio' => 18.50],
+    ['titulo' => 'El árbol',   'autor' => 'Baroja', 'precio' => 12.00],
+]);
+echo "Insertados: " . count($resultado->getInsertedIds());
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>5.3 FIND — buscar documentos</h3>
+      <p class="sub-desc"><span class="ic">find()</span> devuelve un cursor (iterable). <span class="ic">findOne()</span> devuelve solo el primer resultado o null. El primer parámetro es el <strong>filtro</strong>.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+        <pre><code class="language-javascript">// Todos los documentos
+db.libros.find({})
+
+// Filtro exacto
+db.libros.find({ autor: "Cervantes" })
+
+// Con operador: precio > 15
+db.libros.find({ precio: { $gt: 15 } })
+
+// Rango: precio entre 10 y 20
+db.libros.find({ precio: { $gte: 10, $lte: 20 } })
+
+// Solo uno
+db.libros.findOne({ titulo: "Don Quijote" })</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — find_mongo.php</div>
+        <pre><code class="language-php">&lt;?php
+// Todos los documentos
+$libros = $coleccion->find([]);
+foreach ($libros as $libro) {
+    echo $libro['titulo'];
+}
+
+// Filtro exacto (como WHERE autor = 'Cervantes')
+$libros = $coleccion->find(['autor' => 'Cervantes']);
+
+// Con operador: precio mayor que 15
+$libros = $coleccion->find(['precio' => ['$gt' => 15]]);
+
+// Rango: precio entre 10 y 20
+$libros = $coleccion->find([
+    'precio' => ['$gte' => 10, '$lte' => 20]
+]);
+
+// findOne() → devuelve solo un documento (o null)
+$libro = $coleccion->findOne(['titulo' => 'Don Quijote']);
+echo $libro['autor'];  // Cervantes
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>5.4 Operadores de comparación</h3>
+      <p class="sub-desc">En MongoDB los operadores siempre llevan <strong>$</strong> delante. Son la clave para hacer filtros avanzados.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operador</th><th>Significado</th><th>Compass / Shell</th><th>PHP</th></tr></thead>
+          <tbody>
+            <tr><td><code>$eq</code></td><td>Igual a</td><td><code>{ precio: { $eq: 20 } }</code></td><td><code>['precio' => ['$eq' => 20]]</code></td></tr>
+            <tr><td><code>$gt</code></td><td>Mayor que (&gt;)</td><td><code>{ precio: { $gt: 15 } }</code></td><td><code>['precio' => ['$gt' => 15]]</code></td></tr>
+            <tr><td><code>$gte</code></td><td>Mayor o igual (≥)</td><td><code>{ precio: { $gte: 15 } }</code></td><td><code>['precio' => ['$gte' => 15]]</code></td></tr>
+            <tr><td><code>$lt</code></td><td>Menor que (&lt;)</td><td><code>{ stock: { $lt: 10 } }</code></td><td><code>['stock' => ['$lt' => 10]]</code></td></tr>
+            <tr><td><code>$lte</code></td><td>Menor o igual (≤)</td><td><code>{ stock: { $lte: 10 } }</code></td><td><code>['stock' => ['$lte' => 10]]</code></td></tr>
+            <tr><td><code>$ne</code></td><td>Distinto de (≠)</td><td><code>{ autor: { $ne: "Cervantes" } }</code></td><td><code>['autor' => ['$ne' => 'Cervantes']]</code></td></tr>
+            <tr><td><code>$in</code></td><td>Está en la lista</td><td><code>{ autor: { $in: ["Cervantes","Clarín"] } }</code></td><td><code>['autor' => ['$in' => ['Cervantes','Clarín']]]</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>5.5 UPDATE — actualizar documentos</h3>
+      <p class="sub-desc">El primer parámetro es el <strong>filtro</strong> (qué documentos actualizar). El segundo es el <strong>operador de actualización</strong>. <span class="ic">$set</span> cambia campos, <span class="ic">$inc</span> incrementa, <span class="ic">$push</span> añade a arrays.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+        <pre><code class="language-javascript">// Actualizar uno ($set cambia solo los campos indicados)
+db.libros.updateOne(
+  { titulo: "Don Quijote" },           // filtro
+  { $set: { precio: 19.99 } }          // cambio
+)
+
+// Actualizar varios
+db.libros.updateMany(
+  { autor: "Cervantes" },
+  { $set: { precio: 20.00 } }
+)
+
+// Incrementar con $inc (suma al valor actual)
+db.libros.updateMany(
+  {},                                   // {} = todos los documentos
+  { $inc: { stock: 5 } }               // suma 5 al stock de cada uno
+)
+
+// Añadir elemento a un array con $push
+db.libros.updateOne(
+  { titulo: "Don Quijote" },
+  { $push: { categorias: "Bestseller" } }
+)</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — update_mongo.php</div>
+        <pre><code class="language-php">&lt;?php
+// updateOne() — actualiza el primer documento que coincide
+$coleccion->updateOne(
+    ['titulo' => 'Don Quijote'],      // filtro
+    ['$set' => ['precio' => 19.99]]  // operador + cambio
+);
+
+// updateMany() — actualiza todos los que coinciden
+$coleccion->updateMany(
+    ['autor' => 'Cervantes'],
+    ['$set' => ['precio' => 20.00]]
+);
+
+// $inc — incrementa un número
+$coleccion->updateMany(
+    [],                          // sin filtro = todos
+    ['$inc' => ['stock' => 5]]   // suma 5 al campo stock
+);
+
+// $push — añade un elemento a un array existente
+$coleccion->updateOne(
+    ['titulo' => 'Don Quijote'],
+    ['$push' => ['categorias' => 'Bestseller']]
+);
+?&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>5.6 DELETE — eliminar documentos</h3>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+        <pre><code class="language-javascript">db.libros.deleteOne({ titulo: "Don Quijote" })
+db.libros.deleteMany({ precio: { $lt: 10 } })
+db.libros.deleteMany({})  // elimina todos los documentos</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — delete_mongo.php</div>
+        <pre><code class="language-php">&lt;?php
+// Eliminar UNO (el primero que coincida)
+$coleccion->deleteOne(['titulo' => 'Don Quijote']);
+
+// Eliminar VARIOS (todos los que coincidan)
+$coleccion->deleteMany(['precio' => ['$lt' => 10]]);
+
+// Eliminar TODOS los documentos de la colección
+$coleccion->deleteMany([]);
+?&gt;</code></pre>
+      </div>
+      <div class="callout callout-err">
+        <span class="callout-icon">⚠️</span>
+        <span><strong>Cuidado:</strong> <span class="ic">deleteMany([])</span> elimina TODOS los documentos. El filtro vacío <span class="ic">{}</span> coincide con todo.</span>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3>5.7 Opciones avanzadas — Sort, Limit, Skip, Projection</h3>
+      <p class="sub-desc">Se pasan como segundo parámetro en <span class="ic">find()</span>, tanto en Compass como en PHP.</p>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+        <pre><code class="language-javascript">// Ordenar: 1 = ascendente, -1 = descendente
+db.libros.find({}).sort({ precio: 1 })
+db.libros.find({}).sort({ precio: -1 })
+
+// Limitar resultados
+db.libros.find({}).limit(5)
+
+// Paginación: saltar 10, mostrar 5
+db.libros.find({}).skip(10).limit(5)
+
+// Proyección: qué campos devolver (1=incluir, 0=excluir)
+db.libros.find({}, { titulo: 1, precio: 1, _id: 0 })</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-label"><span class="code-dot dot-php"></span>php — opciones_mongo.php</div>
+        <pre><code class="language-php">&lt;?php
+// sort → ordenar. 1 = asc, -1 = desc
+$libros = $coleccion->find([], ['sort' => ['precio' => 1]]);
+
+// limit → máximo de resultados
+$libros = $coleccion->find([], ['limit' => 5]);
+
+// skip + limit → paginación (página 3 de 5 en 5)
+$libros = $coleccion->find([], ['skip' => 10, 'limit' => 5]);
+
+// projection → solo devuelve los campos indicados
+// 1 = incluir, 0 = excluir (_id se excluye si no se incluye)
+$libros = $coleccion->find([], [
+    'projection' => [
+        'titulo' => 1,
+        'precio' => 1,
+        '_id'    => 0   // excluir el _id
+    ]
+]);
+?&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ 6. RESUMEN ══════════════════════════ -->
+  <section class="section" id="resumen">
+    <div class="section-header">
+      <span class="section-badge badge-exam">Examen</span>
+      <h2>6. Resumen Rápido</h2>
+    </div>
+    <p class="section-desc">Todo lo esencial para repasar de un vistazo justo antes del examen.</p>
+
+    <div class="resumen-grid" style="margin-bottom:24px">
+      <div class="resumen-card">
+        <h4 style="color:var(--muted)">MVC</h4>
+        <p>Modelo → datos + BD<br>Vista → HTML/CSS/JS<br>Controlador → lógica</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:#7bb8f5">PDO</h4>
+        <p>new PDO() →<br>prepare($sql) →<br>execute([params]) →<br>fetchAll(FETCH_ASSOC)</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:#f87b6a">Laravel — pasos</h4>
+        <p>make:migration →<br>Schema::create() →<br>migrate →<br>make:model → make:controller</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:#f87b6a">Blade esencial</h4>
+        <p>{{ }} · @foreach<br>@if · @csrf<br>@method('DELETE')<br>route() · old()</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:#6ee7a0">MongoDB CRUD</h4>
+        <p>insertOne / insertMany<br>find / findOne<br>updateOne / updateMany<br>deleteOne / deleteMany</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:#6ee7a0">MongoDB Operadores</h4>
+        <p>$gt · $gte · $lt · $lte<br>$eq · $ne · $in<br>$set · $inc · $push<br>sort · limit · skip</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:#c084fc">PHP esencial</h4>
+        <p>$var · $array['key']<br>foreach · if · else<br>function nombre($p)<br>return valor</p>
+      </div>
+      <div class="resumen-card">
+        <h4 style="color:var(--accent-bright)">Artisan rápido</h4>
+        <p>artisan serve<br>artisan migrate<br>make:model -m<br>make:controller --resource</p>
+      </div>
+    </div>
+
+    <p style="font-family:var(--font-m);font-size:.66rem;color:var(--accent-bright);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Consejos para el examen</p>
+    <ul class="consejos-list">
+      <li><span class="consejo-num">1</span>Lee bien el enunciado: ¿piden código completo, completar huecos o detectar errores? Cada caso tiene su estrategia.</li>
+      <li><span class="consejo-num">2</span>PDO: usa siempre <strong>prepare() + execute()</strong> con <span class="ic">:param</span>. Nunca concatenes variables en el SQL.</li>
+      <li><span class="consejo-num">3</span>Laravel: <strong>singular</strong> para el Modelo (<span class="ic">Libro</span>), <strong>plural</strong> para tabla y rutas (<span class="ic">libros</span>).</li>
+      <li><span class="consejo-num">4</span>MongoDB: todos los operadores llevan <strong>$</strong> delante — <span class="ic">$gt</span>, <span class="ic">$set</span>, <span class="ic">$inc</span>. Sin él no funciona.</li>
+      <li><span class="consejo-num">5</span>Blade: no olvides <strong>@csrf</strong> en todo formulario POST, ni <strong>@method('DELETE')</strong> para eliminar.</li>
+      <li><span class="consejo-num">6</span>Revisa la sintaxis: punto y coma al final, llaves equilibradas, comillas simples en PHP.</li>
+      <li><span class="consejo-num">7</span>MVC: ante cualquier pregunta de arquitectura, identifica qué capa es responsable y justifícalo.</li>
+    </ul>
+
+    <div class="footer">
+      <p>¡Mucha suerte en el examen! 🚀</p>
+      <span>Has estudiado todo esto — aplícalo con calma y confianza.</span>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+hljs.highlightAll();
+
+const sections = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(i => i.classList.remove('active'));
+      const match = document.querySelector(`.nav-item[href="#${entry.target.id}"]`);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-15% 0px -75% 0px' });
+sections.forEach(s => observer.observe(s));
+
+const KEY = 'dwes_teoria_scroll';
+const main = document.querySelector('.main');
+const saved = sessionStorage.getItem(KEY);
+if (saved) main.scrollTop = parseInt(saved);
+main.addEventListener('scroll', () => sessionStorage.setItem(KEY, main.scrollTop));
+</script>
+</body>
+</html>

@@ -360,6 +360,8 @@ ic { color: var(--accent-bright); font-style: normal; font-family: var(--font-m)
   <a class="nav-item" href="#laravel"><span class="nav-dot" style="background:#f87b6a"></span>4. Laravel</a>
   <a class="nav-item" href="#mongodb"><span class="nav-dot" style="background:#6ee7a0"></span>5. MongoDB</a>
   <a class="nav-item" href="#resumen"><span class="nav-dot" style="background:var(--accent-bright)"></span>6. Resumen Examen</a>
+  <a class="nav-item" href="#laravel-ejercicio"><span class="nav-dot" style="background:#f87b6a"></span>7. Ejercicio Laravel</a>
+  <a class="nav-item" href="#php-ejercicio"><span class="nav-dot" style="background:#c084fc"></span>8. Ejercicio PHP</a>
 </nav>
 
 <main class="main">
@@ -1421,6 +1423,791 @@ $libros = $coleccion->find([], [
       <p>¡Mucha suerte en el examen! 🚀</p>
       <span>Has estudiado todo esto — aplícalo con calma y confianza.</span>
     </div>
+  </section>
+
+  <!-- ══════════════════════════ 7. EJERCICIO LARAVEL ══════════════════════════ -->
+  <section class="section" id="laravel-ejercicio">
+    <div class="section-header">
+      <span class="section-badge badge-laravel">LARAVEL</span>
+      <h2>7. Ejercicio Laravel</h2>
+    </div>
+    <p class="section-desc">
+      Aplicación completa de gestión de películas usando Laravel: migraciones, modelos Eloquent, controladores, rutas y vistas Blade.
+    </p>
+
+    <!-- ────────── ENUNCIADO ────────── -->
+    <div class="sub-section">
+      <h3>📋 Enunciado</h3>
+      <div class="sub-desc">
+        Desarrolla una aplicación web con Laravel que permita gestionar un catálogo de películas. La aplicación deberá almacenar información básica de cada película y permitir visualizarla y añadir nuevos registros mediante un formulario.
+      </div>
+    </div>
+
+    <!-- ────────── REQUISITOS ────────── -->
+    <div class="sub-section">
+      <h3>✓ Requisitos</h3>
+      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
+        <li>Tabla 'peliculas' con campos: id, titulo, director, anio, duracion, timestamps</li>
+        <li>Controlador con métodos: index() para listar, store() para guardar</li>
+        <li>Rutas: GET /peliculas (mostrar) y POST /peliculas (guardar)</li>
+        <li>Vista Blade con listado de películas y formulario de alta</li>
+        <li>Validaciones: titulo y director obligatorios, anio numérico, duracion entero</li>
+      </ul>
+    </div>
+
+    <!-- ────────── PASO 1 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 1: Crear Proyecto Laravel</h3>
+      <div class="sub-desc">
+        Composer descarga Laravel y genera toda la estructura del proyecto (~15,000 archivos).
+      </div>
+      <pre><code class="language-bash">composer create-project laravel/laravel peliculas
+cd peliculas</code></pre>
+      <div style="margin-top: 8px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
+          💡 Verifica: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">php artisan serve</code> y visita http://127.0.0.1:8000
+        </span>
+      </div>
+    </div>
+
+    <!-- ────────── PASO 2 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 2: Crear Base de Datos</h3>
+      <div class="sub-desc">
+        Crea una base de datos vacía en MySQL/phpMyAdmin con codificación UTF-8.
+      </div>
+      <pre><code class="language-sql">CREATE DATABASE peliculas_db 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;</code></pre>
+    </div>
+
+    <!-- ────────── PASO 3 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 3: Configurar Conexión</h3>
+      <div class="sub-desc">
+        Edita <code>peliculas/.env</code> para conectar Laravel con MySQL.
+      </div>
+      <pre><code class="language-bash">DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=peliculas_db
+DB_USERNAME=root
+DB_PASSWORD=</code></pre>
+    </div>
+
+    <!-- ────────── PASO 4 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 4: Crear Migración</h3>
+      <div class="sub-desc">
+        Genera el archivo de migración que contendrá la estructura de la tabla 'peliculas'.
+      </div>
+      <pre><code class="language-bash">php artisan make:migration create_peliculas_table</code></pre>
+      <div style="margin-top: 10px;">
+        <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+          📁 database/migrations/2026_xx_xx_xxxxxx_create_peliculas_table.php
+        </div>
+        <pre><code class="language-php">public function up(): void
+{
+    Schema::create('peliculas', function (Blueprint $table) {
+        $table->id();
+        $table->string('titulo');
+        $table->string('director');
+        $table->integer('anio');
+        $table->integer('duracion');
+        $table->timestamps();
+    });
+}
+
+public function down(): void
+{
+    Schema::dropIfExists('peliculas');
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ────────── PASO 5 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 5: Ejecutar Migración</h3>
+      <div class="sub-desc">
+        Laravel ejecuta el método up() y crea la tabla 'peliculas' en la base de datos.
+      </div>
+      <pre><code class="language-bash">php artisan migrate</code></pre>
+    </div>
+
+    <!-- ────────── PASO 6 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 6: Crear Modelo</h3>
+      <div class="sub-desc">
+        El modelo Eloquent representa la tabla en PHP. Permite interactuar con la BD sin SQL.
+      </div>
+      <pre><code class="language-bash">php artisan make:model Pelicula</code></pre>
+      <div style="margin-top: 10px;">
+        <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+          📁 app/Models/Pelicula.php
+        </div>
+        <pre><code class="language-php">class Pelicula extends Model
+{
+    protected $fillable = [
+        'titulo',
+        'director',
+        'anio',
+        'duracion'
+    ];
+}</code></pre>
+      </div>
+      <div style="margin-top: 8px; padding: 10px 14px; background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #7bb8f5;">
+          ℹ️ <strong>$fillable:</strong> Protección de seguridad. Solo estos campos pueden llenarse con create() o update().
+        </span>
+      </div>
+    </div>
+
+    <!-- ────────── PASO 7 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 7: Crear Controlador</h3>
+      <div class="sub-desc">
+        El controlador contiene la lógica para listar y guardar películas con validación.
+      </div>
+      <pre><code class="language-bash">php artisan make:controller PeliculaController</code></pre>
+      <div style="margin-top: 10px;">
+        <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+          📁 app/Http/Controllers/PeliculaController.php
+        </div>
+        <pre><code class="language-php">use App\Models\Pelicula;
+use Illuminate\Http\Request;
+
+class PeliculaController extends Controller
+{
+    public function index()
+    {
+        $peliculas = Pelicula::all();
+        return view('peliculas.index', compact('peliculas'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'titulo' => 'required',
+            'director' => 'required',
+            'anio' => 'required|numeric',
+            'duracion' => 'required|integer'
+        ]);
+
+        Pelicula::create($request->all());
+
+        return redirect()->route('peliculas.index')
+            ->with('success', 'Película agregada correctamente');
+    }
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- ────────── PASO 8 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 8: Definir Rutas</h3>
+      <div class="sub-desc">
+        Las rutas mapean URLs a métodos del controlador.
+      </div>
+      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+        📁 routes/web.php
+      </div>
+      <pre><code class="language-php">use App\Http\Controllers\PeliculaController;
+
+Route::get('/', function () {
+    return redirect('/peliculas');
+});
+
+Route::get('/peliculas', [PeliculaController::class, 'index'])
+    ->name('peliculas.index');
+
+Route::post('/peliculas', [PeliculaController::class, 'store'])
+    ->name('peliculas.store');</code></pre>
+    </div>
+
+    <!-- ────────── PASO 9 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 9: Crear Vista Blade</h3>
+      <div style="margin-bottom: 10px; padding: 10px 14px; background: rgba(240,80,60,0.12); border-left: 3px solid rgba(240,80,60,0.5); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #f87b6a;">
+          ⚠️ <strong>Crear manualmente:</strong> resources/views/peliculas/index.blade.php
+        </span>
+      </div>
+      <div class="sub-desc">
+        La vista debe incluir:
+      </div>
+      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px; margin-bottom: 10px;">
+        <li>Formulario con campos: título, director, año, duración</li>
+        <li>Mensajes de validación con <code>@error</code></li>
+        <li>Tabla con el listado de películas usando <code>@forelse</code></li>
+        <li>Mensaje de éxito con <code>@if(session('success'))</code></li>
+      </ul>
+      <pre><code class="language-html">&lt;!-- Estructura básica de la vista --&gt;
+&lt;form action="{{ route('peliculas.store') }}" method="POST"&gt;
+    @csrf
+    &lt;!-- Campos del formulario --&gt;
+&lt;/form&gt;
+
+&lt;table&gt;
+    @forelse($peliculas as $pelicula)
+        &lt;tr&gt;
+            &lt;td&gt;{{ $pelicula-&gt;titulo }}&lt;/td&gt;
+            &lt;!-- ... --&gt;
+        &lt;/tr&gt;
+    @empty
+        &lt;tr&gt;&lt;td&gt;No hay películas&lt;/td&gt;&lt;/tr&gt;
+    @endforelse
+&lt;/table&gt;</code></pre>
+    </div>
+
+    <!-- ────────── PASO 10 ────────── -->
+    <div class="sub-section">
+      <h3>Paso 10: Iniciar Servidor</h3>
+      <div class="sub-desc">
+        Inicia el servidor de desarrollo de Laravel.
+      </div>
+      <pre><code class="language-bash">php artisan serve</code></pre>
+      <div style="margin-top: 8px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
+          💡 Accede a: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">http://127.0.0.1:8000/peliculas</code>
+        </span>
+      </div>
+    </div>
+
+    <!-- ────────── ESTRUCTURA ────────── -->
+    <div class="sub-section">
+      <h3>📁 Estructura del Proyecto</h3>
+      <pre style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 16px; border-radius: var(--radius); font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2); line-height: 1.6;"><code>peliculas/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       └── PeliculaController.php  ← CRUD
+│   └── Models/
+│       └── Pelicula.php                ← Modelo
+├── database/
+│   └── migrations/
+│       └── xxxx_create_peliculas_table.php
+├── resources/
+│   └── views/
+│       └── peliculas/
+│           └── index.blade.php         ← Vista
+├── routes/
+│   └── web.php                         ← Rutas
+└── .env                                ← Config BD</code></pre>
+    </div>
+
+    <!-- ────────── COMANDOS ÚTILES ────────── -->
+    <div class="sub-section">
+      <h3>⚡ Comandos Útiles de Laravel</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px;">
+        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan list</code>
+          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ver todos los comandos</div>
+        </div>
+        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate</code>
+          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ejecutar migraciones</div>
+        </div>
+        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate:rollback</code>
+          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Deshacer última migración</div>
+        </div>
+        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate:fresh --seed</code>
+          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Recrear BD + seeders</div>
+        </div>
+        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan route:list</code>
+          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ver todas las rutas</div>
+        </div>
+        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan tinker</code>
+          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Consola interactiva</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────── ATAJOS ────────── -->
+    <div class="sub-section">
+      <h3>🚀 Atajos de Creación Múltiple</h3>
+      <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -m</code>
+          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración</span>
+        </div>
+        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -mc</code>
+          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración + Controlador</span>
+        </div>
+        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -mcr</code>
+          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración + Controlador resource</span>
+        </div>
+        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -a</code>
+          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ TODO (migración, controlador, factory, seeder, etc.)</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+<!-- ══════════════════════════ 8. EJERCICIO PHP ══════════════════════════ -->
+  <section class="section" id="php-ejercicio">
+    <div class="section-header">
+      <span class="section-badge badge-php">PHP</span>
+      <h2>8. Ejercicio PHP</h2>
+    </div>
+    <p class="section-desc">
+      Sistema de gestión de reservas para restaurante con formulario HTML y procesamiento PHP usando PDO y MySQLi con prepared statements.
+    </p>
+
+    <!-- ────────── OBJETIVO ────────── -->
+    <div class="sub-section">
+      <h3>🎯 Objetivo del Ejercicio</h3>
+      <div class="sub-desc">
+        Desarrollar un sistema de reservas completo que permita:
+      </div>
+      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
+        <li>Formulario HTML con validación de campos</li>
+        <li>Procesamiento con <strong>PDO</strong> (portable, moderno)</li>
+        <li>Procesamiento con <strong>MySQLi</strong> (específico MySQL)</li>
+        <li>Prepared statements para seguridad contra inyección SQL</li>
+        <li>Validación de datos en servidor</li>
+      </ul>
+    </div>
+
+    <!-- ────────── CAMPOS ────────── -->
+    <div class="sub-section">
+      <h3>📝 Campos del Formulario</h3>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Nombre completo</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Correo electrónico</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Teléfono</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Fecha reserva</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Número de personas</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Turno (comida/cena)</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Zona (interior/terraza)</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Tipo de menú</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Ocasión especial</div>
+        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Comentarios</div>
+      </div>
+    </div>
+
+    <!-- ────────── PASO 1: BASE DE DATOS ────────── -->
+    <div class="sub-section">
+      <h3>Paso 1: Crear Base de Datos</h3>
+      <div class="sub-desc">
+        La estructura es <strong>idéntica</strong> para PDO y MySQLi. Ejecutar en phpMyAdmin.
+      </div>
+      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+        📁 database.sql
+      </div>
+      <pre><code class="language-sql">CREATE DATABASE IF NOT EXISTS restaurante_db 
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE restaurante_db;
+
+CREATE TABLE IF NOT EXISTS reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    fecha_reserva DATE NOT NULL,
+    num_personas TINYINT UNSIGNED NOT NULL,
+    turno ENUM('comida', 'cena') NOT NULL,
+    zona ENUM('interior', 'terraza') NOT NULL,
+    tipo_menu ENUM('estandar', 'vegetariano', 'infantil') NOT NULL,
+    ocasion_especial ENUM('ninguna', 'cumpleaños', 'aniversario') 
+        DEFAULT 'ninguna',
+    comentarios TEXT,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_fecha_reserva (fecha_reserva),
+    INDEX idx_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</code></pre>
+    </div>
+
+    <!-- ────────── PASO 2: FORMULARIO HTML ────────── -->
+    <div class="sub-section">
+      <h3>Paso 2: Formulario HTML</h3>
+      <div class="sub-desc">
+        El HTML es <strong>idéntico</strong>. Solo cambia el <code>action</code> del form según la versión.
+      </div>
+      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+        📁 index.php
+      </div>
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Reservas - Restaurante&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Sistema de Gestión de Reservas&lt;/h1&gt;
+    
+    &lt;?php if (isset($_GET['success'])): ?&gt;
+        &lt;div class="alert-success"&gt;✓ Reserva registrada&lt;/div&gt;
+    &lt;?php endif; ?&gt;
+    
+    &lt;!-- PDO: action="procesar_pdo.php" --&gt;
+    &lt;!-- MySQLi: action="procesar_mysqli.php" --&gt;
+    &lt;form action="procesar_pdo.php" method="POST"&gt;
+        &lt;input type="text" name="nombre" required&gt;
+        &lt;input type="email" name="email" required&gt;
+        &lt;input type="tel" name="telefono" pattern="[0-9]{9}" required&gt;
+        &lt;input type="date" name="fecha" min="&lt;?php echo date('Y-m-d'); ?&gt;" required&gt;
+        &lt;input type="number" name="personas" min="1" max="20" required&gt;
+        
+        &lt;select name="turno" required&gt;
+            &lt;option value="comida"&gt;Comida (13:00-16:00)&lt;/option&gt;
+            &lt;option value="cena"&gt;Cena (20:00-23:00)&lt;/option&gt;
+        &lt;/select&gt;
+        
+        &lt;select name="zona" required&gt;
+            &lt;option value="interior"&gt;Interior&lt;/option&gt;
+            &lt;option value="terraza"&gt;Terraza&lt;/option&gt;
+        &lt;/select&gt;
+        
+        &lt;select name="menu" required&gt;
+            &lt;option value="estandar"&gt;Estándar&lt;/option&gt;
+            &lt;option value="vegetariano"&gt;Vegetariano&lt;/option&gt;
+            &lt;option value="infantil"&gt;Infantil&lt;/option&gt;
+        &lt;/select&gt;
+        
+        &lt;select name="ocasion"&gt;
+            &lt;option value="ninguna"&gt;Ninguna&lt;/option&gt;
+            &lt;option value="cumpleaños"&gt;Cumpleaños&lt;/option&gt;
+            &lt;option value="aniversario"&gt;Aniversario&lt;/option&gt;
+        &lt;/select&gt;
+        
+        &lt;textarea name="comentarios" rows="4"&gt;&lt;/textarea&gt;
+        
+        &lt;button type="submit"&gt;Confirmar Reserva&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+
+    <!-- ────────── PASO 3: VERSIÓN PDO ────────── -->
+    <div class="sub-section">
+      <h3>Paso 3: Procesamiento con PDO</h3>
+      <div class="sub-desc">
+        PDO usa placeholders <strong>nombrados</strong> (<code>:nombre</code>) y vincula automáticamente los tipos.
+      </div>
+      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+        📁 procesar_pdo.php
+      </div>
+      <pre><code class="language-php">&lt;?php
+// CONFIGURACIÓN
+$host = 'localhost';
+$dbname = 'restaurante_db';
+$username = 'root';
+$password = '';
+
+try {
+    // Crear conexión PDO
+    $conn = new PDO(
+        "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
+        $username,
+        $password
+    );
+    
+    // Configurar modo de errores
+    $conn-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+        // Recoger datos
+        $nombre = trim($_POST['nombre']);
+        $email = trim($_POST['email']);
+        $telefono = trim($_POST['telefono']);
+        $fecha = $_POST['fecha'];
+        $personas = (int)$_POST['personas'];
+        $turno = $_POST['turno'];
+        $zona = $_POST['zona'];
+        $menu = $_POST['menu'];
+        $ocasion = $_POST['ocasion'];
+        $comentarios = trim($_POST['comentarios']);
+        
+        // Validaciones
+        if (empty($nombre) || empty($email) || empty($telefono)) {
+            header('Location: index.php?error=campos_vacios');
+            exit();
+        }
+        
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            header('Location: index.php?error=email_invalido');
+            exit();
+        }
+        
+        // PREPARED STATEMENT - PDO
+        $sql = "INSERT INTO reservas 
+                (nombre, email, telefono, fecha_reserva, num_personas, 
+                 turno, zona, tipo_menu, ocasion_especial, comentarios) 
+                VALUES 
+                (:nombre, :email, :telefono, :fecha, :personas, 
+                 :turno, :zona, :menu, :ocasion, :comentarios)";
+        
+        $stmt = $conn-&gt;prepare($sql);
+        
+        // Ejecutar con array asociativo
+        $stmt-&gt;execute([
+            ':nombre' =&gt; $nombre,
+            ':email' =&gt; $email,
+            ':telefono' =&gt; $telefono,
+            ':fecha' =&gt; $fecha,
+            ':personas' =&gt; $personas,
+            ':turno' =&gt; $turno,
+            ':zona' =&gt; $zona,
+            ':menu' =&gt; $menu,
+            ':ocasion' =&gt; $ocasion,
+            ':comentarios' =&gt; $comentarios
+        ]);
+        
+        header('Location: index.php?success=1');
+        exit();
+    }
+    
+} catch(PDOException $e) {
+    error_log("Error PDO: " . $e-&gt;getMessage());
+    header('Location: index.php?error=1');
+    exit();
+}
+?&gt;</code></pre>
+      <div style="margin-top: 8px; padding: 10px 14px; background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #7bb8f5;">
+          ℹ️ <strong>Ventajas PDO:</strong> Sintaxis moderna, portable entre bases de datos, manejo de errores con excepciones, vinculación automática de tipos.
+        </span>
+      </div>
+    </div>
+
+    <!-- ────────── PASO 4: VERSIÓN MYSQLI ────────── -->
+    <div class="sub-section">
+      <h3>Paso 4: Procesamiento con MySQLi</h3>
+      <div class="sub-desc">
+        MySQLi usa placeholders <strong>posicionales</strong> (<code>?</code>) y requiere especificar tipos manualmente.
+      </div>
+      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+        📁 procesar_mysqli.php
+      </div>
+      <pre><code class="language-php">&lt;?php
+// CONFIGURACIÓN
+$host = 'localhost';
+$dbname = 'restaurante_db';
+$username = 'root';
+$password = '';
+
+// Crear conexión
+$conn = mysqli_connect($host, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
+
+mysqli_set_charset($conn, "utf8mb4");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // Recoger datos
+    $nombre = trim($_POST['nombre']);
+    $email = trim($_POST['email']);
+    $telefono = trim($_POST['telefono']);
+    $fecha = $_POST['fecha'];
+    $personas = (int)$_POST['personas'];
+    $turno = $_POST['turno'];
+    $zona = $_POST['zona'];
+    $menu = $_POST['menu'];
+    $ocasion = $_POST['ocasion'];
+    $comentarios = trim($_POST['comentarios']);
+    
+    // Validaciones
+    if (empty($nombre) || empty($email) || empty($telefono)) {
+        mysqli_close($conn);
+        header('Location: index.php?error=campos_vacios');
+        exit();
+    }
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        mysqli_close($conn);
+        header('Location: index.php?error=email_invalido');
+        exit();
+    }
+    
+    // PREPARED STATEMENT - MYSQLI
+    $sql = "INSERT INTO reservas 
+            (nombre, email, telefono, fecha_reserva, num_personas, 
+             turno, zona, tipo_menu, ocasion_especial, comentarios) 
+            VALUES 
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = mysqli_prepare($conn, $sql);
+    
+    if ($stmt === false) {
+        mysqli_close($conn);
+        header('Location: index.php?error=1');
+        exit();
+    }
+    
+    // VINCULAR PARÁMETROS
+    // "ssssisssss" = 9 strings + 1 integer
+    // s = string, i = integer, d = double, b = blob
+    mysqli_stmt_bind_param($stmt, "ssssisssss", 
+        $nombre,      // s
+        $email,       // s
+        $telefono,    // s
+        $fecha,       // s
+        $personas,    // i ← único INTEGER
+        $turno,       // s
+        $zona,        // s
+        $menu,        // s
+        $ocasion,     // s
+        $comentarios  // s
+    );
+    
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        header('Location: index.php?success=1');
+        exit();
+    } else {
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        header('Location: index.php?error=1');
+        exit();
+    }
+}
+?&gt;</code></pre>
+      <div style="margin-top: 8px; padding: 10px 14px; background: rgba(240,80,60,0.12); border-left: 3px solid rgba(240,80,60,0.5); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #f87b6a;">
+          ⚠️ <strong>bind_param:</strong> Debes especificar tipos manualmente. En este caso: <code>"ssssisssss"</code> = 9 strings + 1 integer (num_personas).
+        </span>
+      </div>
+    </div>
+
+    <!-- ────────── COMPARATIVA ────────── -->
+    <div class="sub-section">
+      <h3>📊 Comparativa PDO vs MySQLi</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.82rem;">
+        <thead>
+          <tr style="background: var(--surface-3); border-bottom: 2px solid var(--border-2);">
+            <th style="padding: 10px; text-align: left; color: var(--text); font-family: var(--font-m); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;">Aspecto</th>
+            <th style="padding: 10px; text-align: left; color: #7bb8f5; font-family: var(--font-m); font-size: 0.7rem;">PDO</th>
+            <th style="padding: 10px; text-align: left; color: #6ee7a0; font-family: var(--font-m); font-size: 0.7rem;">MySQLi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 8px; color: var(--text-2);">Conexión</td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>new PDO(...)</code></td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>mysqli_connect(...)</code></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 8px; color: var(--text-2);">Placeholders</td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>:nombre</code> (nombrados)</td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>?</code> (posicionales)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 8px; color: var(--text-2);">Vincular</td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>execute([array])</code></td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>bind_param("ssi",...)</code></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 8px; color: var(--text-2);">Tipos</td>
+            <td style="padding: 8px; color: #4ade80;">✓ Automático</td>
+            <td style="padding: 8px; color: #f87b6a;">✗ Manual (s,i,d,b)</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 8px; color: var(--text-2);">Errores</td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>try/catch</code></td>
+            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>if ($stmt === false)</code></td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 8px; color: var(--text-2);">Portabilidad</td>
+            <td style="padding: 8px; color: #4ade80;">✓ Múltiples BD</td>
+            <td style="padding: 8px; color: #f87b6a;">✗ Solo MySQL</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; color: var(--text-2);">Recomendado</td>
+            <td style="padding: 8px; color: #4ade80; font-weight: 600;">✓ Primera opción</td>
+            <td style="padding: 8px; color: var(--accent-bright);">OK pero menos moderna</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ────────── TIPOS BIND_PARAM ────────── -->
+    <div class="sub-section">
+      <h3>🔤 Tipos en bind_param (MySQLi)</h3>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
+        <div style="background: var(--surface-2); border-left: 3px solid #7bb8f5; padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #7bb8f5;">s = string</code>
+          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Cadenas de texto (nombre, email, fecha)</div>
+        </div>
+        <div style="background: var(--surface-2); border-left: 3px solid #6ee7a0; padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #6ee7a0;">i = integer</code>
+          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Números enteros (personas, edad, cantidad)</div>
+        </div>
+        <div style="background: var(--surface-2); border-left: 3px solid #f87b6a; padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #f87b6a;">d = double</code>
+          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Números decimales (precio, descuento)</div>
+        </div>
+        <div style="background: var(--surface-2); border-left: 3px solid #c084fc; padding: 10px 14px; border-radius: 6px;">
+          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #c084fc;">b = blob</code>
+          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Datos binarios (imágenes, archivos)</div>
+        </div>
+      </div>
+      <div style="margin-top: 12px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
+        <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
+          💡 En este ejercicio: <code>"ssssisssss"</code> = 10 parámetros (9 strings + 1 integer en posición 5)
+        </span>
+      </div>
+    </div>
+
+    <!-- ────────── ESTRUCTURA ────────── -->
+    <div class="sub-section">
+      <h3>📁 Estructura del Proyecto</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+        <div>
+          <div style="font-family: var(--font-m); font-size: 0.68rem; color: #7bb8f5; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Versión PDO</div>
+          <pre style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 12px; border-radius: 6px; font-family: var(--font-m); font-size: 0.72rem; color: var(--text-2); line-height: 1.5;"><code>proyecto-reservas-pdo/
+├── database.sql
+├── index.php
+├── procesar_pdo.php
+└── styles.css</code></pre>
+        </div>
+        <div>
+          <div style="font-family: var(--font-m); font-size: 0.68rem; color: #6ee7a0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Versión MySQLi</div>
+          <pre style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 12px; border-radius: 6px; font-family: var(--font-m); font-size: 0.72rem; color: var(--text-2); line-height: 1.5;"><code>proyecto-reservas-mysqli/
+├── database.sql
+├── index.php
+├── procesar_mysqli.php
+└── styles.css</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────── PASOS EJECUCIÓN ────────── -->
+    <div class="sub-section">
+      <h3>🚀 Pasos para Ejecutar</h3>
+      <ol style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 20px;">
+        <li>Importar <code>database.sql</code> en phpMyAdmin</li>
+        <li>Ajustar credenciales en <code>procesar_*.php</code> si es necesario</li>
+        <li>Copiar archivos a <code>htdocs/</code> (XAMPP) o <code>www/</code> (WAMP)</li>
+        <li>Iniciar Apache + MySQL</li>
+        <li>Acceder a <code>http://localhost/reservas/index.php</code></li>
+      </ol>
+    </div>
+
+    <!-- ────────── RECOMENDACIONES ────────── -->
+    <div class="sub-section">
+      <h3>💡 Recomendaciones</h3>
+      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
+        <li><strong>Para aprender:</strong> Practica AMBAS versiones y compara las diferencias</li>
+        <li><strong>Para exámenes:</strong> Domina la que pida tu profesor</li>
+        <li><strong>Para proyectos:</strong> Usa PDO (más moderna, portable, concisa)</li>
+        <li><strong>Seguridad:</strong> SIEMPRE usa prepared statements, nunca concatenes variables en SQL</li>
+      </ul>
+    </div>
+
   </section>
 
 </main>

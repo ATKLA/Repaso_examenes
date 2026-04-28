@@ -1,452 +1,919 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DWES — Teórica Práctica</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --accent:        #D18A00;
-  --accent-bright: #F5A623;
-  --accent-bg:     rgba(245,166,35,0.12);
-  --bg:            #0A0908;
-  --surface:       #141210;
-  --surface-2:     #1C1A17;
-  --surface-3:     #242118;
-  --border:        rgba(255,255,255,0.09);
-  --border-2:      rgba(255,255,255,0.15);
-  --text:          #F5F0E8;
-  --text-2:        #C8BEA8;
-  --muted:         #8A7F6C;
-  --font-d:        'Bricolage Grotesque', system-ui, sans-serif;
-  --font-s:        'Lato', system-ui, sans-serif;
-  --font-m:        'IBM Plex Mono', monospace;
-  --radius:        10px;
-  --radius-lg:     14px;
-  --sidebar-w:     230px;
-}
-html { font-size: 16px; }
-body {
-  font-family: var(--font-s);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.65;
-  display: flex; flex-direction: column;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DWES — Teórica Práctica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* HEADER */
-.header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 0 24px; height: 52px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(10,9,8,0.92);
-  backdrop-filter: blur(16px);
-  position: sticky; top: 0; z-index: 200; flex-shrink: 0;
-}
-.btn-back {
-  display: flex; align-items: center; gap: 6px;
-  color: var(--muted); text-decoration: none;
-  font-family: var(--font-m); font-size: 0.72rem;
-  letter-spacing: 0.04em; transition: color 0.2s;
-}
-.btn-back:hover { color: var(--accent-bright); }
-.btn-back:hover svg { transform: translateX(-3px); }
-.btn-back svg { transition: transform 0.2s; }
-.header-title {
-  font-family: var(--font-d); font-size: 0.88rem;
-  font-weight: 700; letter-spacing: 0.06em;
-}
-.header-pill {
-  font-family: var(--font-m); font-size: 0.62rem;
-  letter-spacing: 0.08em; color: var(--accent-bright);
-  background: var(--accent-bg); border: 1px solid var(--accent);
-  padding: 2px 8px; border-radius: 4px;
-}
-.header-tag {
-  margin-left: auto; font-family: var(--font-m); font-size: 0.66rem;
-  letter-spacing: 0.1em; color: var(--accent-bright);
-  background: var(--accent-bg); border: 1px solid var(--accent);
-  padding: 2px 8px; border-radius: 4px;
-}
+    :root {
+      --accent: #D18A00;
+      --accent-bright: #F5A623;
+      --accent-bg: rgba(245, 166, 35, 0.12);
+      --bg: #0A0908;
+      --surface: #141210;
+      --surface-2: #1C1A17;
+      --surface-3: #242118;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-2: rgba(255, 255, 255, 0.15);
+      --text: #F5F0E8;
+      --text-2: #C8BEA8;
+      --muted: #8A7F6C;
+      --font-d: 'Bricolage Grotesque', system-ui, sans-serif;
+      --font-s: 'Lato', system-ui, sans-serif;
+      --font-m: 'IBM Plex Mono', monospace;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --sidebar-w: 230px;
+    }
 
-/* LAYOUT */
-.layout { display: flex; flex: 1; }
+    html {
+      font-size: 16px;
+    }
 
-/* SIDEBAR */
-.sidebar {
-  width: var(--sidebar-w); flex-shrink: 0;
-  background: var(--surface); border-right: 1px solid var(--border);
-  position: sticky; top: 52px;
-  height: calc(100vh - 52px); overflow-y: auto;
-  padding: 20px 0 40px;
-}
-.nav-group-label {
-  padding: 16px 16px 6px;
-  font-family: var(--font-m); font-size: 0.6rem; font-weight: 600;
-  color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 7px 16px; font-family: var(--font-m);
-  font-size: 0.72rem; color: var(--muted);
-  text-decoration: none; cursor: pointer;
-  border-left: 2px solid transparent; transition: all 0.15s;
-}
-.nav-item:hover { color: var(--text); background: var(--surface-2); }
-.nav-item.active {
-  color: var(--accent-bright); font-weight: 600;
-  border-left-color: var(--accent); background: var(--accent-bg);
-}
-.nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    body {
+      font-family: var(--font-s);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* MAIN */
-.main { flex: 1; padding: 32px 40px 80px; max-width: 820px; min-width: 0; }
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 24px;
+      height: 52px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 9, 8, 0.92);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-shrink: 0;
+    }
 
-/* HERO */
-.hero {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 36px;
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; top: -80px; right: -60px;
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 65%);
-  pointer-events: none;
-}
-.hero-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-.chip {
-  background: var(--surface-2); border: 1px solid var(--border-2);
-  border-radius: 20px; padding: 2px 10px;
-  font-family: var(--font-m); font-size: 0.65rem; font-weight: 600;
-  color: var(--muted); letter-spacing: 0.04em;
-}
-.chip.accent { background: var(--accent-bg); border-color: var(--accent); color: var(--accent-bright); }
-.hero h1 {
-  font-family: var(--font-d); font-size: 1.8rem; font-weight: 800;
-  letter-spacing: -0.02em; margin-bottom: 6px;
-}
-.hero p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-m);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
 
-/* SECTION */
-.section { scroll-margin-top: 70px; }
-.section + .section { margin-top: 44px; }
-.section-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 6px; padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-2);
-}
-.section-desc {
-  font-size: 0.875rem; color: var(--muted);
-  margin-bottom: 20px; line-height: 1.65;
-}
-.section-badge {
-  font-family: var(--font-m); font-size: 0.6rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 4px;
-}
-.badge-mvc     { background: var(--surface-3); color: var(--muted); border: 1px solid var(--border-2); }
-.badge-php     { background: rgba(160,100,240,0.12); color: #c084fc; border: 1px solid rgba(160,100,240,0.3); }
-.badge-pdo     { background: rgba(56,150,240,0.12);  color: #7bb8f5; border: 1px solid rgba(56,150,240,0.3); }
-.badge-laravel { background: rgba(240,80,60,0.12);   color: #f87b6a; border: 1px solid rgba(240,80,60,0.3); }
-.badge-mongo   { background: rgba(60,210,100,0.12);  color: #6ee7a0; border: 1px solid rgba(60,210,100,0.3); }
-.badge-exam    { background: var(--accent-bg); color: var(--accent-bright); border: 1px solid var(--accent); }
-.section-header h2 {
-  font-family: var(--font-d); font-size: 1.25rem; font-weight: 800;
-  letter-spacing: -0.01em;
-}
+    .btn-back:hover {
+      color: var(--accent-bright);
+    }
 
-/* SUB-SECTIONS */
-.sub-section { margin-bottom: 28px; }
-.sub-section h3 {
-  font-family: var(--font-m); font-size: 0.66rem; font-weight: 600;
-  color: var(--accent-bright); text-transform: uppercase;
-  letter-spacing: 0.1em; margin-bottom: 8px;
-}
-.sub-desc {
-  font-size: 0.84rem; color: var(--text-2); margin-bottom: 10px; line-height: 1.65;
-}
+    .btn-back:hover svg {
+      transform: translateX(-3px);
+    }
 
-/* MVC */
-.mvc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
-.mvc-card {
-  background: var(--surface-2); border: 1px solid var(--border-2);
-  border-radius: var(--radius); padding: 16px;
-}
-.mvc-card h4 { font-family: var(--font-d); font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
-.mvc-card .mvc-role { font-family: var(--font-m); font-size: 0.68rem; color: var(--muted); margin-bottom: 8px; }
-.mvc-card ul { padding-left: 14px; }
-.mvc-card ul li { font-size: 0.8rem; color: var(--text-2); line-height: 1.65; }
-.mvc-icon { font-size: 1.25rem; margin-bottom: 8px; }
-.mvc-m { border-left: 3px solid rgba(56,150,240,0.5); }
-.mvc-v { border-left: 3px solid rgba(60,210,100,0.5); }
-.mvc-c { border-left: 3px solid rgba(240,80,60,0.5); }
-.flow-line {
-  display: flex; align-items: center; justify-content: center;
-  flex-wrap: wrap; gap: 6px; margin-top: 12px;
-  font-family: var(--font-m); font-size: 0.7rem; color: var(--muted);
-}
-.flow-line span {
-  color: var(--accent-bright); font-weight: 600;
-  background: var(--accent-bg); padding: 2px 8px;
-  border-radius: 4px; border: 1px solid var(--accent);
-}
+    .btn-back svg {
+      transition: transform 0.2s;
+    }
 
-/* CODE BLOCKS — sin scroll horizontal */
-.code-block-wrap { border-radius: var(--radius); overflow: hidden; margin-bottom: 10px; }
-.code-label {
-  background: #0d0d0b; color: var(--muted);
-  font-family: var(--font-m); font-size: 0.65rem;
-  padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex; align-items: center; gap: 7px; letter-spacing: 0.04em;
-}
-.code-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-.dot-php    { background: #c084fc; }
-.dot-bash   { background: #6ee7a0; }
-.dot-blade  { background: #f87b6a; }
-.dot-mongo  { background: #6ee7a0; }
-pre { margin: 0 !important; border-radius: 0 !important; }
-pre code.hljs {
-  font-family: var(--font-m) !important;
-  font-size: 0.81rem !important;
-  line-height: 1.65 !important;
-  padding: 16px !important;
-  white-space: pre-wrap !important;
-  word-break: break-word !important;
-  overflow-x: hidden !important;
-}
+    .header-title {
+      font-family: var(--font-d);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
 
-/* STEP NUMBERS */
-.step-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-.step {
-  display: flex; gap: 12px; align-items: flex-start;
-  background: var(--surface-2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 11px 14px;
-}
-.step-num {
-  background: var(--surface-3); color: var(--accent-bright);
-  border: 1px solid var(--accent); width: 22px; height: 22px;
-  border-radius: 50%; font-family: var(--font-m); font-size: 0.65rem;
-  font-weight: 700; display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.step-content { font-size: 0.845rem; color: var(--text-2); line-height: 1.6; }
-.step-content strong { color: var(--text); }
+    .header-pill {
+      font-family: var(--font-m);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--accent-bright);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
 
-/* CALLOUTS */
-.callout {
-  display: flex; gap: 12px; align-items: flex-start;
-  padding: 12px 16px; border-radius: var(--radius);
-  font-size: 0.85rem; margin: 10px 0; line-height: 1.65;
-}
-.callout-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
-.callout-safe { background: rgba(60,210,100,0.07); border: 1px solid rgba(60,210,100,0.25); color: var(--text-2); }
-.callout-warn { background: var(--accent-bg); border: 1px solid rgba(245,166,35,0.35); color: var(--text-2); }
-.callout-info { background: rgba(56,150,240,0.07); border: 1px solid rgba(56,150,240,0.25); color: var(--text-2); }
-.callout-tip  { background: rgba(160,100,240,0.07); border: 1px solid rgba(160,100,240,0.25); color: var(--text-2); }
-.callout-err  { background: rgba(224,82,82,0.07); border: 1px solid rgba(224,82,82,0.25); color: var(--text-2); }
+    .header-tag {
+      margin-left: auto;
+      font-family: var(--font-m);
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      color: var(--accent-bright);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
 
-/* TABLES */
-.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border-2); margin: 10px 0; }
-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-th {
-  background: var(--surface-2); padding: 9px 14px;
-  text-align: left; font-family: var(--font-m); font-weight: 600;
-  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--muted); border-bottom: 1px solid var(--border-2);
-}
-td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-2); }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--surface-2); color: var(--text); }
-td code {
-  font-family: var(--font-m); font-size: 0.76rem;
-  background: var(--surface-3); padding: 1px 5px;
-  border-radius: 3px; color: var(--accent-bright);
-}
-ic { color: var(--accent-bright); font-style: normal; font-family: var(--font-m); font-size: 0.82rem; }
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      flex: 1;
+    }
 
-/* DIVIDER */
-.divider {
-  height: 1px; background: var(--border); margin: 24px 0;
-}
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      padding: 20px 0 40px;
+    }
 
-/* RESUMEN */
-.resumen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.resumen-card {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: var(--radius); padding: 14px 16px;
-}
-.resumen-card h4 {
-  font-family: var(--font-m); font-size: 0.62rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
-}
-.resumen-card p { font-family: var(--font-m); font-size: 0.76rem; color: var(--text-2); line-height: 1.75; }
+    .nav-group-label {
+      padding: 16px 16px 6px;
+      font-family: var(--font-m);
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
 
-/* CONSEJOS */
-.consejos-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.consejos-list li {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: var(--radius); padding: 12px 16px;
-  font-size: 0.875rem; color: var(--text-2);
-  display: flex; gap: 12px; align-items: flex-start;
-  transition: border-color 0.15s;
-}
-.consejos-list li:hover { border-color: var(--accent); }
-.consejo-num {
-  background: var(--accent); color: #0A0908;
-  width: 20px; height: 20px; border-radius: 50%;
-  font-family: var(--font-m); font-size: 0.65rem; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 2px;
-}
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 16px;
+      font-family: var(--font-m);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+    }
 
-/* FOOTER */
-.footer {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg); padding: 24px;
-  text-align: center; margin-top: 28px;
-}
-.footer p { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-.footer span { font-size: 0.82rem; color: var(--muted); }
+    .nav-item:hover {
+      color: var(--text);
+      background: var(--surface-2);
+    }
 
-/* INLINE CODE */
-.ic {
-  font-family: var(--font-m); font-size: 0.82rem;
-  background: var(--surface-3); padding: 1px 6px;
-  border-radius: 3px; color: var(--accent-bright);
-}
+    .nav-item.active {
+      color: var(--accent-bright);
+      font-weight: 600;
+      border-left-color: var(--accent);
+      background: var(--accent-bg);
+    }
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+    .nav-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
 
-@media (max-width: 720px) {
-  .sidebar { display: none; }
-  .main { padding: 20px 16px 60px; }
-  .mvc-grid { grid-template-columns: 1fr; }
-  .resumen-grid { grid-template-columns: 1fr; }
-}
-</style>
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 32px 40px 80px;
+      max-width: 820px;
+      min-width: 0;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -60px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .chip {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .chip.accent {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent-bright);
+    }
+
+    .hero h1 {
+      font-family: var(--font-d);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .hero p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* SECTION */
+    .section {
+      scroll-margin-top: 70px;
+    }
+
+    .section+.section {
+      margin-top: 44px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-2);
+    }
+
+    .section-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.65;
+    }
+
+    .section-badge {
+      font-family: var(--font-m);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    .badge-mvc {
+      background: var(--surface-3);
+      color: var(--muted);
+      border: 1px solid var(--border-2);
+    }
+
+    .badge-php {
+      background: rgba(160, 100, 240, 0.12);
+      color: #c084fc;
+      border: 1px solid rgba(160, 100, 240, 0.3);
+    }
+
+    .badge-pdo {
+      background: rgba(56, 150, 240, 0.12);
+      color: #7bb8f5;
+      border: 1px solid rgba(56, 150, 240, 0.3);
+    }
+
+    .badge-laravel {
+      background: rgba(240, 80, 60, 0.12);
+      color: #f87b6a;
+      border: 1px solid rgba(240, 80, 60, 0.3);
+    }
+
+    .badge-mongo {
+      background: rgba(60, 210, 100, 0.12);
+      color: #6ee7a0;
+      border: 1px solid rgba(60, 210, 100, 0.3);
+    }
+
+    .badge-exam {
+      background: var(--accent-bg);
+      color: var(--accent-bright);
+      border: 1px solid var(--accent);
+    }
+
+    .section-header h2 {
+      font-family: var(--font-d);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    /* SUB-SECTIONS */
+    .sub-section {
+      margin-bottom: 28px;
+    }
+
+    .sub-section h3 {
+      font-family: var(--font-m);
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .sub-desc {
+      font-size: 0.84rem;
+      color: var(--text-2);
+      margin-bottom: 10px;
+      line-height: 1.65;
+    }
+
+    /* MVC */
+    .mvc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mvc-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .mvc-card h4 {
+      font-family: var(--font-d);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .mvc-card .mvc-role {
+      font-family: var(--font-m);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .mvc-card ul {
+      padding-left: 14px;
+    }
+
+    .mvc-card ul li {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    .mvc-icon {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .mvc-m {
+      border-left: 3px solid rgba(56, 150, 240, 0.5);
+    }
+
+    .mvc-v {
+      border-left: 3px solid rgba(60, 210, 100, 0.5);
+    }
+
+    .mvc-c {
+      border-left: 3px solid rgba(240, 80, 60, 0.5);
+    }
+
+    .flow-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+      font-family: var(--font-m);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .flow-line span {
+      color: var(--accent-bright);
+      font-weight: 600;
+      background: var(--accent-bg);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--accent);
+    }
+
+    /* CODE BLOCKS — sin scroll horizontal */
+    .code-block-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .code-label {
+      background: #0d0d0b;
+      color: var(--muted);
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      padding: 7px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      letter-spacing: 0.04em;
+    }
+
+    .code-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-php {
+      background: #c084fc;
+    }
+
+    .dot-bash {
+      background: #6ee7a0;
+    }
+
+    .dot-blade {
+      background: #f87b6a;
+    }
+
+    .dot-mongo {
+      background: #6ee7a0;
+    }
+
+    pre {
+      margin: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    pre code.hljs {
+      font-family: var(--font-m) !important;
+      font-size: 0.81rem !important;
+      line-height: 1.65 !important;
+      padding: 16px !important;
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+      overflow-x: hidden !important;
+    }
+
+    /* STEP NUMBERS */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 11px 14px;
+    }
+
+    .step-num {
+      background: var(--surface-3);
+      color: var(--accent-bright);
+      border: 1px solid var(--accent);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-content {
+      font-size: 0.845rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .step-content strong {
+      color: var(--text);
+    }
+
+    /* CALLOUTS */
+    .callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      margin: 10px 0;
+      line-height: 1.65;
+    }
+
+    .callout-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .callout-safe {
+      background: rgba(60, 210, 100, 0.07);
+      border: 1px solid rgba(60, 210, 100, 0.25);
+      color: var(--text-2);
+    }
+
+    .callout-warn {
+      background: var(--accent-bg);
+      border: 1px solid rgba(245, 166, 35, 0.35);
+      color: var(--text-2);
+    }
+
+    .callout-info {
+      background: rgba(56, 150, 240, 0.07);
+      border: 1px solid rgba(56, 150, 240, 0.25);
+      color: var(--text-2);
+    }
+
+    .callout-tip {
+      background: rgba(160, 100, 240, 0.07);
+      border: 1px solid rgba(160, 100, 240, 0.25);
+      color: var(--text-2);
+    }
+
+    .callout-err {
+      background: rgba(224, 82, 82, 0.07);
+      border: 1px solid rgba(224, 82, 82, 0.25);
+      color: var(--text-2);
+    }
+
+    /* TABLES */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-2);
+      margin: 10px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
+    th {
+      background: var(--surface-2);
+      padding: 9px 14px;
+      text-align: left;
+      font-family: var(--font-m);
+      font-weight: 600;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border-2);
+    }
+
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--text-2);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    td code {
+      font-family: var(--font-m);
+      font-size: 0.76rem;
+      background: var(--surface-3);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--accent-bright);
+    }
+
+    ic {
+      color: var(--accent-bright);
+      font-style: normal;
+      font-family: var(--font-m);
+      font-size: 0.82rem;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    /* RESUMEN */
+    .resumen-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .resumen-card {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+
+    .resumen-card h4 {
+      font-family: var(--font-m);
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .resumen-card p {
+      font-family: var(--font-m);
+      font-size: 0.76rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+
+    /* CONSEJOS */
+    .consejos-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .consejos-list li {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 0.875rem;
+      color: var(--text-2);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: border-color 0.15s;
+    }
+
+    .consejos-list li:hover {
+      border-color: var(--accent);
+    }
+
+    .consejo-num {
+      background: var(--accent);
+      color: #0A0908;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-family: var(--font-m);
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .footer p {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .footer span {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* INLINE CODE */
+    .ic {
+      font-family: var(--font-m);
+      font-size: 0.82rem;
+      background: var(--surface-3);
+      padding: 1px 6px;
+      border-radius: 3px;
+      color: var(--accent-bright);
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-2);
+      border-radius: 3px;
+    }
+
+    @media (max-width: 720px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 20px 16px 60px;
+      }
+
+      .mvc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resumen-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<header class="header">
-  <a href="index.html" class="btn-back">
-    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-    </svg>
-    DWES
-  </a>
-  <span class="header-title">Teórica Práctica</span>
-  <span class="header-pill">Guía Maestra</span>
-  <span class="header-tag">0613 · UAX</span>
-</header>
+  <header class="header">
+    <a href="index.html" class="btn-back">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      DWES
+    </a>
+    <span class="header-title">Teórica Práctica</span>
+    <span class="header-pill">Guía Maestra</span>
+    <span class="header-tag">0613 · UAX</span>
+  </header>
 
-<div class="layout">
+  <div class="layout">
 
-<nav class="sidebar">
-  <div class="nav-group-label">Contenidos</div>
-  <a class="nav-item active" href="#mvc"><span class="nav-dot" style="background:var(--muted)"></span>1. MVC</a>
-  <a class="nav-item" href="#php"><span class="nav-dot" style="background:#c084fc"></span>2. PHP Básico</a>
-  <a class="nav-item" href="#pdo"><span class="nav-dot" style="background:#7bb8f5"></span>3. Conexión PDO</a>
-  <a class="nav-item" href="#laravel"><span class="nav-dot" style="background:#f87b6a"></span>4. Laravel</a>
-  <a class="nav-item" href="#mongodb"><span class="nav-dot" style="background:#6ee7a0"></span>5. MongoDB</a>
-  <a class="nav-item" href="#resumen"><span class="nav-dot" style="background:var(--accent-bright)"></span>6. Resumen Examen</a>
-  <a class="nav-item" href="#laravel-ejercicio"><span class="nav-dot" style="background:#f87b6a"></span>7. Ejercicio Laravel</a>
-  <a class="nav-item" href="#php-ejercicio"><span class="nav-dot" style="background:#c084fc"></span>8. Ejercicio PHP</a>
-</nav>
+    <nav class="sidebar">
+      <div class="nav-group-label">Contenidos</div>
+      <a class="nav-item active" href="#mvc"><span class="nav-dot" style="background:var(--muted)"></span>1. MVC</a>
+      <a class="nav-item" href="#php"><span class="nav-dot" style="background:#c084fc"></span>2. PHP Básico</a>
+      <a class="nav-item" href="#pdo"><span class="nav-dot" style="background:#7bb8f5"></span>3. Conexión PDO</a>
+      <a class="nav-item" href="#laravel"><span class="nav-dot" style="background:#f87b6a"></span>4. Laravel</a>
+      <a class="nav-item" href="#mongodb"><span class="nav-dot" style="background:#6ee7a0"></span>5. MongoDB</a>
+      <a class="nav-item" href="#resumen"><span class="nav-dot" style="background:var(--accent-bright)"></span>6.
+        Resumen Examen</a>
+      <a class="nav-item" href="#laravel-ejercicio"><span class="nav-dot" style="background:#f87b6a"></span>7. Ejercicio
+        Laravel</a>
+      <a class="nav-item" href="#php-ejercicio"><span class="nav-dot" style="background:#c084fc"></span>8. Ejercicio
+        PHP</a>
+      <a class="nav-item" href="#practica-mongo"><span class="nav-dot" style="background:#6ee7a0"></span>9. Práctica
+        Mongo</a>
+    </nav>
 
-<main class="main">
+    <main class="main">
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-chips">
-      <span class="chip accent">PHP</span>
-      <span class="chip accent">Laravel</span>
-      <span class="chip accent">MongoDB</span>
-      <span class="chip">PDO</span><span class="chip">MVC</span>
-    </div>
-    <h1>Guía Maestra DWES</h1>
-    <p>Conceptos clave explicados paso a paso, con código comentado y ejemplos reales. Todo lo que necesitas para el examen — PHP, PDO, Laravel completo y MongoDB con sintaxis de Compass.</p>
-  </div>
-
-  <!-- ══════════════════════════ 1. MVC ══════════════════════════ -->
-  <section class="section" id="mvc">
-    <div class="section-header">
-      <span class="section-badge badge-mvc">Arquitectura</span>
-      <h2>1. Modelo Vista Controlador</h2>
-    </div>
-    <p class="section-desc">
-      MVC es un <strong>patrón de diseño</strong> que divide la aplicación en 3 capas independientes. El objetivo es que cada parte haga una sola cosa: los datos son responsabilidad del Modelo, la presentación de la Vista, y la lógica de negocio del Controlador. Esto hace el código más limpio, fácil de mantener y reutilizable.
-    </p>
-
-    <div class="mvc-grid">
-      <div class="mvc-card mvc-m">
-        <div class="mvc-icon">🗄️</div>
-        <h4>Modelo</h4>
-        <div class="mvc-role">¿Qué hace? → Gestiona los datos</div>
-        <ul>
-          <li>Conecta con la base de datos</li>
-          <li>Define la estructura de los datos</li>
-          <li>Contiene la lógica de negocio</li>
-          <li><strong>No sabe nada de la Vista</strong></li>
-        </ul>
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-chips">
+          <span class="chip accent">PHP</span>
+          <span class="chip accent">Laravel</span>
+          <span class="chip accent">MongoDB</span>
+          <span class="chip">PDO</span><span class="chip">MVC</span>
+        </div>
+        <h1>Guía Maestra DWES</h1>
+        <p>Conceptos clave explicados paso a paso, con código comentado y ejemplos reales. Todo lo que necesitas para el
+          examen — PHP, PDO, Laravel completo y MongoDB con sintaxis de Compass.</p>
       </div>
-      <div class="mvc-card mvc-v">
-        <div class="mvc-icon">🖥️</div>
-        <h4>Vista</h4>
-        <div class="mvc-role">¿Qué hace? → Muestra los datos</div>
-        <ul>
-          <li>Solo HTML, CSS, JS</li>
-          <li>Recibe datos del Controlador</li>
-          <li>No toma decisiones</li>
-          <li><strong>Sin lógica de negocio</strong></li>
-        </ul>
-      </div>
-      <div class="mvc-card mvc-c">
-        <div class="mvc-icon">⚙️</div>
-        <h4>Controlador</h4>
-        <div class="mvc-role">¿Qué hace? → Conecta todo</div>
-        <ul>
-          <li>Recibe la petición del usuario</li>
-          <li>Decide qué Modelo usar</li>
-          <li>Pasa datos a la Vista</li>
-          <li><strong>Es el intermediario</strong></li>
-        </ul>
-      </div>
-    </div>
-    <div class="flow-line">
-      Usuario → <span>Controlador</span> → <span>Modelo</span> → <span>Controlador</span> → <span>Vista</span> → Usuario
-    </div>
 
-    <div class="callout callout-warn" style="margin-top:14px">
-      <span class="callout-icon">💡</span>
-      <span>En el examen: si te preguntan qué capa hace X, piensa — ¿es datos? Modelo. ¿Es interfaz? Vista. ¿Es lógica/decisión? Controlador.</span>
-    </div>
-  </section>
+      <!-- ══════════════════════════ 1. MVC ══════════════════════════ -->
+      <section class="section" id="mvc">
+        <div class="section-header">
+          <span class="section-badge badge-mvc">Arquitectura</span>
+          <h2>1. Modelo Vista Controlador</h2>
+        </div>
+        <p class="section-desc">
+          MVC es un <strong>patrón de diseño</strong> que divide la aplicación en 3 capas independientes. El objetivo es
+          que cada parte haga una sola cosa: los datos son responsabilidad del Modelo, la presentación de la Vista, y la
+          lógica de negocio del Controlador. Esto hace el código más limpio, fácil de mantener y reutilizable.
+        </p>
 
-  <!-- ══════════════════════════ 2. PHP ══════════════════════════ -->
-  <section class="section" id="php">
-    <div class="section-header">
-      <span class="section-badge badge-php">PHP</span>
-      <h2>2. PHP Básico</h2>
-    </div>
-    <p class="section-desc">PHP es un lenguaje de servidor: el código se ejecuta en el servidor y devuelve HTML al navegador. Todo el código va entre <span class="ic">&lt;?php</span> y <span class="ic">?&gt;</span>. Las variables siempre empiezan por <span class="ic">$</span>.</p>
+        <div class="mvc-grid">
+          <div class="mvc-card mvc-m">
+            <div class="mvc-icon">🗄️</div>
+            <h4>Modelo</h4>
+            <div class="mvc-role">¿Qué hace? → Gestiona los datos</div>
+            <ul>
+              <li>Conecta con la base de datos</li>
+              <li>Define la estructura de los datos</li>
+              <li>Contiene la lógica de negocio</li>
+              <li><strong>No sabe nada de la Vista</strong></li>
+            </ul>
+          </div>
+          <div class="mvc-card mvc-v">
+            <div class="mvc-icon">🖥️</div>
+            <h4>Vista</h4>
+            <div class="mvc-role">¿Qué hace? → Muestra los datos</div>
+            <ul>
+              <li>Solo HTML, CSS, JS</li>
+              <li>Recibe datos del Controlador</li>
+              <li>No toma decisiones</li>
+              <li><strong>Sin lógica de negocio</strong></li>
+            </ul>
+          </div>
+          <div class="mvc-card mvc-c">
+            <div class="mvc-icon">⚙️</div>
+            <h4>Controlador</h4>
+            <div class="mvc-role">¿Qué hace? → Conecta todo</div>
+            <ul>
+              <li>Recibe la petición del usuario</li>
+              <li>Decide qué Modelo usar</li>
+              <li>Pasa datos a la Vista</li>
+              <li><strong>Es el intermediario</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="flow-line">
+          Usuario → <span>Controlador</span> → <span>Modelo</span> → <span>Controlador</span> → <span>Vista</span> →
+          Usuario
+        </div>
 
-    <div class="sub-section">
-      <h3>2.1 Variables y Arrays</h3>
-      <p class="sub-desc">Una <strong>variable</strong> guarda un valor. Un <strong>array</strong> guarda varios valores. El array asociativo usa clave→valor, como un diccionario.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — variables_arrays.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="callout callout-warn" style="margin-top:14px">
+          <span class="callout-icon">💡</span>
+          <span>En el examen: si te preguntan qué capa hace X, piensa — ¿es datos? Modelo. ¿Es interfaz? Vista. ¿Es
+            lógica/decisión? Controlador.</span>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ 2. PHP ══════════════════════════ -->
+      <section class="section" id="php">
+        <div class="section-header">
+          <span class="section-badge badge-php">PHP</span>
+          <h2>2. PHP Básico</h2>
+        </div>
+        <p class="section-desc">PHP es un lenguaje de servidor: el código se ejecuta en el servidor y devuelve HTML al
+          navegador. Todo el código va entre <span class="ic">&lt;?php</span> y <span class="ic">?&gt;</span>. Las
+          variables siempre empiezan por <span class="ic">$</span>.</p>
+
+        <div class="sub-section">
+          <h3>2.1 Variables y Arrays</h3>
+          <p class="sub-desc">Una <strong>variable</strong> guarda un valor. Un <strong>array</strong> guarda varios
+            valores. El array asociativo usa clave→valor, como un diccionario.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — variables_arrays.php</div>
+            <pre><code class="language-php">&lt;?php
 // Variables — tipo automático según el valor asignado
 $nombre = "Laura";     // string
 $edad   = 25;          // int
@@ -470,15 +937,17 @@ echo "Hola, " . $nombre . "!";  // Hola, Laura!
 // Interpolación dentro de comillas dobles
 echo "Hola, $nombre!";          // Hola, Laura!
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>2.2 Estructuras de Control</h3>
-      <p class="sub-desc">Permiten tomar decisiones (<strong>if</strong>) y repetir acciones (<strong>foreach</strong>). El foreach es el más habitual en PHP para recorrer resultados de base de datos.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — estructuras.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>2.2 Estructuras de Control</h3>
+          <p class="sub-desc">Permiten tomar decisiones (<strong>if</strong>) y repetir acciones
+            (<strong>foreach</strong>). El foreach es el más habitual en PHP para recorrer resultados de base de datos.
+          </p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — estructuras.php</div>
+            <pre><code class="language-php">&lt;?php
 // IF / ELSE — toma decisiones
 if ($edad >= 18) {
     echo "Mayor de edad";
@@ -505,15 +974,17 @@ for ($i = 0; $i &lt; 3; $i++) {
     echo $i;  // 0, 1, 2
 }
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>2.3 Funciones</h3>
-      <p class="sub-desc">Una función agrupa código reutilizable. Le das un nombre, puede recibir parámetros y devolver un resultado con <span class="ic">return</span>. PHP 7+ permite declarar los tipos de los parámetros.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — funciones.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>2.3 Funciones</h3>
+          <p class="sub-desc">Una función agrupa código reutilizable. Le das un nombre, puede recibir parámetros y
+            devolver un resultado con <span class="ic">return</span>. PHP 7+ permite declarar los tipos de los
+            parámetros.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — funciones.php</div>
+            <pre><code class="language-php">&lt;?php
 // Función básica — recibe parámetro, devuelve string
 function saludar($nombre) {
     return "Hola, " . $nombre;
@@ -535,36 +1006,51 @@ function despedir($nombre = "amigo") {
 echo despedir();         // Hasta luego, amigo
 echo despedir("Laura");  // Hasta luego, Laura
 ?&gt;</code></pre>
-      </div>
-    </div>
-  </section>
+          </div>
+        </div>
+      </section>
 
-  <!-- ══════════════════════════ 3. PDO ══════════════════════════ -->
-  <section class="section" id="pdo">
-    <div class="section-header">
-      <span class="section-badge badge-pdo">PDO</span>
-      <h2>3. Conexión PDO</h2>
-    </div>
-    <p class="section-desc">
-      <strong>PDO (PHP Data Objects)</strong> es la forma moderna de conectar PHP con bases de datos. Funciona con MySQL, PostgreSQL, SQLite y más. Su ventaja principal es que usa <strong>consultas preparadas</strong>, que protegen contra inyección SQL.
-    </p>
+      <!-- ══════════════════════════ 3. PDO ══════════════════════════ -->
+      <section class="section" id="pdo">
+        <div class="section-header">
+          <span class="section-badge badge-pdo">PDO</span>
+          <h2>3. Conexión PDO</h2>
+        </div>
+        <p class="section-desc">
+          <strong>PDO (PHP Data Objects)</strong> es la forma moderna de conectar PHP con bases de datos. Funciona con
+          MySQL, PostgreSQL, SQLite y más. Su ventaja principal es que usa <strong>consultas preparadas</strong>, que
+          protegen contra inyección SQL.
+        </p>
 
-    <div class="sub-section">
-      <h3>Flujo de trabajo PDO — de memoria</h3>
-      <div class="step-list">
-        <div class="step"><span class="step-num">1</span><div class="step-content"><strong>new PDO()</strong> — crea la conexión con los datos del servidor y la base de datos.</div></div>
-        <div class="step"><span class="step-num">2</span><div class="step-content"><strong>prepare($sql)</strong> — prepara la consulta SQL con marcadores de posición (<span class="ic">:param</span>) en lugar de los valores reales.</div></div>
-        <div class="step"><span class="step-num">3</span><div class="step-content"><strong>execute([...])</strong> — ejecuta la consulta sustituyendo los marcadores por los valores reales de forma segura.</div></div>
-        <div class="step"><span class="step-num">4</span><div class="step-content"><strong>fetchAll() / fetch()</strong> — obtiene los resultados como array. Solo para SELECT.</div></div>
-      </div>
-    </div>
+        <div class="sub-section">
+          <h3>Flujo de trabajo PDO — de memoria</h3>
+          <div class="step-list">
+            <div class="step"><span class="step-num">1</span>
+              <div class="step-content"><strong>new PDO()</strong> — crea la conexión con los datos del servidor y la
+                base de datos.</div>
+            </div>
+            <div class="step"><span class="step-num">2</span>
+              <div class="step-content"><strong>prepare($sql)</strong> — prepara la consulta SQL con marcadores de
+                posición (<span class="ic">:param</span>) en lugar de los valores reales.</div>
+            </div>
+            <div class="step"><span class="step-num">3</span>
+              <div class="step-content"><strong>execute([...])</strong> — ejecuta la consulta sustituyendo los
+                marcadores por los valores reales de forma segura.</div>
+            </div>
+            <div class="step"><span class="step-num">4</span>
+              <div class="step-content"><strong>fetchAll() / fetch()</strong> — obtiene los resultados como array. Solo
+                para SELECT.</div>
+            </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>3.1 Conexión básica</h3>
-      <p class="sub-desc">La conexión se hace en un bloque <span class="ic">try/catch</span>. Si algo falla, PDO lanza una excepción que puedes capturar en lugar de mostrar un error feo.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — conexion.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>3.1 Conexión básica</h3>
+          <p class="sub-desc">La conexión se hace en un bloque <span class="ic">try/catch</span>. Si algo falla, PDO
+            lanza una excepción que puedes capturar en lugar de mostrar un error feo.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — conexion.php</div>
+            <pre><code class="language-php">&lt;?php
 $host   = 'localhost';   // servidor donde está MySQL
 $dbname = 'biblioteca';  // nombre de la base de datos
 $user   = 'root';
@@ -588,15 +1074,17 @@ try {
     die("Error de conexión: " . $e->getMessage());
 }
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>3.2 SELECT — consultar datos</h3>
-      <p class="sub-desc">Para leer datos. Si la consulta no tiene condiciones, usa <span class="ic">query()</span>. Si tiene condiciones con variables, <strong>siempre</strong> usa <span class="ic">prepare() + execute()</span>.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — select.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>3.2 SELECT — consultar datos</h3>
+          <p class="sub-desc">Para leer datos. Si la consulta no tiene condiciones, usa <span class="ic">query()</span>.
+            Si tiene condiciones con variables, <strong>siempre</strong> usa <span class="ic">prepare() +
+              execute()</span>.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — select.php</div>
+            <pre><code class="language-php">&lt;?php
 // SELECT simple — sin parámetros, se puede usar query()
 $stmt   = $pdo->query("SELECT * FROM libros");
 $libros = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -618,19 +1106,22 @@ $stmt = $pdo->prepare("SELECT * FROM libros WHERE id = :id");
 $stmt->execute(['id' => 1]);
 $libro = $stmt->fetch(PDO::FETCH_ASSOC);  // fetch() → solo una fila
 ?&gt;</code></pre>
-      </div>
-      <div class="callout callout-safe">
-        <span class="callout-icon">🔒</span>
-        <span><strong>¿Por qué prepare + execute?</strong> Si concatenaras la variable directamente en el SQL (<span class="ic">"WHERE autor = '$autor'"</span>), un usuario podría inyectar código SQL malicioso. Con <span class="ic">:param</span>, PDO escapa automáticamente el valor.</span>
-      </div>
-    </div>
+          </div>
+          <div class="callout callout-safe">
+            <span class="callout-icon">🔒</span>
+            <span><strong>¿Por qué prepare + execute?</strong> Si concatenaras la variable directamente en el SQL (<span
+                class="ic">"WHERE autor = '$autor'"</span>), un usuario podría inyectar código SQL malicioso. Con <span
+                class="ic">:param</span>, PDO escapa automáticamente el valor.</span>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>3.3 INSERT — insertar datos</h3>
-      <p class="sub-desc">Añade una nueva fila. Con <span class="ic">lastInsertId()</span> obtienes el ID autogenerado del registro que acabas de insertar.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — insert.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>3.3 INSERT — insertar datos</h3>
+          <p class="sub-desc">Añade una nueva fila. Con <span class="ic">lastInsertId()</span> obtienes el ID
+            autogenerado del registro que acabas de insertar.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — insert.php</div>
+            <pre><code class="language-php">&lt;?php
 $sql = "INSERT INTO libros (titulo, autor, precio)
         VALUES (:titulo, :autor, :precio)";
 
@@ -644,15 +1135,16 @@ $stmt->execute([
 // Obtiene el ID del registro recién insertado
 echo "Libro creado con ID: " . $pdo->lastInsertId();
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>3.4 UPDATE — actualizar datos</h3>
-      <p class="sub-desc">Modifica filas existentes. Con <span class="ic">rowCount()</span> sabes cuántas filas se han actualizado. Siempre incluye <span class="ic">WHERE</span> o actualizarás TODA la tabla.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — update.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>3.4 UPDATE — actualizar datos</h3>
+          <p class="sub-desc">Modifica filas existentes. Con <span class="ic">rowCount()</span> sabes cuántas filas se
+            han actualizado. Siempre incluye <span class="ic">WHERE</span> o actualizarás TODA la tabla.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — update.php</div>
+            <pre><code class="language-php">&lt;?php
 $sql  = "UPDATE libros SET precio = :precio WHERE id = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['precio' => 29.99, 'id' => 1]);
@@ -660,30 +1152,32 @@ $stmt->execute(['precio' => 29.99, 'id' => 1]);
 echo "Filas actualizadas: " . $stmt->rowCount();
 // rowCount() → número de filas afectadas por la consulta
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>3.5 DELETE — eliminar datos</h3>
-      <p class="sub-desc">Elimina filas. <strong>¡Cuidado!</strong> Sin <span class="ic">WHERE</span> borra toda la tabla.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — delete.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>3.5 DELETE — eliminar datos</h3>
+          <p class="sub-desc">Elimina filas. <strong>¡Cuidado!</strong> Sin <span class="ic">WHERE</span> borra toda la
+            tabla.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — delete.php</div>
+            <pre><code class="language-php">&lt;?php
 $sql  = "DELETE FROM libros WHERE id = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['id' => 5]);
 
 echo "Filas eliminadas: " . $stmt->rowCount();
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>3.6 Clase Database (buena práctica)</h3>
-      <p class="sub-desc">En proyectos reales, la conexión se separa en su propio archivo para no repetirla en cada script. Se crea una clase con un método que devuelve el objeto <span class="ic">$pdo</span>.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>config/database.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>3.6 Clase Database (buena práctica)</h3>
+          <p class="sub-desc">En proyectos reales, la conexión se separa en su propio archivo para no repetirla en cada
+            script. Se crea una clase con un método que devuelve el objeto <span class="ic">$pdo</span>.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>config/database.php</div>
+            <pre><code class="language-php">&lt;?php
 class Database {
     // Datos de conexión como propiedades privadas
     private $host     = 'localhost';
@@ -707,10 +1201,10 @@ class Database {
     }
 }
 ?&gt;</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — usar_database.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — usar_database.php</div>
+            <pre><code class="language-php">&lt;?php
 require_once 'config/database.php';  // carga la clase
 
 $database = new Database();
@@ -719,31 +1213,36 @@ $pdo      = $database->getConnection();  // obtiene la conexión
 // A partir de aquí, $pdo está listo
 $stmt = $pdo->query("SELECT * FROM libros");
 ?&gt;</code></pre>
-      </div>
-    </div>
-  </section>
+          </div>
+        </div>
+      </section>
 
-  <!-- ══════════════════════════ 4. LARAVEL ══════════════════════════ -->
-  <section class="section" id="laravel">
-    <div class="section-header">
-      <span class="section-badge badge-laravel">Laravel</span>
-      <h2>4. Laravel — CRUD Completo</h2>
-    </div>
-    <p class="section-desc">
-      Laravel es un <strong>framework PHP</strong> que implementa MVC automáticamente. En lugar de escribir SQL a mano, usas clases (Eloquent ORM) que representan las tablas. Sigue el principio de <em>convención sobre configuración</em>: si respetas los nombres, Laravel hace el resto solo.
-    </p>
+      <!-- ══════════════════════════ 4. LARAVEL ══════════════════════════ -->
+      <section class="section" id="laravel">
+        <div class="section-header">
+          <span class="section-badge badge-laravel">Laravel</span>
+          <h2>4. Laravel — CRUD Completo</h2>
+        </div>
+        <p class="section-desc">
+          Laravel es un <strong>framework PHP</strong> que implementa MVC automáticamente. En lugar de escribir SQL a
+          mano, usas clases (Eloquent ORM) que representan las tablas. Sigue el principio de <em>convención sobre
+            configuración</em>: si respetas los nombres, Laravel hace el resto solo.
+        </p>
 
-    <div class="callout callout-warn">
-      <span class="callout-icon">📌</span>
-      <span><strong>Regla de nombres clave:</strong> el Modelo es <strong>singular</strong> (<span class="ic">Libro</span>), la tabla y las rutas son <strong>plural</strong> (<span class="ic">libros</span>). Laravel lo detecta automáticamente.</span>
-    </div>
+        <div class="callout callout-warn">
+          <span class="callout-icon">📌</span>
+          <span><strong>Regla de nombres clave:</strong> el Modelo es <strong>singular</strong> (<span
+              class="ic">Libro</span>), la tabla y las rutas son <strong>plural</strong> (<span
+              class="ic">libros</span>). Laravel lo detecta automáticamente.</span>
+        </div>
 
-    <div class="sub-section" style="margin-top:16px">
-      <h3>4.1 Crear Proyecto</h3>
-      <p class="sub-desc">Composer descarga Laravel y crea la estructura de carpetas. El archivo <span class="ic">.env</span> contiene la configuración sensible (credenciales de BD, etc.).</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-bash"></span>bash — terminal</div>
-        <pre><code class="language-bash"># Crea un nuevo proyecto llamado 'biblioteca'
+        <div class="sub-section" style="margin-top:16px">
+          <h3>4.1 Crear Proyecto</h3>
+          <p class="sub-desc">Composer descarga Laravel y crea la estructura de carpetas. El archivo <span
+              class="ic">.env</span> contiene la configuración sensible (credenciales de BD, etc.).</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-bash"></span>bash — terminal</div>
+            <pre><code class="language-bash"># Crea un nuevo proyecto llamado 'biblioteca'
 composer create-project laravel/laravel biblioteca
 
 cd biblioteca  # entra en la carpeta del proyecto
@@ -758,23 +1257,26 @@ DB_PASSWORD=
 
 # Arrancar el servidor local (http://localhost:8000)
 php artisan serve</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>4.2 Migración — crear la tabla</h3>
-      <p class="sub-desc">Una <strong>migración</strong> es un archivo PHP que define la estructura de una tabla. En vez de crear la tabla a mano en MySQL, la defines en código y Laravel la crea con <span class="ic">php artisan migrate</span>. Así el esquema queda versionado.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
-        <pre><code class="language-bash"># Crear el archivo de migración
+        <div class="sub-section">
+          <h3>4.2 Migración — crear la tabla</h3>
+          <p class="sub-desc">Una <strong>migración</strong> es un archivo PHP que define la estructura de una tabla. En
+            vez de crear la tabla a mano en MySQL, la defines en código y Laravel la crea con <span class="ic">php
+              artisan migrate</span>. Así el esquema queda versionado.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
+            <pre><code class="language-bash"># Crear el archivo de migración
 php artisan make:migration create_libros_table
 
 # Ejecutar todas las migraciones pendientes (crea las tablas)
 php artisan migrate</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>database/migrations/xxxx_create_libros_table.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span
+                class="code-dot dot-php"></span>database/migrations/xxxx_create_libros_table.php</div>
+            <pre><code class="language-php">&lt;?php
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -802,34 +1304,73 @@ return new class extends Migration
     }
 };
 ?&gt;</code></pre>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Método Blueprint</th><th>Tipo SQL equivalente</th><th>Cuándo usarlo</th></tr></thead>
-          <tbody>
-            <tr><td><code>$table->id()</code></td><td>BIGINT PK AUTO_INCREMENT</td><td>Siempre como primera columna</td></tr>
-            <tr><td><code>->string('campo')</code></td><td>VARCHAR(255)</td><td>Textos cortos: nombre, título, email</td></tr>
-            <tr><td><code>->text('campo')</code></td><td>TEXT</td><td>Textos largos: descripción, contenido</td></tr>
-            <tr><td><code>->integer('campo')</code></td><td>INT</td><td>Números enteros: stock, edad</td></tr>
-            <tr><td><code>->decimal('campo', 8, 2)</code></td><td>DECIMAL(8,2)</td><td>Precios, importes con decimales</td></tr>
-            <tr><td><code>->boolean('campo')</code></td><td>TINYINT(1)</td><td>Verdadero/falso: activo, publicado</td></tr>
-            <tr><td><code>->timestamps()</code></td><td>DATETIME created_at + updated_at</td><td>Siempre al final si quieres auditoría</td></tr>
-            <tr><td><code>->nullable()</code></td><td>Modificador: permite NULL</td><td>Campos opcionales</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Método Blueprint</th>
+                  <th>Tipo SQL equivalente</th>
+                  <th>Cuándo usarlo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>$table->id()</code></td>
+                  <td>BIGINT PK AUTO_INCREMENT</td>
+                  <td>Siempre como primera columna</td>
+                </tr>
+                <tr>
+                  <td><code>->string('campo')</code></td>
+                  <td>VARCHAR(255)</td>
+                  <td>Textos cortos: nombre, título, email</td>
+                </tr>
+                <tr>
+                  <td><code>->text('campo')</code></td>
+                  <td>TEXT</td>
+                  <td>Textos largos: descripción, contenido</td>
+                </tr>
+                <tr>
+                  <td><code>->integer('campo')</code></td>
+                  <td>INT</td>
+                  <td>Números enteros: stock, edad</td>
+                </tr>
+                <tr>
+                  <td><code>->decimal('campo', 8, 2)</code></td>
+                  <td>DECIMAL(8,2)</td>
+                  <td>Precios, importes con decimales</td>
+                </tr>
+                <tr>
+                  <td><code>->boolean('campo')</code></td>
+                  <td>TINYINT(1)</td>
+                  <td>Verdadero/falso: activo, publicado</td>
+                </tr>
+                <tr>
+                  <td><code>->timestamps()</code></td>
+                  <td>DATETIME created_at + updated_at</td>
+                  <td>Siempre al final si quieres auditoría</td>
+                </tr>
+                <tr>
+                  <td><code>->nullable()</code></td>
+                  <td>Modificador: permite NULL</td>
+                  <td>Campos opcionales</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>4.3 Modelo — representar la tabla</h3>
-      <p class="sub-desc">El <strong>Modelo</strong> es una clase PHP que representa la tabla en la base de datos. Cada instancia del modelo es una fila. Eloquent ORM te permite hacer consultas sin escribir SQL.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
-        <pre><code class="language-bash">php artisan make:model Libro</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>app/Models/Libro.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>4.3 Modelo — representar la tabla</h3>
+          <p class="sub-desc">El <strong>Modelo</strong> es una clase PHP que representa la tabla en la base de datos.
+            Cada instancia del modelo es una fila. Eloquent ORM te permite hacer consultas sin escribir SQL.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
+            <pre><code class="language-bash">php artisan make:model Libro</code></pre>
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>app/Models/Libro.php</div>
+            <pre><code class="language-php">&lt;?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -857,23 +1398,25 @@ class Libro extends Model
     // Libro::create([...])      → INSERT INTO libros (...)
 }
 ?&gt;</code></pre>
-      </div>
-      <div class="callout callout-tip">
-        <span class="callout-icon">⚡</span>
-        <span><strong>$fillable</strong> es obligatorio si usas <span class="ic">Libro::create()</span> o <span class="ic">$libro->update()</span>. Sin él, Laravel rechaza la asignación masiva por seguridad.</span>
-      </div>
-    </div>
+          </div>
+          <div class="callout callout-tip">
+            <span class="callout-icon">⚡</span>
+            <span><strong>$fillable</strong> es obligatorio si usas <span class="ic">Libro::create()</span> o <span
+                class="ic">$libro->update()</span>. Sin él, Laravel rechaza la asignación masiva por seguridad.</span>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>4.4 Controlador — la lógica de cada acción</h3>
-      <p class="sub-desc">El <strong>Controlador</strong> maneja cada acción del usuario. Con <span class="ic">--resource</span>, Artisan genera automáticamente los 7 métodos CRUD estándar.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
-        <pre><code class="language-bash">php artisan make:controller LibroController --resource</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>app/Http/Controllers/LibroController.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>4.4 Controlador — la lógica de cada acción</h3>
+          <p class="sub-desc">El <strong>Controlador</strong> maneja cada acción del usuario. Con <span
+              class="ic">--resource</span>, Artisan genera automáticamente los 7 métodos CRUD estándar.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-bash"></span>bash</div>
+            <pre><code class="language-bash">php artisan make:controller LibroController --resource</code></pre>
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>app/Http/Controllers/LibroController.php</div>
+            <pre><code class="language-php">&lt;?php
 namespace App\Http\Controllers;
 
 use App\Models\Libro;
@@ -958,44 +1501,98 @@ class LibroController extends Controller
     }
 }
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>4.5 Rutas — mapear URLs a métodos</h3>
-      <p class="sub-desc"><span class="ic">Route::resource</span> genera automáticamente las 7 rutas del CRUD con una sola línea. Es el equivalente a definir las 7 rutas individualmente.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>routes/web.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>4.5 Rutas — mapear URLs a métodos</h3>
+          <p class="sub-desc"><span class="ic">Route::resource</span> genera automáticamente las 7 rutas del CRUD con
+            una sola línea. Es el equivalente a definir las 7 rutas individualmente.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>routes/web.php</div>
+            <pre><code class="language-php">&lt;?php
 use App\Http\Controllers\LibroController;
 use Illuminate\Support\Facades\Route;
 
 // Una sola línea genera las 7 rutas CRUD
 Route::resource('libros', LibroController::class);
 ?&gt;</code></pre>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Verbo HTTP</th><th>URL</th><th>Método</th><th>Nombre de ruta</th><th>Qué hace</th></tr></thead>
-          <tbody>
-            <tr><td>GET</td><td><code>/libros</code></td><td>index</td><td><code>libros.index</code></td><td>Lista todos los libros</td></tr>
-            <tr><td>GET</td><td><code>/libros/create</code></td><td>create</td><td><code>libros.create</code></td><td>Formulario nuevo libro</td></tr>
-            <tr><td>POST</td><td><code>/libros</code></td><td>store</td><td><code>libros.store</code></td><td>Guarda nuevo libro</td></tr>
-            <tr><td>GET</td><td><code>/libros/{id}</code></td><td>show</td><td><code>libros.show</code></td><td>Detalle de un libro</td></tr>
-            <tr><td>GET</td><td><code>/libros/{id}/edit</code></td><td>edit</td><td><code>libros.edit</code></td><td>Formulario editar</td></tr>
-            <tr><td>PUT/PATCH</td><td><code>/libros/{id}</code></td><td>update</td><td><code>libros.update</code></td><td>Guarda cambios</td></tr>
-            <tr><td>DELETE</td><td><code>/libros/{id}</code></td><td>destroy</td><td><code>libros.destroy</code></td><td>Elimina el libro</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Verbo HTTP</th>
+                  <th>URL</th>
+                  <th>Método</th>
+                  <th>Nombre de ruta</th>
+                  <th>Qué hace</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>GET</td>
+                  <td><code>/libros</code></td>
+                  <td>index</td>
+                  <td><code>libros.index</code></td>
+                  <td>Lista todos los libros</td>
+                </tr>
+                <tr>
+                  <td>GET</td>
+                  <td><code>/libros/create</code></td>
+                  <td>create</td>
+                  <td><code>libros.create</code></td>
+                  <td>Formulario nuevo libro</td>
+                </tr>
+                <tr>
+                  <td>POST</td>
+                  <td><code>/libros</code></td>
+                  <td>store</td>
+                  <td><code>libros.store</code></td>
+                  <td>Guarda nuevo libro</td>
+                </tr>
+                <tr>
+                  <td>GET</td>
+                  <td><code>/libros/{id}</code></td>
+                  <td>show</td>
+                  <td><code>libros.show</code></td>
+                  <td>Detalle de un libro</td>
+                </tr>
+                <tr>
+                  <td>GET</td>
+                  <td><code>/libros/{id}/edit</code></td>
+                  <td>edit</td>
+                  <td><code>libros.edit</code></td>
+                  <td>Formulario editar</td>
+                </tr>
+                <tr>
+                  <td>PUT/PATCH</td>
+                  <td><code>/libros/{id}</code></td>
+                  <td>update</td>
+                  <td><code>libros.update</code></td>
+                  <td>Guarda cambios</td>
+                </tr>
+                <tr>
+                  <td>DELETE</td>
+                  <td><code>/libros/{id}</code></td>
+                  <td>destroy</td>
+                  <td><code>libros.destroy</code></td>
+                  <td>Elimina el libro</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>4.6 Vistas Blade — HTML dinámico</h3>
-      <p class="sub-desc">Blade es el motor de plantillas de Laravel. Permite mezclar HTML con directivas PHP especiales. Los archivos tienen extensión <span class="ic">.blade.php</span> y viven en <span class="ic">resources/views/</span>.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-blade"></span>resources/views/libros/index.blade.php — lista completa</div>
-        <pre><code class="language-html">&lt;!-- Mensajes flash (vienen del controlador con with('success',...)) --&gt;
+        <div class="sub-section">
+          <h3>4.6 Vistas Blade — HTML dinámico</h3>
+          <p class="sub-desc">Blade es el motor de plantillas de Laravel. Permite mezclar HTML con directivas PHP
+            especiales. Los archivos tienen extensión <span class="ic">.blade.php</span> y viven en <span
+              class="ic">resources/views/</span>.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-blade"></span>resources/views/libros/index.blade.php —
+              lista completa</div>
+            <pre><code class="language-html">&lt;!-- Mensajes flash (vienen del controlador con with('success',...)) --&gt;
 @if(session('success'))
     &lt;div class="alert"&gt;{{ session('success') }}&lt;/div&gt;
 @endif
@@ -1023,10 +1620,11 @@ Route::resource('libros', LibroController::class);
     &lt;/tr&gt;
     @endforeach
 &lt;/table&gt;</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-blade"></span>resources/views/libros/create.blade.php — formulario nuevo</div>
-        <pre><code class="language-html">&lt;!-- $errors contiene los errores de validate() del controlador --&gt;
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-blade"></span>resources/views/libros/create.blade.php —
+              formulario nuevo</div>
+            <pre><code class="language-html">&lt;!-- $errors contiene los errores de validate() del controlador --&gt;
 @if ($errors-&gt;any())
     &lt;ul&gt;
         @foreach ($errors-&gt;all() as $error)
@@ -1047,71 +1645,136 @@ Route::resource('libros', LibroController::class);
 
     &lt;button type="submit"&gt;Guardar&lt;/button&gt;
 &lt;/form&gt;</code></pre>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Directiva Blade</th><th>Qué hace exactamente</th></tr></thead>
-          <tbody>
-            <tr><td><code>{{ $variable }}</code></td><td>Muestra el valor <strong>escapando HTML</strong> (protege contra XSS)</td></tr>
-            <tr><td><code>{!! $variable !!}</code></td><td>Muestra el valor <strong>sin escapar</strong> (solo para HTML de confianza)</td></tr>
-            <tr><td><code>@foreach / @endforeach</code></td><td>Bucle para recorrer arrays y colecciones Eloquent</td></tr>
-            <tr><td><code>@if / @elseif / @else / @endif</code></td><td>Condicional estándar</td></tr>
-            <tr><td><code>@csrf</code></td><td>Genera token de seguridad — <strong>obligatorio en todo POST</strong></td></tr>
-            <tr><td><code>@method('DELETE')</code></td><td>Simula verbos HTTP (PUT, PATCH, DELETE) que los formularios no soportan</td></tr>
-            <tr><td><code>route('nombre', $id)</code></td><td>Genera la URL de una ruta por su nombre</td></tr>
-            <tr><td><code>old('campo')</code></td><td>Repuebla el campo si hubo error de validación</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Directiva Blade</th>
+                  <th>Qué hace exactamente</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>{{ $variable }}</code></td>
+                  <td>Muestra el valor <strong>escapando HTML</strong> (protege contra XSS)</td>
+                </tr>
+                <tr>
+                  <td><code>{!! $variable !!}</code></td>
+                  <td>Muestra el valor <strong>sin escapar</strong> (solo para HTML de confianza)</td>
+                </tr>
+                <tr>
+                  <td><code>@foreach / @endforeach</code></td>
+                  <td>Bucle para recorrer arrays y colecciones Eloquent</td>
+                </tr>
+                <tr>
+                  <td><code>@if / @elseif / @else / @endif</code></td>
+                  <td>Condicional estándar</td>
+                </tr>
+                <tr>
+                  <td><code>@csrf</code></td>
+                  <td>Genera token de seguridad — <strong>obligatorio en todo POST</strong></td>
+                </tr>
+                <tr>
+                  <td><code>@method('DELETE')</code></td>
+                  <td>Simula verbos HTTP (PUT, PATCH, DELETE) que los formularios no soportan</td>
+                </tr>
+                <tr>
+                  <td><code>route('nombre', $id)</code></td>
+                  <td>Genera la URL de una ruta por su nombre</td>
+                </tr>
+                <tr>
+                  <td><code>old('campo')</code></td>
+                  <td>Repuebla el campo si hubo error de validación</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>4.7 Comandos Artisan de referencia</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
-          <tbody>
-            <tr><td><code>php artisan serve</code></td><td>Inicia servidor local en http://localhost:8000</td></tr>
-            <tr><td><code>php artisan migrate</code></td><td>Ejecuta todas las migraciones pendientes</td></tr>
-            <tr><td><code>php artisan migrate:fresh</code></td><td>Elimina todas las tablas y vuelve a ejecutar las migraciones</td></tr>
-            <tr><td><code>php artisan migrate:rollback</code></td><td>Deshace la última migración</td></tr>
-            <tr><td><code>php artisan route:list</code></td><td>Lista todas las rutas con su método, URL y nombre</td></tr>
-            <tr><td><code>php artisan make:model X</code></td><td>Crea app/Models/X.php</td></tr>
-            <tr><td><code>php artisan make:model X -m</code></td><td>Crea modelo Y su migración a la vez</td></tr>
-            <tr><td><code>php artisan make:controller X --resource</code></td><td>Crea controlador con los 7 métodos CRUD</td></tr>
-            <tr><td><code>php artisan make:migration create_X_table</code></td><td>Crea archivo de migración</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+        <div class="sub-section">
+          <h3>4.7 Comandos Artisan de referencia</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Comando</th>
+                  <th>Qué hace</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>php artisan serve</code></td>
+                  <td>Inicia servidor local en http://localhost:8000</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan migrate</code></td>
+                  <td>Ejecuta todas las migraciones pendientes</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan migrate:fresh</code></td>
+                  <td>Elimina todas las tablas y vuelve a ejecutar las migraciones</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan migrate:rollback</code></td>
+                  <td>Deshace la última migración</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan route:list</code></td>
+                  <td>Lista todas las rutas con su método, URL y nombre</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan make:model X</code></td>
+                  <td>Crea app/Models/X.php</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan make:model X -m</code></td>
+                  <td>Crea modelo Y su migración a la vez</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan make:controller X --resource</code></td>
+                  <td>Crea controlador con los 7 métodos CRUD</td>
+                </tr>
+                <tr>
+                  <td><code>php artisan make:migration create_X_table</code></td>
+                  <td>Crea archivo de migración</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
-  <!-- ══════════════════════════ 5. MONGODB ══════════════════════════ -->
-  <section class="section" id="mongodb">
-    <div class="section-header">
-      <span class="section-badge badge-mongo">MongoDB</span>
-      <h2>5. MongoDB — CRUD Completo</h2>
-    </div>
-    <p class="section-desc">
-      MongoDB es una base de datos <strong>NoSQL orientada a documentos</strong>. En vez de tablas con filas, tienes <strong>colecciones</strong> con <strong>documentos</strong> (objetos JSON). Cada documento puede tener campos distintos. No hay esquema fijo.
-    </p>
+      <!-- ══════════════════════════ 5. MONGODB ══════════════════════════ -->
+      <section class="section" id="mongodb">
+        <div class="section-header">
+          <span class="section-badge badge-mongo">MongoDB</span>
+          <h2>5. MongoDB — CRUD Completo</h2>
+        </div>
+        <p class="section-desc">
+          MongoDB es una base de datos <strong>NoSQL orientada a documentos</strong>. En vez de tablas con filas, tienes
+          <strong>colecciones</strong> con <strong>documentos</strong> (objetos JSON). Cada documento puede tener campos
+          distintos. No hay esquema fijo.
+        </p>
 
-    <div class="callout callout-info">
-      <span class="callout-icon">🧭</span>
-      <span>Esta sección muestra la sintaxis en los <strong>dos formatos</strong> que debes conocer: <strong>MongoDB Compass / Shell</strong> (lo que practicas en clase con <span class="ic">db.coleccion.método()</span>) y <strong>PHP con la librería oficial</strong>.</span>
-    </div>
+        <div class="callout callout-info">
+          <span class="callout-icon">🧭</span>
+          <span>Esta sección muestra la sintaxis en los <strong>dos formatos</strong> que debes conocer: <strong>MongoDB
+              Compass / Shell</strong> (lo que practicas en clase con <span class="ic">db.coleccion.método()</span>) y
+            <strong>PHP con la librería oficial</strong>.</span>
+        </div>
 
-    <div class="divider"></div>
+        <div class="divider"></div>
 
-    <div class="sub-section">
-      <h3>5.1 Conexión en PHP</h3>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-bash"></span>bash — instalar librería</div>
-        <pre><code class="language-bash">composer require mongodb/mongodb</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — conexion_mongo.php</div>
-        <pre><code class="language-php">&lt;?php
+        <div class="sub-section">
+          <h3>5.1 Conexión en PHP</h3>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-bash"></span>bash — instalar librería</div>
+            <pre><code class="language-bash">composer require mongodb/mongodb</code></pre>
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — conexion_mongo.php</div>
+            <pre><code class="language-php">&lt;?php
 require 'vendor/autoload.php';
 use MongoDB\Client;
 
@@ -1124,16 +1787,17 @@ $db        = $cliente->biblioteca;
 // Seleccionar la colección (equivale a tabla en SQL)
 $coleccion = $db->libros;
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>5.2 INSERT — insertar documentos</h3>
-      <p class="sub-desc">Los documentos son arrays asociativos PHP / objetos JSON. Pueden contener arrays anidados dentro. MongoDB genera automáticamente el <span class="ic">_id</span> único.</p>
+        <div class="sub-section">
+          <h3>5.2 INSERT — insertar documentos</h3>
+          <p class="sub-desc">Los documentos son arrays asociativos PHP / objetos JSON. Pueden contener arrays anidados
+            dentro. MongoDB genera automáticamente el <span class="ic">_id</span> único.</p>
 
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
-        <pre><code class="language-javascript">// Insertar uno
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+            <pre><code class="language-javascript">// Insertar uno
 db.libros.insertOne({
   titulo: "Don Quijote",
   autor: "Cervantes",
@@ -1146,10 +1810,10 @@ db.libros.insertMany([
   { titulo: "La Regenta", autor: "Clarín",  precio: 18.50 },
   { titulo: "El árbol",   autor: "Baroja",  precio: 12.00 }
 ])</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — insert_mongo.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — insert_mongo.php</div>
+            <pre><code class="language-php">&lt;?php
 // insertOne() → inserta un documento
 $resultado = $coleccion->insertOne([
     'titulo'     => 'Don Quijote',
@@ -1166,15 +1830,18 @@ $resultado = $coleccion->insertMany([
 ]);
 echo "Insertados: " . count($resultado->getInsertedIds());
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>5.3 FIND — buscar documentos</h3>
-      <p class="sub-desc"><span class="ic">find()</span> devuelve un cursor (iterable). <span class="ic">findOne()</span> devuelve solo el primer resultado o null. El primer parámetro es el <strong>filtro</strong>.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
-        <pre><code class="language-javascript">// Todos los documentos
+        <div class="sub-section">
+          <h3>5.3 FIND — buscar documentos</h3>
+          <p class="sub-desc"><span class="ic">find()</span> devuelve un cursor (iterable). <span
+              class="ic">findOne()</span> devuelve solo el primer resultado o null. El primer parámetro es el
+            <strong>filtro</strong>.
+          </p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+            <pre><code class="language-javascript">// Todos los documentos
 db.libros.find({})
 
 // Filtro exacto
@@ -1188,10 +1855,10 @@ db.libros.find({ precio: { $gte: 10, $lte: 20 } })
 
 // Solo uno
 db.libros.findOne({ titulo: "Don Quijote" })</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — find_mongo.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — find_mongo.php</div>
+            <pre><code class="language-php">&lt;?php
 // Todos los documentos
 $libros = $coleccion->find([]);
 foreach ($libros as $libro) {
@@ -1213,34 +1880,79 @@ $libros = $coleccion->find([
 $libro = $coleccion->findOne(['titulo' => 'Don Quijote']);
 echo $libro['autor'];  // Cervantes
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>5.4 Operadores de comparación</h3>
-      <p class="sub-desc">En MongoDB los operadores siempre llevan <strong>$</strong> delante. Son la clave para hacer filtros avanzados.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Operador</th><th>Significado</th><th>Compass / Shell</th><th>PHP</th></tr></thead>
-          <tbody>
-            <tr><td><code>$eq</code></td><td>Igual a</td><td><code>{ precio: { $eq: 20 } }</code></td><td><code>['precio' => ['$eq' => 20]]</code></td></tr>
-            <tr><td><code>$gt</code></td><td>Mayor que (&gt;)</td><td><code>{ precio: { $gt: 15 } }</code></td><td><code>['precio' => ['$gt' => 15]]</code></td></tr>
-            <tr><td><code>$gte</code></td><td>Mayor o igual (≥)</td><td><code>{ precio: { $gte: 15 } }</code></td><td><code>['precio' => ['$gte' => 15]]</code></td></tr>
-            <tr><td><code>$lt</code></td><td>Menor que (&lt;)</td><td><code>{ stock: { $lt: 10 } }</code></td><td><code>['stock' => ['$lt' => 10]]</code></td></tr>
-            <tr><td><code>$lte</code></td><td>Menor o igual (≤)</td><td><code>{ stock: { $lte: 10 } }</code></td><td><code>['stock' => ['$lte' => 10]]</code></td></tr>
-            <tr><td><code>$ne</code></td><td>Distinto de (≠)</td><td><code>{ autor: { $ne: "Cervantes" } }</code></td><td><code>['autor' => ['$ne' => 'Cervantes']]</code></td></tr>
-            <tr><td><code>$in</code></td><td>Está en la lista</td><td><code>{ autor: { $in: ["Cervantes","Clarín"] } }</code></td><td><code>['autor' => ['$in' => ['Cervantes','Clarín']]]</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+        <div class="sub-section">
+          <h3>5.4 Operadores de comparación</h3>
+          <p class="sub-desc">En MongoDB los operadores siempre llevan <strong>$</strong> delante. Son la clave para
+            hacer filtros avanzados.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Operador</th>
+                  <th>Significado</th>
+                  <th>Compass / Shell</th>
+                  <th>PHP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>$eq</code></td>
+                  <td>Igual a</td>
+                  <td><code>{ precio: { $eq: 20 } }</code></td>
+                  <td><code>['precio' => ['$eq' => 20]]</code></td>
+                </tr>
+                <tr>
+                  <td><code>$gt</code></td>
+                  <td>Mayor que (&gt;)</td>
+                  <td><code>{ precio: { $gt: 15 } }</code></td>
+                  <td><code>['precio' => ['$gt' => 15]]</code></td>
+                </tr>
+                <tr>
+                  <td><code>$gte</code></td>
+                  <td>Mayor o igual (≥)</td>
+                  <td><code>{ precio: { $gte: 15 } }</code></td>
+                  <td><code>['precio' => ['$gte' => 15]]</code></td>
+                </tr>
+                <tr>
+                  <td><code>$lt</code></td>
+                  <td>Menor que (&lt;)</td>
+                  <td><code>{ stock: { $lt: 10 } }</code></td>
+                  <td><code>['stock' => ['$lt' => 10]]</code></td>
+                </tr>
+                <tr>
+                  <td><code>$lte</code></td>
+                  <td>Menor o igual (≤)</td>
+                  <td><code>{ stock: { $lte: 10 } }</code></td>
+                  <td><code>['stock' => ['$lte' => 10]]</code></td>
+                </tr>
+                <tr>
+                  <td><code>$ne</code></td>
+                  <td>Distinto de (≠)</td>
+                  <td><code>{ autor: { $ne: "Cervantes" } }</code></td>
+                  <td><code>['autor' => ['$ne' => 'Cervantes']]</code></td>
+                </tr>
+                <tr>
+                  <td><code>$in</code></td>
+                  <td>Está en la lista</td>
+                  <td><code>{ autor: { $in: ["Cervantes","Clarín"] } }</code></td>
+                  <td><code>['autor' => ['$in' => ['Cervantes','Clarín']]]</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>5.5 UPDATE — actualizar documentos</h3>
-      <p class="sub-desc">El primer parámetro es el <strong>filtro</strong> (qué documentos actualizar). El segundo es el <strong>operador de actualización</strong>. <span class="ic">$set</span> cambia campos, <span class="ic">$inc</span> incrementa, <span class="ic">$push</span> añade a arrays.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
-        <pre><code class="language-javascript">// Actualizar uno ($set cambia solo los campos indicados)
+        <div class="sub-section">
+          <h3>5.5 UPDATE — actualizar documentos</h3>
+          <p class="sub-desc">El primer parámetro es el <strong>filtro</strong> (qué documentos actualizar). El segundo
+            es el <strong>operador de actualización</strong>. <span class="ic">$set</span> cambia campos, <span
+              class="ic">$inc</span> incrementa, <span class="ic">$push</span> añade a arrays.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+            <pre><code class="language-javascript">// Actualizar uno ($set cambia solo los campos indicados)
 db.libros.updateOne(
   { titulo: "Don Quijote" },           // filtro
   { $set: { precio: 19.99 } }          // cambio
@@ -1263,10 +1975,10 @@ db.libros.updateOne(
   { titulo: "Don Quijote" },
   { $push: { categorias: "Bestseller" } }
 )</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — update_mongo.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — update_mongo.php</div>
+            <pre><code class="language-php">&lt;?php
 // updateOne() — actualiza el primer documento que coincide
 $coleccion->updateOne(
     ['titulo' => 'Don Quijote'],      // filtro
@@ -1291,20 +2003,20 @@ $coleccion->updateOne(
     ['$push' => ['categorias' => 'Bestseller']]
 );
 ?&gt;</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>5.6 DELETE — eliminar documentos</h3>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
-        <pre><code class="language-javascript">db.libros.deleteOne({ titulo: "Don Quijote" })
+        <div class="sub-section">
+          <h3>5.6 DELETE — eliminar documentos</h3>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+            <pre><code class="language-javascript">db.libros.deleteOne({ titulo: "Don Quijote" })
 db.libros.deleteMany({ precio: { $lt: 10 } })
 db.libros.deleteMany({})  // elimina todos los documentos</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — delete_mongo.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — delete_mongo.php</div>
+            <pre><code class="language-php">&lt;?php
 // Eliminar UNO (el primero que coincida)
 $coleccion->deleteOne(['titulo' => 'Don Quijote']);
 
@@ -1314,19 +2026,21 @@ $coleccion->deleteMany(['precio' => ['$lt' => 10]]);
 // Eliminar TODOS los documentos de la colección
 $coleccion->deleteMany([]);
 ?&gt;</code></pre>
-      </div>
-      <div class="callout callout-err">
-        <span class="callout-icon">⚠️</span>
-        <span><strong>Cuidado:</strong> <span class="ic">deleteMany([])</span> elimina TODOS los documentos. El filtro vacío <span class="ic">{}</span> coincide con todo.</span>
-      </div>
-    </div>
+          </div>
+          <div class="callout callout-err">
+            <span class="callout-icon">⚠️</span>
+            <span><strong>Cuidado:</strong> <span class="ic">deleteMany([])</span> elimina TODOS los documentos. El
+              filtro vacío <span class="ic">{}</span> coincide con todo.</span>
+          </div>
+        </div>
 
-    <div class="sub-section">
-      <h3>5.7 Opciones avanzadas — Sort, Limit, Skip, Projection</h3>
-      <p class="sub-desc">Se pasan como segundo parámetro en <span class="ic">find()</span>, tanto en Compass como en PHP.</p>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
-        <pre><code class="language-javascript">// Ordenar: 1 = ascendente, -1 = descendente
+        <div class="sub-section">
+          <h3>5.7 Opciones avanzadas — Sort, Limit, Skip, Projection</h3>
+          <p class="sub-desc">Se pasan como segundo parámetro en <span class="ic">find()</span>, tanto en Compass como
+            en PHP.</p>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>MongoDB Compass / Shell</div>
+            <pre><code class="language-javascript">// Ordenar: 1 = ascendente, -1 = descendente
 db.libros.find({}).sort({ precio: 1 })
 db.libros.find({}).sort({ precio: -1 })
 
@@ -1338,10 +2052,10 @@ db.libros.find({}).skip(10).limit(5)
 
 // Proyección: qué campos devolver (1=incluir, 0=excluir)
 db.libros.find({}, { titulo: 1, precio: 1, _id: 0 })</code></pre>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-label"><span class="code-dot dot-php"></span>php — opciones_mongo.php</div>
-        <pre><code class="language-php">&lt;?php
+          </div>
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-php"></span>php — opciones_mongo.php</div>
+            <pre><code class="language-php">&lt;?php
 // sort → ordenar. 1 = asc, -1 = desc
 $libros = $coleccion->find([], ['sort' => ['precio' => 1]]);
 
@@ -1361,152 +2075,170 @@ $libros = $coleccion->find([], [
     ]
 ]);
 ?&gt;</code></pre>
-      </div>
-    </div>
-  </section>
+          </div>
+        </div>
+      </section>
 
-  <!-- ══════════════════════════ 6. RESUMEN ══════════════════════════ -->
-  <section class="section" id="resumen">
-    <div class="section-header">
-      <span class="section-badge badge-exam">Examen</span>
-      <h2>6. Resumen Rápido</h2>
-    </div>
-    <p class="section-desc">Todo lo esencial para repasar de un vistazo justo antes del examen.</p>
+      <!-- ══════════════════════════ 6. RESUMEN ══════════════════════════ -->
+      <section class="section" id="resumen">
+        <div class="section-header">
+          <span class="section-badge badge-exam">Examen</span>
+          <h2>6. Resumen Rápido</h2>
+        </div>
+        <p class="section-desc">Todo lo esencial para repasar de un vistazo justo antes del examen.</p>
 
-    <div class="resumen-grid" style="margin-bottom:24px">
-      <div class="resumen-card">
-        <h4 style="color:var(--muted)">MVC</h4>
-        <p>Modelo → datos + BD<br>Vista → HTML/CSS/JS<br>Controlador → lógica</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:#7bb8f5">PDO</h4>
-        <p>new PDO() →<br>prepare($sql) →<br>execute([params]) →<br>fetchAll(FETCH_ASSOC)</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:#f87b6a">Laravel — pasos</h4>
-        <p>make:migration →<br>Schema::create() →<br>migrate →<br>make:model → make:controller</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:#f87b6a">Blade esencial</h4>
-        <p>{{ }} · @foreach<br>@if · @csrf<br>@method('DELETE')<br>route() · old()</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:#6ee7a0">MongoDB CRUD</h4>
-        <p>insertOne / insertMany<br>find / findOne<br>updateOne / updateMany<br>deleteOne / deleteMany</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:#6ee7a0">MongoDB Operadores</h4>
-        <p>$gt · $gte · $lt · $lte<br>$eq · $ne · $in<br>$set · $inc · $push<br>sort · limit · skip</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:#c084fc">PHP esencial</h4>
-        <p>$var · $array['key']<br>foreach · if · else<br>function nombre($p)<br>return valor</p>
-      </div>
-      <div class="resumen-card">
-        <h4 style="color:var(--accent-bright)">Artisan rápido</h4>
-        <p>artisan serve<br>artisan migrate<br>make:model -m<br>make:controller --resource</p>
-      </div>
-    </div>
+        <div class="resumen-grid" style="margin-bottom:24px">
+          <div class="resumen-card">
+            <h4 style="color:var(--muted)">MVC</h4>
+            <p>Modelo → datos + BD<br>Vista → HTML/CSS/JS<br>Controlador → lógica</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:#7bb8f5">PDO</h4>
+            <p>new PDO() →<br>prepare($sql) →<br>execute([params]) →<br>fetchAll(FETCH_ASSOC)</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:#f87b6a">Laravel — pasos</h4>
+            <p>make:migration →<br>Schema::create() →<br>migrate →<br>make:model → make:controller</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:#f87b6a">Blade esencial</h4>
+            <p>{{ }} · @foreach<br>@if · @csrf<br>@method('DELETE')<br>route() · old()</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:#6ee7a0">MongoDB CRUD</h4>
+            <p>insertOne / insertMany<br>find / findOne<br>updateOne / updateMany<br>deleteOne / deleteMany</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:#6ee7a0">MongoDB Operadores</h4>
+            <p>$gt · $gte · $lt · $lte<br>$eq · $ne · $in<br>$set · $inc · $push<br>sort · limit · skip</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:#c084fc">PHP esencial</h4>
+            <p>$var · $array['key']<br>foreach · if · else<br>function nombre($p)<br>return valor</p>
+          </div>
+          <div class="resumen-card">
+            <h4 style="color:var(--accent-bright)">Artisan rápido</h4>
+            <p>artisan serve<br>artisan migrate<br>make:model -m<br>make:controller --resource</p>
+          </div>
+        </div>
 
-    <p style="font-family:var(--font-m);font-size:.66rem;color:var(--accent-bright);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Consejos para el examen</p>
-    <ul class="consejos-list">
-      <li><span class="consejo-num">1</span>Lee bien el enunciado: ¿piden código completo, completar huecos o detectar errores? Cada caso tiene su estrategia.</li>
-      <li><span class="consejo-num">2</span>PDO: usa siempre <strong>prepare() + execute()</strong> con <span class="ic">:param</span>. Nunca concatenes variables en el SQL.</li>
-      <li><span class="consejo-num">3</span>Laravel: <strong>singular</strong> para el Modelo (<span class="ic">Libro</span>), <strong>plural</strong> para tabla y rutas (<span class="ic">libros</span>).</li>
-      <li><span class="consejo-num">4</span>MongoDB: todos los operadores llevan <strong>$</strong> delante — <span class="ic">$gt</span>, <span class="ic">$set</span>, <span class="ic">$inc</span>. Sin él no funciona.</li>
-      <li><span class="consejo-num">5</span>Blade: no olvides <strong>@csrf</strong> en todo formulario POST, ni <strong>@method('DELETE')</strong> para eliminar.</li>
-      <li><span class="consejo-num">6</span>Revisa la sintaxis: punto y coma al final, llaves equilibradas, comillas simples en PHP.</li>
-      <li><span class="consejo-num">7</span>MVC: ante cualquier pregunta de arquitectura, identifica qué capa es responsable y justifícalo.</li>
-    </ul>
+        <p
+          style="font-family:var(--font-m);font-size:.66rem;color:var(--accent-bright);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">
+          Consejos para el examen</p>
+        <ul class="consejos-list">
+          <li><span class="consejo-num">1</span>Lee bien el enunciado: ¿piden código completo, completar huecos o
+            detectar errores? Cada caso tiene su estrategia.</li>
+          <li><span class="consejo-num">2</span>PDO: usa siempre <strong>prepare() + execute()</strong> con <span
+              class="ic">:param</span>. Nunca concatenes variables en el SQL.</li>
+          <li><span class="consejo-num">3</span>Laravel: <strong>singular</strong> para el Modelo (<span
+              class="ic">Libro</span>), <strong>plural</strong> para tabla y rutas (<span class="ic">libros</span>).
+          </li>
+          <li><span class="consejo-num">4</span>MongoDB: todos los operadores llevan <strong>$</strong> delante — <span
+              class="ic">$gt</span>, <span class="ic">$set</span>, <span class="ic">$inc</span>. Sin él no funciona.
+          </li>
+          <li><span class="consejo-num">5</span>Blade: no olvides <strong>@csrf</strong> en todo formulario POST, ni
+            <strong>@method('DELETE')</strong> para eliminar.
+          </li>
+          <li><span class="consejo-num">6</span>Revisa la sintaxis: punto y coma al final, llaves equilibradas, comillas
+            simples en PHP.</li>
+          <li><span class="consejo-num">7</span>MVC: ante cualquier pregunta de arquitectura, identifica qué capa es
+            responsable y justifícalo.</li>
+        </ul>
 
-    <div class="footer">
-      <p>¡Mucha suerte en el examen! 🚀</p>
-      <span>Has estudiado todo esto — aplícalo con calma y confianza.</span>
-    </div>
-  </section>
+        <div class="footer">
+          <p>¡Mucha suerte en el examen! 🚀</p>
+          <span>Has estudiado todo esto — aplícalo con calma y confianza.</span>
+        </div>
+      </section>
 
-  <!-- ══════════════════════════ 7. EJERCICIO LARAVEL ══════════════════════════ -->
-  <section class="section" id="laravel-ejercicio">
-    <div class="section-header">
-      <span class="section-badge badge-laravel">LARAVEL</span>
-      <h2>7. Ejercicio Laravel</h2>
-    </div>
-    <p class="section-desc">
-      Aplicación completa de gestión de películas usando Laravel: migraciones, modelos Eloquent, controladores, rutas y vistas Blade.
-    </p>
+      <!-- ══════════════════════════ 7. EJERCICIO LARAVEL ══════════════════════════ -->
+      <section class="section" id="laravel-ejercicio">
+        <div class="section-header">
+          <span class="section-badge badge-laravel">LARAVEL</span>
+          <h2>7. Ejercicio Laravel</h2>
+        </div>
+        <p class="section-desc">
+          Aplicación completa de gestión de películas usando Laravel: migraciones, modelos Eloquent, controladores,
+          rutas y vistas Blade.
+        </p>
 
-    <!-- ────────── ENUNCIADO ────────── -->
-    <div class="sub-section">
-      <h3>📋 Enunciado</h3>
-      <div class="sub-desc">
-        Desarrolla una aplicación web con Laravel que permita gestionar un catálogo de películas. La aplicación deberá almacenar información básica de cada película y permitir visualizarla y añadir nuevos registros mediante un formulario.
-      </div>
-    </div>
+        <!-- ────────── ENUNCIADO ────────── -->
+        <div class="sub-section">
+          <h3>📋 Enunciado</h3>
+          <div class="sub-desc">
+            Desarrolla una aplicación web con Laravel que permita gestionar un catálogo de películas. La aplicación
+            deberá almacenar información básica de cada película y permitir visualizarla y añadir nuevos registros
+            mediante un formulario.
+          </div>
+        </div>
 
-    <!-- ────────── REQUISITOS ────────── -->
-    <div class="sub-section">
-      <h3>✓ Requisitos</h3>
-      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
-        <li>Tabla 'peliculas' con campos: id, titulo, director, anio, duracion, timestamps</li>
-        <li>Controlador con métodos: index() para listar, store() para guardar</li>
-        <li>Rutas: GET /peliculas (mostrar) y POST /peliculas (guardar)</li>
-        <li>Vista Blade con listado de películas y formulario de alta</li>
-        <li>Validaciones: titulo y director obligatorios, anio numérico, duracion entero</li>
-      </ul>
-    </div>
+        <!-- ────────── REQUISITOS ────────── -->
+        <div class="sub-section">
+          <h3>✓ Requisitos</h3>
+          <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
+            <li>Tabla 'peliculas' con campos: id, titulo, director, anio, duracion, timestamps</li>
+            <li>Controlador con métodos: index() para listar, store() para guardar</li>
+            <li>Rutas: GET /peliculas (mostrar) y POST /peliculas (guardar)</li>
+            <li>Vista Blade con listado de películas y formulario de alta</li>
+            <li>Validaciones: titulo y director obligatorios, anio numérico, duracion entero</li>
+          </ul>
+        </div>
 
-    <!-- ────────── PASO 1 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 1: Crear Proyecto Laravel</h3>
-      <div class="sub-desc">
-        Composer descarga Laravel y genera toda la estructura del proyecto (~15,000 archivos).
-      </div>
-      <pre><code class="language-bash">composer create-project laravel/laravel peliculas
+        <!-- ────────── PASO 1 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 1: Crear Proyecto Laravel</h3>
+          <div class="sub-desc">
+            Composer descarga Laravel y genera toda la estructura del proyecto (~15,000 archivos).
+          </div>
+          <pre><code class="language-bash">composer create-project laravel/laravel peliculas
 cd peliculas</code></pre>
-      <div style="margin-top: 8px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
-          💡 Verifica: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">php artisan serve</code> y visita http://127.0.0.1:8000
-        </span>
-      </div>
-    </div>
+          <div
+            style="margin-top: 8px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
+              💡 Verifica: <code
+                style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">php artisan serve</code> y
+              visita http://127.0.0.1:8000
+            </span>
+          </div>
+        </div>
 
-    <!-- ────────── PASO 2 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 2: Crear Base de Datos</h3>
-      <div class="sub-desc">
-        Crea una base de datos vacía en MySQL/phpMyAdmin con codificación UTF-8.
-      </div>
-      <pre><code class="language-sql">CREATE DATABASE peliculas_db 
+        <!-- ────────── PASO 2 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 2: Crear Base de Datos</h3>
+          <div class="sub-desc">
+            Crea una base de datos vacía en MySQL/phpMyAdmin con codificación UTF-8.
+          </div>
+          <pre><code class="language-sql">CREATE DATABASE peliculas_db 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_unicode_ci;</code></pre>
-    </div>
+        </div>
 
-    <!-- ────────── PASO 3 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 3: Configurar Conexión</h3>
-      <div class="sub-desc">
-        Edita <code>peliculas/.env</code> para conectar Laravel con MySQL.
-      </div>
-      <pre><code class="language-bash">DB_CONNECTION=mysql
+        <!-- ────────── PASO 3 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 3: Configurar Conexión</h3>
+          <div class="sub-desc">
+            Edita <code>peliculas/.env</code> para conectar Laravel con MySQL.
+          </div>
+          <pre><code class="language-bash">DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=peliculas_db
 DB_USERNAME=root
 DB_PASSWORD=</code></pre>
-    </div>
-
-    <!-- ────────── PASO 4 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 4: Crear Migración</h3>
-      <div class="sub-desc">
-        Genera el archivo de migración que contendrá la estructura de la tabla 'peliculas'.
-      </div>
-      <pre><code class="language-bash">php artisan make:migration create_peliculas_table</code></pre>
-      <div style="margin-top: 10px;">
-        <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-          📁 database/migrations/2026_xx_xx_xxxxxx_create_peliculas_table.php
         </div>
-        <pre><code class="language-php">public function up(): void
+
+        <!-- ────────── PASO 4 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 4: Crear Migración</h3>
+          <div class="sub-desc">
+            Genera el archivo de migración que contendrá la estructura de la tabla 'peliculas'.
+          </div>
+          <pre><code class="language-bash">php artisan make:migration create_peliculas_table</code></pre>
+          <div style="margin-top: 10px;">
+            <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+              📁 database/migrations/2026_xx_xx_xxxxxx_create_peliculas_table.php
+            </div>
+            <pre><code class="language-php">public function up(): void
 {
     Schema::create('peliculas', function (Blueprint $table) {
         $table->id();
@@ -1522,30 +2254,30 @@ public function down(): void
 {
     Schema::dropIfExists('peliculas');
 }</code></pre>
-      </div>
-    </div>
-
-    <!-- ────────── PASO 5 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 5: Ejecutar Migración</h3>
-      <div class="sub-desc">
-        Laravel ejecuta el método up() y crea la tabla 'peliculas' en la base de datos.
-      </div>
-      <pre><code class="language-bash">php artisan migrate</code></pre>
-    </div>
-
-    <!-- ────────── PASO 6 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 6: Crear Modelo</h3>
-      <div class="sub-desc">
-        El modelo Eloquent representa la tabla en PHP. Permite interactuar con la BD sin SQL.
-      </div>
-      <pre><code class="language-bash">php artisan make:model Pelicula</code></pre>
-      <div style="margin-top: 10px;">
-        <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-          📁 app/Models/Pelicula.php
+          </div>
         </div>
-        <pre><code class="language-php">class Pelicula extends Model
+
+        <!-- ────────── PASO 5 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 5: Ejecutar Migración</h3>
+          <div class="sub-desc">
+            Laravel ejecuta el método up() y crea la tabla 'peliculas' en la base de datos.
+          </div>
+          <pre><code class="language-bash">php artisan migrate</code></pre>
+        </div>
+
+        <!-- ────────── PASO 6 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 6: Crear Modelo</h3>
+          <div class="sub-desc">
+            El modelo Eloquent representa la tabla en PHP. Permite interactuar con la BD sin SQL.
+          </div>
+          <pre><code class="language-bash">php artisan make:model Pelicula</code></pre>
+          <div style="margin-top: 10px;">
+            <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+              📁 app/Models/Pelicula.php
+            </div>
+            <pre><code class="language-php">class Pelicula extends Model
 {
     protected $fillable = [
         'titulo',
@@ -1554,26 +2286,28 @@ public function down(): void
         'duracion'
     ];
 }</code></pre>
-      </div>
-      <div style="margin-top: 8px; padding: 10px 14px; background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #7bb8f5;">
-          ℹ️ <strong>$fillable:</strong> Protección de seguridad. Solo estos campos pueden llenarse con create() o update().
-        </span>
-      </div>
-    </div>
-
-    <!-- ────────── PASO 7 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 7: Crear Controlador</h3>
-      <div class="sub-desc">
-        El controlador contiene la lógica para listar y guardar películas con validación.
-      </div>
-      <pre><code class="language-bash">php artisan make:controller PeliculaController</code></pre>
-      <div style="margin-top: 10px;">
-        <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-          📁 app/Http/Controllers/PeliculaController.php
+          </div>
+          <div
+            style="margin-top: 8px; padding: 10px 14px; background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: #7bb8f5;">
+              ℹ️ <strong>$fillable:</strong> Protección de seguridad. Solo estos campos pueden llenarse con create() o
+              update().
+            </span>
+          </div>
         </div>
-        <pre><code class="language-php">use App\Models\Pelicula;
+
+        <!-- ────────── PASO 7 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 7: Crear Controlador</h3>
+          <div class="sub-desc">
+            El controlador contiene la lógica para listar y guardar películas con validación.
+          </div>
+          <pre><code class="language-bash">php artisan make:controller PeliculaController</code></pre>
+          <div style="margin-top: 10px;">
+            <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+              📁 app/Http/Controllers/PeliculaController.php
+            </div>
+            <pre><code class="language-php">use App\Models\Pelicula;
 use Illuminate\Http\Request;
 
 class PeliculaController extends Controller
@@ -1599,19 +2333,19 @@ class PeliculaController extends Controller
             ->with('success', 'Película agregada correctamente');
     }
 }</code></pre>
-      </div>
-    </div>
+          </div>
+        </div>
 
-    <!-- ────────── PASO 8 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 8: Definir Rutas</h3>
-      <div class="sub-desc">
-        Las rutas mapean URLs a métodos del controlador.
-      </div>
-      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-        📁 routes/web.php
-      </div>
-      <pre><code class="language-php">use App\Http\Controllers\PeliculaController;
+        <!-- ────────── PASO 8 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 8: Definir Rutas</h3>
+          <div class="sub-desc">
+            Las rutas mapean URLs a métodos del controlador.
+          </div>
+          <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+            📁 routes/web.php
+          </div>
+          <pre><code class="language-php">use App\Http\Controllers\PeliculaController;
 
 Route::get('/', function () {
     return redirect('/peliculas');
@@ -1622,26 +2356,28 @@ Route::get('/peliculas', [PeliculaController::class, 'index'])
 
 Route::post('/peliculas', [PeliculaController::class, 'store'])
     ->name('peliculas.store');</code></pre>
-    </div>
+        </div>
 
-    <!-- ────────── PASO 9 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 9: Crear Vista Blade</h3>
-      <div style="margin-bottom: 10px; padding: 10px 14px; background: rgba(240,80,60,0.12); border-left: 3px solid rgba(240,80,60,0.5); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #f87b6a;">
-          ⚠️ <strong>Crear manualmente:</strong> resources/views/peliculas/index.blade.php
-        </span>
-      </div>
-      <div class="sub-desc">
-        La vista debe incluir:
-      </div>
-      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px; margin-bottom: 10px;">
-        <li>Formulario con campos: título, director, año, duración</li>
-        <li>Mensajes de validación con <code>@error</code></li>
-        <li>Tabla con el listado de películas usando <code>@forelse</code></li>
-        <li>Mensaje de éxito con <code>@if(session('success'))</code></li>
-      </ul>
-      <pre><code class="language-html">&lt;!-- Estructura básica de la vista --&gt;
+        <!-- ────────── PASO 9 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 9: Crear Vista Blade</h3>
+          <div
+            style="margin-bottom: 10px; padding: 10px 14px; background: rgba(240,80,60,0.12); border-left: 3px solid rgba(240,80,60,0.5); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: #f87b6a;">
+              ⚠️ <strong>Crear manualmente:</strong> resources/views/peliculas/index.blade.php
+            </span>
+          </div>
+          <div class="sub-desc">
+            La vista debe incluir:
+          </div>
+          <ul
+            style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px; margin-bottom: 10px;">
+            <li>Formulario con campos: título, director, año, duración</li>
+            <li>Mensajes de validación con <code>@error</code></li>
+            <li>Tabla con el listado de películas usando <code>@forelse</code></li>
+            <li>Mensaje de éxito con <code>@if(session('success'))</code></li>
+          </ul>
+          <pre><code class="language-html">&lt;!-- Estructura básica de la vista --&gt;
 &lt;form action="{{ route('peliculas.store') }}" method="POST"&gt;
     @csrf
     &lt;!-- Campos del formulario --&gt;
@@ -1657,26 +2393,29 @@ Route::post('/peliculas', [PeliculaController::class, 'store'])
         &lt;tr&gt;&lt;td&gt;No hay películas&lt;/td&gt;&lt;/tr&gt;
     @endforelse
 &lt;/table&gt;</code></pre>
-    </div>
+        </div>
 
-    <!-- ────────── PASO 10 ────────── -->
-    <div class="sub-section">
-      <h3>Paso 10: Iniciar Servidor</h3>
-      <div class="sub-desc">
-        Inicia el servidor de desarrollo de Laravel.
-      </div>
-      <pre><code class="language-bash">php artisan serve</code></pre>
-      <div style="margin-top: 8px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
-          💡 Accede a: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">http://127.0.0.1:8000/peliculas</code>
-        </span>
-      </div>
-    </div>
+        <!-- ────────── PASO 10 ────────── -->
+        <div class="sub-section">
+          <h3>Paso 10: Iniciar Servidor</h3>
+          <div class="sub-desc">
+            Inicia el servidor de desarrollo de Laravel.
+          </div>
+          <pre><code class="language-bash">php artisan serve</code></pre>
+          <div
+            style="margin-top: 8px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
+              💡 Accede a: <code
+                style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 3px;">http://127.0.0.1:8000/peliculas</code>
+            </span>
+          </div>
+        </div>
 
-    <!-- ────────── ESTRUCTURA ────────── -->
-    <div class="sub-section">
-      <h3>📁 Estructura del Proyecto</h3>
-      <pre style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 16px; border-radius: var(--radius); font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2); line-height: 1.6;"><code>peliculas/
+        <!-- ────────── ESTRUCTURA ────────── -->
+        <div class="sub-section">
+          <h3>📁 Estructura del Proyecto</h3>
+          <pre
+            style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 16px; border-radius: var(--radius); font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2); line-height: 1.6;"><code>peliculas/
 ├── app/
 │   ├── Http/
 │   │   └── Controllers/
@@ -1693,116 +2432,160 @@ Route::post('/peliculas', [PeliculaController::class, 'store'])
 ├── routes/
 │   └── web.php                         ← Rutas
 └── .env                                ← Config BD</code></pre>
-    </div>
+        </div>
 
-    <!-- ────────── COMANDOS ÚTILES ────────── -->
-    <div class="sub-section">
-      <h3>⚡ Comandos Útiles de Laravel</h3>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px;">
-        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan list</code>
-          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ver todos los comandos</div>
+        <!-- ────────── COMANDOS ÚTILES ────────── -->
+        <div class="sub-section">
+          <h3>⚡ Comandos Útiles de Laravel</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px;">
+            <div
+              style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan list</code>
+              <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ver todos los comandos</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate</code>
+              <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ejecutar migraciones</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate:rollback</code>
+              <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Deshacer última migración</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate:fresh --seed</code>
+              <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Recrear BD + seeders</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan route:list</code>
+              <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ver todas las rutas</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan tinker</code>
+              <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Consola interactiva</div>
+            </div>
+          </div>
         </div>
-        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate</code>
-          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ejecutar migraciones</div>
-        </div>
-        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate:rollback</code>
-          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Deshacer última migración</div>
-        </div>
-        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan migrate:fresh --seed</code>
-          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Recrear BD + seeders</div>
-        </div>
-        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan route:list</code>
-          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Ver todas las rutas</div>
-        </div>
-        <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.72rem; color: var(--accent-bright);">php artisan tinker</code>
-          <div style="font-size: 0.72rem; color: var(--muted); margin-top: 3px;">Consola interactiva</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- ────────── ATAJOS ────────── -->
-    <div class="sub-section">
-      <h3>🚀 Atajos de Creación Múltiple</h3>
-      <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
-        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -m</code>
-          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración</span>
+        <!-- ────────── ATAJOS ────────── -->
+        <div class="sub-section">
+          <h3>🚀 Atajos de Creación Múltiple</h3>
+          <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+            <div
+              style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -m</code>
+              <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración</span>
+            </div>
+            <div
+              style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -mc</code>
+              <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración +
+                Controlador</span>
+            </div>
+            <div
+              style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -mcr</code>
+              <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración +
+                Controlador resource</span>
+            </div>
+            <div
+              style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
+              <code
+                style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -a</code>
+              <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ TODO (migración, controlador,
+                factory, seeder, etc.)</span>
+            </div>
+          </div>
         </div>
-        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -mc</code>
-          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración + Controlador</span>
+
+      </section>
+
+      <!-- ══════════════════════════ 8. EJERCICIO PHP ══════════════════════════ -->
+      <section class="section" id="php-ejercicio">
+        <div class="section-header">
+          <span class="section-badge badge-php">PHP</span>
+          <h2>8. Ejercicio PHP</h2>
         </div>
-        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -mcr</code>
-          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ Modelo + Migración + Controlador resource</span>
+        <p class="section-desc">
+          Sistema de gestión de reservas para restaurante con formulario HTML y procesamiento PHP usando PDO y MySQLi
+          con prepared statements.
+        </p>
+
+        <!-- ────────── OBJETIVO ────────── -->
+        <div class="sub-section">
+          <h3>🎯 Objetivo del Ejercicio</h3>
+          <div class="sub-desc">
+            Desarrollar un sistema de reservas completo que permita:
+          </div>
+          <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
+            <li>Formulario HTML con validación de campos</li>
+            <li>Procesamiento con <strong>PDO</strong> (portable, moderno)</li>
+            <li>Procesamiento con <strong>MySQLi</strong> (específico MySQL)</li>
+            <li>Prepared statements para seguridad contra inyección SQL</li>
+            <li>Validación de datos en servidor</li>
+          </ul>
         </div>
-        <div style="background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.76rem; color: #7bb8f5;">php artisan make:model Pelicula -a</code>
-          <span style="font-size: 0.74rem; color: var(--muted); margin-left: 8px;">→ TODO (migración, controlador, factory, seeder, etc.)</span>
+
+        <!-- ────────── CAMPOS ────────── -->
+        <div class="sub-section">
+          <h3>📝 Campos del Formulario</h3>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Nombre completo</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Correo electrónico</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Teléfono</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Fecha reserva</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Número de personas</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Turno (comida/cena)</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Zona (interior/terraza)</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Tipo de menú</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Ocasión especial</div>
+            <div
+              style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">
+              ✓ Comentarios</div>
+          </div>
         </div>
-      </div>
-    </div>
 
-  </section>
-
-<!-- ══════════════════════════ 8. EJERCICIO PHP ══════════════════════════ -->
-  <section class="section" id="php-ejercicio">
-    <div class="section-header">
-      <span class="section-badge badge-php">PHP</span>
-      <h2>8. Ejercicio PHP</h2>
-    </div>
-    <p class="section-desc">
-      Sistema de gestión de reservas para restaurante con formulario HTML y procesamiento PHP usando PDO y MySQLi con prepared statements.
-    </p>
-
-    <!-- ────────── OBJETIVO ────────── -->
-    <div class="sub-section">
-      <h3>🎯 Objetivo del Ejercicio</h3>
-      <div class="sub-desc">
-        Desarrollar un sistema de reservas completo que permita:
-      </div>
-      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
-        <li>Formulario HTML con validación de campos</li>
-        <li>Procesamiento con <strong>PDO</strong> (portable, moderno)</li>
-        <li>Procesamiento con <strong>MySQLi</strong> (específico MySQL)</li>
-        <li>Prepared statements para seguridad contra inyección SQL</li>
-        <li>Validación de datos en servidor</li>
-      </ul>
-    </div>
-
-    <!-- ────────── CAMPOS ────────── -->
-    <div class="sub-section">
-      <h3>📝 Campos del Formulario</h3>
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Nombre completo</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Correo electrónico</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Teléfono</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Fecha reserva</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Número de personas</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Turno (comida/cena)</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Zona (interior/terraza)</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Tipo de menú</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Ocasión especial</div>
-        <div style="background: var(--surface-2); border-left: 2px solid var(--accent); padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; color: var(--text-2);">✓ Comentarios</div>
-      </div>
-    </div>
-
-    <!-- ────────── PASO 1: BASE DE DATOS ────────── -->
-    <div class="sub-section">
-      <h3>Paso 1: Crear Base de Datos</h3>
-      <div class="sub-desc">
-        La estructura es <strong>idéntica</strong> para PDO y MySQLi. Ejecutar en phpMyAdmin.
-      </div>
-      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-        📁 database.sql
-      </div>
-      <pre><code class="language-sql">CREATE DATABASE IF NOT EXISTS restaurante_db 
+        <!-- ────────── PASO 1: BASE DE DATOS ────────── -->
+        <div class="sub-section">
+          <h3>Paso 1: Crear Base de Datos</h3>
+          <div class="sub-desc">
+            La estructura es <strong>idéntica</strong> para PDO y MySQLi. Ejecutar en phpMyAdmin.
+          </div>
+          <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+            📁 database.sql
+          </div>
+          <pre><code class="language-sql">CREATE DATABASE IF NOT EXISTS restaurante_db 
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE restaurante_db;
@@ -1824,18 +2607,18 @@ CREATE TABLE IF NOT EXISTS reservas (
     INDEX idx_fecha_reserva (fecha_reserva),
     INDEX idx_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</code></pre>
-    </div>
+        </div>
 
-    <!-- ────────── PASO 2: FORMULARIO HTML ────────── -->
-    <div class="sub-section">
-      <h3>Paso 2: Formulario HTML</h3>
-      <div class="sub-desc">
-        El HTML es <strong>idéntico</strong>. Solo cambia el <code>action</code> del form según la versión.
-      </div>
-      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-        📁 index.php
-      </div>
-      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+        <!-- ────────── PASO 2: FORMULARIO HTML ────────── -->
+        <div class="sub-section">
+          <h3>Paso 2: Formulario HTML</h3>
+          <div class="sub-desc">
+            El HTML es <strong>idéntico</strong>. Solo cambia el <code>action</code> del form según la versión.
+          </div>
+          <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+            📁 index.php
+          </div>
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="es"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1885,18 +2668,18 @@ CREATE TABLE IF NOT EXISTS reservas (
     &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-    </div>
+        </div>
 
-    <!-- ────────── PASO 3: VERSIÓN PDO ────────── -->
-    <div class="sub-section">
-      <h3>Paso 3: Procesamiento con PDO</h3>
-      <div class="sub-desc">
-        PDO usa placeholders <strong>nombrados</strong> (<code>:nombre</code>) y vincula automáticamente los tipos.
-      </div>
-      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-        📁 procesar_pdo.php
-      </div>
-      <pre><code class="language-php">&lt;?php
+        <!-- ────────── PASO 3: VERSIÓN PDO ────────── -->
+        <div class="sub-section">
+          <h3>Paso 3: Procesamiento con PDO</h3>
+          <div class="sub-desc">
+            PDO usa placeholders <strong>nombrados</strong> (<code>:nombre</code>) y vincula automáticamente los tipos.
+          </div>
+          <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+            📁 procesar_pdo.php
+          </div>
+          <pre><code class="language-php">&lt;?php
 // CONFIGURACIÓN
 $host = 'localhost';
 $dbname = 'restaurante_db';
@@ -1973,23 +2756,26 @@ try {
     exit();
 }
 ?&gt;</code></pre>
-      <div style="margin-top: 8px; padding: 10px 14px; background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #7bb8f5;">
-          ℹ️ <strong>Ventajas PDO:</strong> Sintaxis moderna, portable entre bases de datos, manejo de errores con excepciones, vinculación automática de tipos.
-        </span>
-      </div>
-    </div>
+          <div
+            style="margin-top: 8px; padding: 10px 14px; background: rgba(56,150,240,0.12); border-left: 3px solid rgba(56,150,240,0.5); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: #7bb8f5;">
+              ℹ️ <strong>Ventajas PDO:</strong> Sintaxis moderna, portable entre bases de datos, manejo de errores con
+              excepciones, vinculación automática de tipos.
+            </span>
+          </div>
+        </div>
 
-    <!-- ────────── PASO 4: VERSIÓN MYSQLI ────────── -->
-    <div class="sub-section">
-      <h3>Paso 4: Procesamiento con MySQLi</h3>
-      <div class="sub-desc">
-        MySQLi usa placeholders <strong>posicionales</strong> (<code>?</code>) y requiere especificar tipos manualmente.
-      </div>
-      <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
-        📁 procesar_mysqli.php
-      </div>
-      <pre><code class="language-php">&lt;?php
+        <!-- ────────── PASO 4: VERSIÓN MYSQLI ────────── -->
+        <div class="sub-section">
+          <h3>Paso 4: Procesamiento con MySQLi</h3>
+          <div class="sub-desc">
+            MySQLi usa placeholders <strong>posicionales</strong> (<code>?</code>) y requiere especificar tipos
+            manualmente.
+          </div>
+          <div style="font-family: var(--font-m); font-size: 0.7rem; color: var(--muted); margin-bottom: 6px;">
+            📁 procesar_mysqli.php
+          </div>
+          <pre><code class="language-php">&lt;?php
 // CONFIGURACIÓN
 $host = 'localhost';
 $dbname = 'restaurante_db';
@@ -2076,164 +2862,484 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?&gt;</code></pre>
-      <div style="margin-top: 8px; padding: 10px 14px; background: rgba(240,80,60,0.12); border-left: 3px solid rgba(240,80,60,0.5); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: #f87b6a;">
-          ⚠️ <strong>bind_param:</strong> Debes especificar tipos manualmente. En este caso: <code>"ssssisssss"</code> = 9 strings + 1 integer (num_personas).
-        </span>
-      </div>
-    </div>
+          <div
+            style="margin-top: 8px; padding: 10px 14px; background: rgba(240,80,60,0.12); border-left: 3px solid rgba(240,80,60,0.5); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: #f87b6a;">
+              ⚠️ <strong>bind_param:</strong> Debes especificar tipos manualmente. En este caso:
+              <code>"ssssisssss"</code> = 9 strings + 1 integer (num_personas).
+            </span>
+          </div>
+        </div>
 
-    <!-- ────────── COMPARATIVA ────────── -->
-    <div class="sub-section">
-      <h3>📊 Comparativa PDO vs MySQLi</h3>
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.82rem;">
-        <thead>
-          <tr style="background: var(--surface-3); border-bottom: 2px solid var(--border-2);">
-            <th style="padding: 10px; text-align: left; color: var(--text); font-family: var(--font-m); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;">Aspecto</th>
-            <th style="padding: 10px; text-align: left; color: #7bb8f5; font-family: var(--font-m); font-size: 0.7rem;">PDO</th>
-            <th style="padding: 10px; text-align: left; color: #6ee7a0; font-family: var(--font-m); font-size: 0.7rem;">MySQLi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding: 8px; color: var(--text-2);">Conexión</td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>new PDO(...)</code></td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>mysqli_connect(...)</code></td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding: 8px; color: var(--text-2);">Placeholders</td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>:nombre</code> (nombrados)</td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>?</code> (posicionales)</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding: 8px; color: var(--text-2);">Vincular</td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>execute([array])</code></td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>bind_param("ssi",...)</code></td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding: 8px; color: var(--text-2);">Tipos</td>
-            <td style="padding: 8px; color: #4ade80;">✓ Automático</td>
-            <td style="padding: 8px; color: #f87b6a;">✗ Manual (s,i,d,b)</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding: 8px; color: var(--text-2);">Errores</td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>try/catch</code></td>
-            <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);"><code>if ($stmt === false)</code></td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding: 8px; color: var(--text-2);">Portabilidad</td>
-            <td style="padding: 8px; color: #4ade80;">✓ Múltiples BD</td>
-            <td style="padding: 8px; color: #f87b6a;">✗ Solo MySQL</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px; color: var(--text-2);">Recomendado</td>
-            <td style="padding: 8px; color: #4ade80; font-weight: 600;">✓ Primera opción</td>
-            <td style="padding: 8px; color: var(--accent-bright);">OK pero menos moderna</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <!-- ────────── COMPARATIVA ────────── -->
+        <div class="sub-section">
+          <h3>📊 Comparativa PDO vs MySQLi</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.82rem;">
+            <thead>
+              <tr style="background: var(--surface-3); border-bottom: 2px solid var(--border-2);">
+                <th
+                  style="padding: 10px; text-align: left; color: var(--text); font-family: var(--font-m); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                  Aspecto</th>
+                <th
+                  style="padding: 10px; text-align: left; color: #7bb8f5; font-family: var(--font-m); font-size: 0.7rem;">
+                  PDO</th>
+                <th
+                  style="padding: 10px; text-align: left; color: #6ee7a0; font-family: var(--font-m); font-size: 0.7rem;">
+                  MySQLi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 8px; color: var(--text-2);">Conexión</td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>new PDO(...)</code>
+                </td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>mysqli_connect(...)</code>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 8px; color: var(--text-2);">Placeholders</td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>:nombre</code> (nombrados)
+                </td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>?</code> (posicionales)
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 8px; color: var(--text-2);">Vincular</td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>execute([array])</code>
+                </td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>bind_param("ssi",...)</code>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 8px; color: var(--text-2);">Tipos</td>
+                <td style="padding: 8px; color: #4ade80;">✓ Automático</td>
+                <td style="padding: 8px; color: #f87b6a;">✗ Manual (s,i,d,b)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 8px; color: var(--text-2);">Errores</td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>try/catch</code>
+                </td>
+                <td style="padding: 8px; font-family: var(--font-m); font-size: 0.75rem; color: var(--text-2);">
+                  <code>if ($stmt === false)</code>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 8px; color: var(--text-2);">Portabilidad</td>
+                <td style="padding: 8px; color: #4ade80;">✓ Múltiples BD</td>
+                <td style="padding: 8px; color: #f87b6a;">✗ Solo MySQL</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; color: var(--text-2);">Recomendado</td>
+                <td style="padding: 8px; color: #4ade80; font-weight: 600;">✓ Primera opción</td>
+                <td style="padding: 8px; color: var(--accent-bright);">OK pero menos moderna</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <!-- ────────── TIPOS BIND_PARAM ────────── -->
-    <div class="sub-section">
-      <h3>🔤 Tipos en bind_param (MySQLi)</h3>
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
-        <div style="background: var(--surface-2); border-left: 3px solid #7bb8f5; padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #7bb8f5;">s = string</code>
-          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Cadenas de texto (nombre, email, fecha)</div>
+        <!-- ────────── TIPOS BIND_PARAM ────────── -->
+        <div class="sub-section">
+          <h3>🔤 Tipos en bind_param (MySQLi)</h3>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;">
+            <div
+              style="background: var(--surface-2); border-left: 3px solid #7bb8f5; padding: 10px 14px; border-radius: 6px;">
+              <code style="font-family: var(--font-m); font-size: 0.8rem; color: #7bb8f5;">s = string</code>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Cadenas de texto (nombre, email,
+                fecha)</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border-left: 3px solid #6ee7a0; padding: 10px 14px; border-radius: 6px;">
+              <code style="font-family: var(--font-m); font-size: 0.8rem; color: #6ee7a0;">i = integer</code>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Números enteros (personas, edad,
+                cantidad)</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border-left: 3px solid #f87b6a; padding: 10px 14px; border-radius: 6px;">
+              <code style="font-family: var(--font-m); font-size: 0.8rem; color: #f87b6a;">d = double</code>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Números decimales (precio,
+                descuento)</div>
+            </div>
+            <div
+              style="background: var(--surface-2); border-left: 3px solid #c084fc; padding: 10px 14px; border-radius: 6px;">
+              <code style="font-family: var(--font-m); font-size: 0.8rem; color: #c084fc;">b = blob</code>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Datos binarios (imágenes, archivos)
+              </div>
+            </div>
+          </div>
+          <div
+            style="margin-top: 12px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
+            <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
+              💡 En este ejercicio: <code>"ssssisssss"</code> = 10 parámetros (9 strings + 1 integer en posición 5)
+            </span>
+          </div>
         </div>
-        <div style="background: var(--surface-2); border-left: 3px solid #6ee7a0; padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #6ee7a0;">i = integer</code>
-          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Números enteros (personas, edad, cantidad)</div>
-        </div>
-        <div style="background: var(--surface-2); border-left: 3px solid #f87b6a; padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #f87b6a;">d = double</code>
-          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Números decimales (precio, descuento)</div>
-        </div>
-        <div style="background: var(--surface-2); border-left: 3px solid #c084fc; padding: 10px 14px; border-radius: 6px;">
-          <code style="font-family: var(--font-m); font-size: 0.8rem; color: #c084fc;">b = blob</code>
-          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">Datos binarios (imágenes, archivos)</div>
-        </div>
-      </div>
-      <div style="margin-top: 12px; padding: 10px 14px; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 6px;">
-        <span style="font-family: var(--font-m); font-size: 0.78rem; color: var(--accent-bright);">
-          💡 En este ejercicio: <code>"ssssisssss"</code> = 10 parámetros (9 strings + 1 integer en posición 5)
-        </span>
-      </div>
-    </div>
 
-    <!-- ────────── ESTRUCTURA ────────── -->
-    <div class="sub-section">
-      <h3>📁 Estructura del Proyecto</h3>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
-        <div>
-          <div style="font-family: var(--font-m); font-size: 0.68rem; color: #7bb8f5; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Versión PDO</div>
-          <pre style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 12px; border-radius: 6px; font-family: var(--font-m); font-size: 0.72rem; color: var(--text-2); line-height: 1.5;"><code>proyecto-reservas-pdo/
+        <!-- ────────── ESTRUCTURA ────────── -->
+        <div class="sub-section">
+          <h3>📁 Estructura del Proyecto</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+            <div>
+              <div
+                style="font-family: var(--font-m); font-size: 0.68rem; color: #7bb8f5; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">
+                Versión PDO</div>
+              <pre
+                style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 12px; border-radius: 6px; font-family: var(--font-m); font-size: 0.72rem; color: var(--text-2); line-height: 1.5;"><code>proyecto-reservas-pdo/
 ├── database.sql
 ├── index.php
 ├── procesar_pdo.php
 └── styles.css</code></pre>
-        </div>
-        <div>
-          <div style="font-family: var(--font-m); font-size: 0.68rem; color: #6ee7a0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Versión MySQLi</div>
-          <pre style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 12px; border-radius: 6px; font-family: var(--font-m); font-size: 0.72rem; color: var(--text-2); line-height: 1.5;"><code>proyecto-reservas-mysqli/
+            </div>
+            <div>
+              <div
+                style="font-family: var(--font-m); font-size: 0.68rem; color: #6ee7a0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">
+                Versión MySQLi</div>
+              <pre
+                style="background: var(--surface-2); border: 1px solid var(--border-2); padding: 12px; border-radius: 6px; font-family: var(--font-m); font-size: 0.72rem; color: var(--text-2); line-height: 1.5;"><code>proyecto-reservas-mysqli/
 ├── database.sql
 ├── index.php
 ├── procesar_mysqli.php
 └── styles.css</code></pre>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- ────────── PASOS EJECUCIÓN ────────── -->
-    <div class="sub-section">
-      <h3>🚀 Pasos para Ejecutar</h3>
-      <ol style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 20px;">
-        <li>Importar <code>database.sql</code> en phpMyAdmin</li>
-        <li>Ajustar credenciales en <code>procesar_*.php</code> si es necesario</li>
-        <li>Copiar archivos a <code>htdocs/</code> (XAMPP) o <code>www/</code> (WAMP)</li>
-        <li>Iniciar Apache + MySQL</li>
-        <li>Acceder a <code>http://localhost/reservas/index.php</code></li>
-      </ol>
-    </div>
+        <!-- ────────── PASOS EJECUCIÓN ────────── -->
+        <div class="sub-section">
+          <h3>🚀 Pasos para Ejecutar</h3>
+          <ol style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 20px;">
+            <li>Importar <code>database.sql</code> en phpMyAdmin</li>
+            <li>Ajustar credenciales en <code>procesar_*.php</code> si es necesario</li>
+            <li>Copiar archivos a <code>htdocs/</code> (XAMPP) o <code>www/</code> (WAMP)</li>
+            <li>Iniciar Apache + MySQL</li>
+            <li>Acceder a <code>http://localhost/reservas/index.php</code></li>
+          </ol>
+        </div>
 
-    <!-- ────────── RECOMENDACIONES ────────── -->
-    <div class="sub-section">
-      <h3>💡 Recomendaciones</h3>
-      <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
-        <li><strong>Para aprender:</strong> Practica AMBAS versiones y compara las diferencias</li>
-        <li><strong>Para exámenes:</strong> Domina la que pida tu profesor</li>
-        <li><strong>Para proyectos:</strong> Usa PDO (más moderna, portable, concisa)</li>
-        <li><strong>Seguridad:</strong> SIEMPRE usa prepared statements, nunca concatenes variables en SQL</li>
-      </ul>
-    </div>
+        <!-- ────────── RECOMENDACIONES ────────── -->
+        <div class="sub-section">
+          <h3>💡 Recomendaciones</h3>
+          <ul style="font-size: 0.84rem; color: var(--text-2); line-height: 1.8; padding-left: 18px;">
+            <li><strong>Para aprender:</strong> Practica AMBAS versiones y compara las diferencias</li>
+            <li><strong>Para exámenes:</strong> Domina la que pida tu profesor</li>
+            <li><strong>Para proyectos:</strong> Usa PDO (más moderna, portable, concisa)</li>
+            <li><strong>Seguridad:</strong> SIEMPRE usa prepared statements, nunca concatenes variables en SQL</li>
+          </ul>
+        </div>
 
-  </section>
+      </section>
 
-</main>
-</div>
+      <!-- ══════════════════════════ 9. PRÁCTICA MONGODB ══════════════════════════ -->
+      <section class="section" id="practica-mongo">
+        <div class="section-header">
+          <span class="section-badge badge-mongo">MongoDB</span>
+          <h2>9. Práctica MongoDB - Gestión de Videojuegos</h2>
+        </div>
+        <p class="section-desc">
+          Práctica completa de MongoDB realizando operaciones CRUD sobre una base de datos de videojuegos.
+        </p>
 
-<script>
-hljs.highlightAll();
+        <!-- TAREA 1 -->
+        <div class="sub-section">
+          <h3>Tarea 1: Crear la base de datos</h3>
+          <div class="sub-desc">En MongoDB, la base de datos se crea automáticamente al usarla por primera vez.</div>
 
-const sections = document.querySelectorAll('.section');
-const navItems = document.querySelectorAll('.nav-item');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navItems.forEach(i => i.classList.remove('active'));
-      const match = document.querySelector(`.nav-item[href="#${entry.target.id}"]`);
-      if (match) match.classList.add('active');
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>Paso 1: Crear base de datos gamezone</div>
+            <pre><code class="language-javascript">use gamezone</code></pre>
+          </div>
+
+          <div class="callout callout-info">
+            <span class="callout-icon">ℹ️</span>
+            <span>El comando <code>use gamezone</code> selecciona la base de datos. Si no existe, MongoDB la creará
+              automáticamente cuando insertemos el primer documento.</span>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>Paso 2: Crear colección videojuegos</div>
+            <pre><code class="language-javascript">db.createCollection("videojuegos")
+
+// Verificar colecciones existentes
+show collections</code></pre>
+          </div>
+        </div>
+
+        <!-- TAREA 2 -->
+        <div class="sub-section">
+          <h3>Tarea 2: Insertar datos</h3>
+          <div class="sub-desc">Estructura de cada videojuego: título, plataforma, precio, géneros (array), stock y
+            valoraciones (objeto anidado).</div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>Insertar 5 videojuegos</div>
+            <pre><code class="language-javascript">db.videojuegos.insertMany([
+    {
+        "titulo": "The Legend of Zelda: Breath of the Wild",
+        "plataforma": "Nintendo Switch",
+        "precio": 59.99,
+        "generos": ["Aventura", "Acción"],
+        "stock": 12,
+        "valoraciones": {
+            "jugabilidad": 10,
+            "graficos": 9,
+            "historia": 10
+        }
+    },
+    {
+        "titulo": "God of War Ragnarök",
+        "plataforma": "PlayStation 5",
+        "precio": 69.99,
+        "generos": ["Acción", "Aventura"],
+        "stock": 8,
+        "valoraciones": {
+            "jugabilidad": 9,
+            "graficos": 10,
+            "historia": 9
+        }
+    },
+    {
+        "titulo": "Minecraft",
+        "plataforma": "PC",
+        "precio": 26.95,
+        "generos": ["Sandbox", "Supervivencia"],
+        "stock": 25,
+        "valoraciones": {
+            "jugabilidad": 10,
+            "graficos": 6,
+            "historia": 5
+        }
+    },
+    {
+        "titulo": "Elden Ring",
+        "plataforma": "PC",
+        "precio": 59.99,
+        "generos": ["RPG", "Acción"],
+        "stock": 5,
+        "valoraciones": {
+            "jugabilidad": 9,
+            "graficos": 9,
+            "historia": 10
+        }
+    },
+    {
+        "titulo": "FIFA 24",
+        "plataforma": "Xbox Series X",
+        "precio": 39.99,
+        "generos": ["Deportes"],
+        "stock": 15,
+        "valoraciones": {
+            "jugabilidad": 8,
+            "graficos": 8,
+            "historia": 3
+        }
     }
-  });
-}, { rootMargin: '-15% 0px -75% 0px' });
-sections.forEach(s => observer.observe(s));
+])</code></pre>
+          </div>
+        </div>
 
-const KEY = 'dwes_teoria_scroll';
-const main = document.querySelector('.main');
-const saved = sessionStorage.getItem(KEY);
-if (saved) main.scrollTop = parseInt(saved);
-main.addEventListener('scroll', () => sessionStorage.setItem(KEY, main.scrollTop));
-</script>
+        <!-- TAREA 3 -->
+        <div class="sub-section">
+          <h3>Tarea 3: Consultas básicas</h3>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>a) Mostrar todos los videojuegos</div>
+            <pre><code class="language-javascript">db.videojuegos.find()
+
+// Con formato legible
+db.videojuegos.find().pretty()</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>b) Buscar un videojuego por título</div>
+            <pre><code class="language-javascript">db.videojuegos.find({
+    titulo: "Minecraft"
+})</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>c) Buscar videojuegos con precio mayor a 40
+            </div>
+            <pre><code class="language-javascript">db.videojuegos.find({
+    precio: { $gt: 40 }
+})</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>d) Buscar videojuegos con stock menor a 10
+            </div>
+            <pre><code class="language-javascript">db.videojuegos.find({
+    stock: { $lt: 10 }
+})</code></pre>
+          </div>
+        </div>
+
+        <!-- TAREA 4 -->
+        <div class="sub-section">
+          <h3>Tarea 4: Actualizar datos</h3>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>a) Cambiar el precio de un videojuego</div>
+            <pre><code class="language-javascript">db.videojuegos.updateOne(
+    { titulo: "Minecraft" },
+    { $set: { precio: 29.99 } }
+)</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>b) Añadir un nuevo género usando $push</div>
+            <pre><code class="language-javascript">db.videojuegos.updateOne(
+    { titulo: "FIFA 24" },
+    { $push: { generos: "Simulación" } }
+)</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>c) Aumentar stock de videojuegos de una
+              plataforma usando $inc</div>
+            <pre><code class="language-javascript">db.videojuegos.updateMany(
+    { plataforma: "PC" },
+    { $inc: { stock: 5 } }
+)</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>d) Aumentar valoración de gráficos en 1
+              punto</div>
+            <pre><code class="language-javascript">db.videojuegos.updateMany(
+    { "valoraciones.graficos": { $exists: true } },
+    { $inc: { "valoraciones.graficos": 1 } }
+)</code></pre>
+          </div>
+        </div>
+
+        <!-- TAREA 5 -->
+        <div class="sub-section">
+          <h3>Tarea 5: Eliminar datos</h3>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>a) Eliminar un videojuego por título</div>
+            <pre><code class="language-javascript">db.videojuegos.deleteOne({
+    titulo: "FIFA 24"
+})</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>b) Eliminar videojuegos con stock 0</div>
+            <pre><code class="language-javascript">db.videojuegos.deleteMany({
+    stock: 0
+})</code></pre>
+          </div>
+        </div>
+
+        <!-- TAREA 6 -->
+        <div class="sub-section">
+          <h3>Tarea 6: Consultas avanzadas</h3>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>a) Buscar videojuegos del género "Acción"
+            </div>
+            <pre><code class="language-javascript">db.videojuegos.find({
+    generos: "Acción"
+})</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>b) Mostrar solo título, plataforma y precio
+              (proyección)</div>
+            <pre><code class="language-javascript">db.videojuegos.find(
+    {},
+    {
+        titulo: 1,
+        plataforma: 1,
+        precio: 1,
+        _id: 0
+    }
+)</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>c) Ordenar por precio de mayor a menor</div>
+            <pre><code class="language-javascript">db.videojuegos.find().sort({
+    precio: -1
+})</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>d) Ordenar por stock de menor a mayor</div>
+            <pre><code class="language-javascript">db.videojuegos.find().sort({
+    stock: 1
+})</code></pre>
+          </div>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>e) Buscar videojuegos con valoración de
+              historia >= 8</div>
+            <pre><code class="language-javascript">db.videojuegos.find({
+    "valoraciones.historia": { $gte: 8 }
+})</code></pre>
+          </div>
+        </div>
+
+        <!-- TAREA 7 -->
+        <div class="sub-section">
+          <h3>Tarea 7: Reto extra</h3>
+
+          <div class="code-block-wrap">
+            <div class="code-label"><span class="code-dot dot-mongo"></span>Consulta con múltiples condiciones</div>
+            <pre><code class="language-javascript">// Videojuegos con precio < 50 Y stock > 5
+db.videojuegos.find({
+    precio: { $lt: 50 },
+    stock: { $gt: 5 }
+})
+
+// Alternativa explícita con $and
+db.videojuegos.find({
+    $and: [
+        { precio: { $lt: 50 } },
+        { stock: { $gt: 5 } }
+    ]
+})</code></pre>
+          </div>
+
+          <div class="callout callout-info">
+            <span class="callout-icon">ℹ️</span>
+            <span>Cuando especificamos múltiples condiciones en el mismo objeto, MongoDB aplica un AND lógico
+              automáticamente. El documento debe cumplir TODAS las condiciones.</span>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script>
+    hljs.highlightAll();
+
+    const sections = document.querySelectorAll('.section');
+    const navItems = document.querySelectorAll('.nav-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navItems.forEach(i => i.classList.remove('active'));
+          const match = document.querySelector(`.nav-item[href="#${entry.target.id}"]`);
+          if (match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    const KEY = 'dwes_teoria_scroll';
+    const main = document.querySelector('.main');
+    const saved = sessionStorage.getItem(KEY);
+    if (saved) main.scrollTop = parseInt(saved);
+    main.addEventListener('scroll', () => sessionStorage.setItem(KEY, main.scrollTop));
+  </script>
 </body>
+
 </html>

@@ -58,6 +58,155 @@
       color: var(--accent-bright);
     }
 
+    /* Estilos para panel Desarrollo */
+    .desarrollo-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    .desarrollo-title {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .desarrollo-intro {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+    }
+
+    .question-block {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .question-block-title {
+      color: var(--accent-bright);
+      font-size: 1.3rem;
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+      font-family: var(--font-d);
+    }
+
+    .qa-item {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .qa-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .question {
+      color: var(--text);
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-s);
+    }
+
+    .answer {
+      color: var(--text-2);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .answer p {
+      margin-bottom: 0.75rem;
+    }
+
+    .answer ul,
+    .answer ol {
+      margin-left: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .answer li {
+      margin-bottom: 0.375rem;
+    }
+
+    .code-example {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-family: var(--font-m);
+    }
+
+    .code-example code {
+      color: var(--accent-bright);
+      font-size: 0.9rem;
+    }
+
+    .highlight {
+      background: var(--accent-bg);
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+      border-radius: 0.25rem;
+      font-weight: 500;
+    }
+
+    .note {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 3px solid #3b82f6;
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+      border-radius: 0.25rem;
+      font-style: italic;
+    }
+
+    .warning {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 3px solid #ef4444;
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+      border-radius: 0.25rem;
+      font-weight: 500;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .comparison-table th {
+      background: var(--accent-bg);
+      color: var(--accent-bright);
+      font-weight: 600;
+      font-family: var(--font-m);
+      font-size: 0.8rem;
+    }
+
+    .checklist {
+      list-style: none;
+      margin-left: 0 !important;
+    }
+
+    .checklist li {
+      padding: 0.5rem 0;
+      font-weight: 500;
+    }
   </style>
 </head>
 
@@ -88,8 +237,15 @@
             </svg>
             Ejercicios test
           </button>
+          <button class="btn-mode" data-mode="desarrollo">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Desarrollo
+          </button>
         </div>
-<!-- SELECTOR DE UFs (solo visible en modo test) -->
+        <!-- SELECTOR DE UFs (solo visible en modo test) -->
         <div id="uf-section">
           <p class="section-label">Unidades formativas</p>
           <button class="btn-todo" id="btn-todo">
@@ -125,6 +281,377 @@
             id="pool-info"></div>
           <button class="btn-start" id="btn-start">Comenzar cuestionario →</button>
         </div>
+      </div>
+    </div>
+    <!-- PANEL DESARROLLO -->
+    <div id="panel-desarrollo" style="display: none;">
+      <div class="desarrollo-container">
+        <h2 class="desarrollo-title">Desarrollo - Preguntas y Respuestas</h2>
+        <p class="desarrollo-intro">Explicaciones detalladas de los conceptos clave vistos en clase sobre seguridad
+          informática, copias de seguridad, cifrado, análisis de red y protección de datos.</p>
+
+        <!-- BLOQUE 1: COPIAS DE SEGURIDAD -->
+        <div class="question-block">
+          <h3 class="question-block-title">Copias de Seguridad y Estrategias</h3>
+
+          <div class="qa-item">
+            <h4 class="question">¿Qué es la rotación GFS y por qué hacer el 3-2-1?</h4>
+            <div class="answer">
+              <p>La <strong>rotación GFS (Grandfather-Father-Son)</strong> es una estrategia de planificación de backups
+                en tres niveles:</p>
+              <ul>
+                <li><strong>Hijo (Son):</strong> Copias diarias incrementales para recuperar lo más reciente rápidamente
+                </li>
+                <li><strong>Padre (Father):</strong> Copias semanales completas o diferenciales como punto intermedio
+                </li>
+                <li><strong>Abuelo (Grandfather):</strong> Copias mensuales completas para conservación a largo plazo
+                </li>
+              </ul>
+              <p>Se combina con la <strong>regla 3-2-1</strong> porque esta garantiza que aunque falle un soporte, una
+                ubicación o un tipo de medio, siempre tengas otra copia disponible:</p>
+              <ul>
+                <li><strong>3</strong> copias de los datos</li>
+                <li><strong>2</strong> tipos de medios diferentes</li>
+                <li><strong>1</strong> copia offsite (fuera de la ubicación principal)</li>
+              </ul>
+              <p class="highlight">No es redundancia por capricho: es la mínima garantía ante ransomware, fallo de disco
+                o desastre físico.</p>
+            </div>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="question">Explica rsync y qué hace</h4>
+            <div class="answer">
+              <p><strong>rsync</strong> es una herramienta de Linux que sincroniza archivos y directorios de forma
+                incremental, es decir, solo copia lo que ha cambiado desde la última vez.</p>
+              <div class="code-example">
+                <code>sudo rsync -av --delete $HOME/prueba /mnt/backup/</code>
+              </div>
+              <p><strong>Opciones principales:</strong></p>
+              <ul>
+                <li><code>-a</code> (archive): Mantiene permisos, fechas y estructura</li>
+                <li><code>-v</code> (verbose): Muestra lo que hace en tiempo real</li>
+                <li><code>--delete</code>: Elimina del destino los archivos que ya no existen en el origen</li>
+              </ul>
+              <p class="note">Si borras un fichero en origen y vuelves a lanzar rsync, ese fichero desaparece también
+                del backup, convirtiéndolo en un espejo actualizado.</p>
+              <p><strong>Uso en WSL:</strong> En Windows con WSL (Windows Subsystem for Linux) podemos usar rsync para
+                hacer copias de seguridad desde la consola de Linux sin necesidad de instalar aplicaciones adicionales.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 2: CIFRADO Y PROTECCIÓN -->
+        <div class="question-block">
+          <h3 class="question-block-title">Cifrado y Protección de Datos</h3>
+
+          <div class="qa-item">
+            <h4 class="question">¿Qué utilizarías para proteger una unidad externa? ¿Qué ofrece BitLocker?</h4>
+            <div class="answer">
+              <p>Para una unidad externa usaría <strong>BitLocker</strong> (en Windows) o <strong>VeraCrypt</strong>
+                (multiplataforma).</p>
+              <p><strong>BitLocker</strong> cifra toda la unidad con AES, de forma que si alguien roba o encuentra el
+                dispositivo, no puede acceder a los datos sin la contraseña o la clave de recuperación.</p>
+              <p><strong>Requisitos:</strong></p>
+              <ul>
+                <li>Sistema de ficheros NTFS</li>
+                <li>Windows Pro, Enterprise o Education (no disponible en Home)</li>
+              </ul>
+              <p><strong>Lo que ofrece:</strong> Confidencialidad total del contenido en reposo. Aunque conecten la
+                unidad a otro equipo, ven solo datos cifrados ilegibles.</p>
+              <p class="highlight">Proceso visto en clase: Partición de disco y cifrado con BitLocker para proteger
+                información sensible en unidades externas.</p>
+            </div>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="question">¿Qué es el cifrado Playfair y cómo funciona?</h4>
+            <div class="answer">
+              <p><strong>Playfair</strong> es un cifrado de sustitución polialfabético que trabaja con pares de letras
+                (digramas) en lugar de letras individuales.</p>
+              <p><strong>Proceso de cifrado:</strong></p>
+              <ol>
+                <li>Se crea una matriz 5x5 con una palabra clave y el resto del alfabeto (I/J comparten casilla)</li>
+                <li>El mensaje se divide en pares de letras</li>
+                <li>Se aplican reglas según la posición de cada par en la matriz:
+                  <ul>
+                    <li>Misma fila → desplazar a la derecha</li>
+                    <li>Misma columna → desplazar hacia abajo</li>
+                    <li>Forman rectángulo → intercambiar por las esquinas opuestas</li>
+                  </ul>
+                </li>
+              </ol>
+              <p class="note">Es más seguro que el cifrado César porque trabaja con pares de letras, dificultando el
+                análisis de frecuencias.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 3: INTEGRIDAD Y HASH -->
+        <div class="question-block">
+          <h3 class="question-block-title">Integridad de Archivos</h3>
+
+          <div class="qa-item">
+            <h4 class="question">¿En qué casos se utiliza el hash?</h4>
+            <div class="answer">
+              <p>El hash se usa siempre que necesitas <strong>verificar que un archivo no ha sido modificado</strong>,
+                sin necesidad de leerlo entero.</p>
+              <p><strong>Casos concretos:</strong></p>
+              <ul>
+                <li><strong>Comprobar integridad de descargas:</strong> El proveedor publica el hash SHA-256 del archivo
+                  y tú lo compruebas con <code>Get-FileHash</code></li>
+                <li><strong>Auditoría forense:</strong> Registrar el hash de una evidencia para demostrar que no fue
+                  alterada</li>
+                <li><strong>Verificar ejecutables legítimos:</strong> Comparar el hash del archivo descargado con el
+                  oficial</li>
+                <li><strong>Detectar cambios en ficheros de sistema:</strong> Sistemas de detección de intrusos (IDS)
+                </li>
+              </ul>
+              <div class="code-example">
+                <code>Get-FileHash archivo.exe -Algorithm SHA256</code>
+              </div>
+              <p class="highlight">Si recibes un archivo con código hash X y el oficial tiene código Y, cuidado: ha sido
+                modificado.</p>
+            </div>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="question">¿Podemos entender el hash como cifrado?</h4>
+            <div class="answer">
+              <p><strong>No.</strong> Son cosas completamente distintas:</p>
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Aspecto</th>
+                    <th>Cifrado</th>
+                    <th>Hash</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Reversibilidad</td>
+                    <td>✓ Reversible con la clave</td>
+                    <td>✗ Unidireccional (irreversible)</td>
+                  </tr>
+                  <tr>
+                    <td>Propósito</td>
+                    <td>Proteger contenido (confidencialidad)</td>
+                    <td>Certificar integridad</td>
+                  </tr>
+                  <tr>
+                    <td>Salida</td>
+                    <td>Variable según entrada</td>
+                    <td>Longitud fija</td>
+                  </tr>
+                  <tr>
+                    <td>Analogía</td>
+                    <td>Guardar un secreto en una caja fuerte</td>
+                    <td>Tomar una huella dactilar</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="highlight">A partir del hash nunca puedes obtener el archivo original. El hash no protege el
+                contenido, solo certifica su integridad.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 4: ANÁLISIS DE RED -->
+        <div class="question-block">
+          <h3 class="question-block-title">Análisis y Monitorización de Red</h3>
+
+          <div class="qa-item">
+            <h4 class="question">Sniffer: resultado de un Wireshark</h4>
+            <div class="answer">
+              <p>Un <strong>sniffer</strong> captura todos los paquetes que circulan por la red. En
+                <strong>Wireshark</strong> ves en tiempo real:
+              </p>
+              <ul>
+                <li>Protocolo usado (HTTP, HTTPS, DNS, TCP, UDP...)</li>
+                <li>IP origen y destino</li>
+                <li>Puerto origen y destino</li>
+                <li>Contenido del paquete (si no está cifrado)</li>
+              </ul>
+              <p><strong>Usos legítimos:</strong></p>
+              <ul>
+                <li>Diagnosticar problemas de red</li>
+                <li>Analizar rendimiento</li>
+                <li>Detectar intrusiones</li>
+                <li>Validar configuraciones de seguridad</li>
+              </ul>
+              <p class="warning">También es la herramienta que usaría un atacante en una red WiFi abierta para capturar
+                credenciales.</p>
+              <p><strong>Contramedida:</strong> El cifrado. Si el tráfico va por HTTPS o VPN, Wireshark lo ve pero no
+                puede leerlo.</p>
+            </div>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="question">¿Qué protocolo de seguridad debe tener mi red WiFi en casa?</h4>
+            <div class="answer">
+              <p>El protocolo recomendado es <strong>WPA3</strong> (Wi-Fi Protected Access 3), el estándar más moderno y
+                seguro.</p>
+              <p><strong>Evolución de protocolos:</strong></p>
+              <ul>
+                <li><strong>WEP:</strong> Obsoleto, inseguro, rompible en minutos</li>
+                <li><strong>WPA:</strong> Mejorado pero con vulnerabilidades conocidas</li>
+                <li><strong>WPA2:</strong> Estándar actual, seguro con configuración adecuada</li>
+                <li><strong>WPA3:</strong> Más seguro, protege contra ataques de fuerza bruta, cifrado individualizado
+                </li>
+              </ul>
+              <p class="note">Problema común: Es posible que tu proveedor de internet no ofrezca WPA3 por defecto. En
+                ese caso, debes contactar con tu ISP para solicitarlo o actualizar el firmware del router.</p>
+              <p><strong>Mínimo aceptable:</strong> WPA2 con contraseña fuerte (12+ caracteres, mezcla de mayúsculas,
+                minúsculas, números y símbolos).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 5: FIREWALL Y REGLAS -->
+        <div class="question-block">
+          <h3 class="question-block-title">Firewall y Control de Acceso</h3>
+
+          <div class="qa-item">
+            <h4 class="question">¿Por qué esta conexión se produce y esta otra no? Reglas de entrada del firewall</h4>
+            <div class="answer">
+              <p>El firewall aplica las reglas <strong>en orden</strong> y actúa según la primera que coincide.</p>
+              <p><strong>Una conexión se permite si existe una regla de entrada que coincide con:</strong></p>
+              <ul>
+                <li>Protocolo (TCP/UDP)</li>
+                <li>Puerto de destino</li>
+                <li>IP origen</li>
+                <li>Perfil de red activo (público, privado, dominio)</li>
+              </ul>
+              <p class="highlight">Si no hay ninguna regla que la permita, la política por defecto es
+                <strong>denegar</strong>.
+              </p>
+              <p>Por eso ves conexiones que pasan y otras que se bloquean: unas tienen regla explícita de permiso y
+                otras no.</p>
+            </div>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="question">¿Qué harías para que se permitiera una conexión?</h4>
+            <div class="answer">
+              <p><strong>En Windows Defender Firewall:</strong></p>
+              <ol>
+                <li>Ir a <strong>Firewall de Windows Defender con seguridad avanzada</strong></li>
+                <li>Seleccionar <strong>Reglas de entrada</strong></li>
+                <li>Hacer clic en <strong>Nueva regla...</strong></li>
+                <li>Seleccionar el tipo (programa, puerto o personalizada)</li>
+                <li>Definir protocolo y puerto (ej. TCP 8080)</li>
+                <li>Elegir <strong>"Permitir la conexión"</strong></li>
+                <li>Aplicar al perfil correspondiente (privado, dominio o público)</li>
+              </ol>
+              <p><strong>En Linux con nftables:</strong></p>
+              <div class="code-example">
+                <code>nft add rule inet filter input tcp dport 8080 accept</code>
+              </div>
+              <p class="note">Revisa regularmente las reglas activas del firewall para asegurarte de que no hay puertos
+                innecesarios abiertos.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 6: PROXIES Y SEGURIDAD -->
+        <div class="question-block">
+          <h3 class="question-block-title">Proxies y Privacidad</h3>
+
+          <div class="qa-item">
+            <h4 class="question">Proxies: ¿para qué sirven?</h4>
+            <div class="answer">
+              <p>Un <strong>proxy</strong> es un intermediario entre el cliente y el servidor.</p>
+              <p><strong>Usos principales:</strong></p>
+              <ul>
+                <li><strong>Filtrar contenido:</strong> Bloquear webs no permitidas en una empresa o centro educativo
+                </li>
+                <li><strong>Cachear respuestas:</strong> Guardar contenido frecuente para ahorrar ancho de banda</li>
+                <li><strong>Registrar actividad:</strong> Monitorizar qué sitios visitan los usuarios</li>
+                <li><strong>Ocultar IP real:</strong> Proporcionar anonimato al cliente</li>
+              </ul>
+              <p><strong>Proxy inverso (Reverse Proxy):</strong></p>
+              <ul>
+                <li>Protege los servidores internos</li>
+                <li>Balancea la carga entre varios servidores</li>
+                <li>Oculta la arquitectura interna de la organización al exterior</li>
+              </ul>
+              <p class="note"><strong>Squid</strong> es el proxy más usado en entornos corporativos.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 7: SEGURIDAD PREVENTIVA -->
+        <div class="question-block">
+          <h3 class="question-block-title">Seguridad Preventiva</h3>
+
+          <div class="qa-item">
+            <h4 class="question">¿Cómo saber si mi email ha sido comprometido?</h4>
+            <div class="answer">
+              <p>Puedes verificar si tu dirección de correo ha aparecido en alguna filtración de datos usando servicios
+                especializados.</p>
+              <p><strong>Herramientas recomendadas:</strong></p>
+              <ul>
+                <li><strong>Have I Been Pwned</strong> (haveibeenpwned.com): Base de datos de brechas de seguridad</li>
+                <li><strong>INCIBE</strong> (incibe.es): Instituto Nacional de Ciberseguridad, ofrece información sobre
+                  riesgos y amenazas</li>
+              </ul>
+              <p><strong>Si tu email ha sido comprometido:</strong></p>
+              <ol>
+                <li>Cambia inmediatamente la contraseña</li>
+                <li>Activa la autenticación en dos factores (2FA)</li>
+                <li>Revisa la actividad reciente de la cuenta</li>
+                <li>Cambia contraseñas de otros servicios si usabas la misma</li>
+              </ol>
+              <p class="warning">Nunca reutilices contraseñas entre servicios diferentes.</p>
+            </div>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="question">¿Qué es INCIBE y qué recursos ofrece?</h4>
+            <div class="answer">
+              <p><strong>INCIBE</strong> (Instituto Nacional de Ciberseguridad) es el organismo español de referencia
+                para la ciberseguridad.</p>
+              <p><strong>Recursos principales:</strong></p>
+              <ul>
+                <li><strong>Avisos de seguridad:</strong> Alertas sobre vulnerabilidades y amenazas actuales</li>
+                <li><strong>Herramientas gratuitas:</strong> Para análisis de malware, verificación de URLs sospechosas
+                </li>
+                <li><strong>Formación:</strong> Cursos y guías de buenas prácticas</li>
+                <li><strong>Línea de ayuda:</strong> Atención a incidentes de ciberseguridad</li>
+                <li><strong>OSI (Oficina de Seguridad del Internauta):</strong> Consejos para usuarios y empresas</li>
+              </ul>
+              <p class="highlight">Es recomendable consultar INCIBE periódicamente para estar al día de las amenazas
+                emergentes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE 8: BUENAS PRÁCTICAS -->
+        <div class="question-block">
+          <h3 class="question-block-title">Buenas Prácticas de Seguridad</h3>
+
+          <div class="qa-item">
+            <h4 class="question">Checklist de seguridad básica</h4>
+            <div class="answer">
+              <ul class="checklist">
+                <li>✓ Mantener el sistema operativo y aplicaciones actualizadas</li>
+                <li>✓ Usar antivirus/antimalware actualizado</li>
+                <li>✓ Configurar firewall correctamente</li>
+                <li>✓ Usar contraseñas fuertes y únicas para cada servicio</li>
+                <li>✓ Activar autenticación en dos factores (2FA) siempre que sea posible</li>
+                <li>✓ Realizar copias de seguridad regularmente (regla 3-2-1)</li>
+                <li>✓ Cifrar datos sensibles (BitLocker, VeraCrypt)</li>
+                <li>✓ Usar protocolos seguros (HTTPS, WPA3, VPN)</li>
+                <li>✓ No abrir adjuntos ni enlaces de remitentes desconocidos</li>
+                <li>✓ Verificar hash de archivos descargados cuando sea posible</li>
+                <li>✓ Revisar permisos de aplicaciones instaladas</li>
+                <li>✓ Cerrar sesiones en equipos compartidos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     <div id="panel-quiz">
@@ -187,7 +714,7 @@
     </div>
   </main>
   <script src="ciberseguridad_preguntas.js"></script>
-    <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Contar preguntas de test por UF
       Object.keys(BANCO).forEach(uf => {
@@ -202,6 +729,9 @@
       const temarioSection = document.getElementById('temario-section');
       const quizControls = document.getElementById('quiz-controls');
 
+      const panelDesarrollo = document.getElementById('panel-desarrollo');
+      const panelConfig = document.getElementById('panel-config');
+
       btnsModo.forEach(btn => {
         btn.addEventListener('click', () => {
           btnsModo.forEach(b => b.classList.remove('active'));
@@ -209,14 +739,16 @@
           const modo = btn.dataset.mode;
 
           // Mostrar/ocultar secciones según el modo
-          if (modo === 'temario') {
+          if (modo === 'desarrollo') {
             ufSection.style.display = 'none';
-            temarioSection.classList.add('visible');
             quizControls.style.display = 'none';
+            panelDesarrollo.style.display = 'block';
+            panelConfig.style.display = 'none';
           } else {
             ufSection.style.display = 'block';
-            temarioSection.classList.remove('visible');
             quizControls.style.display = 'block';
+            panelDesarrollo.style.display = 'none';
+            panelConfig.style.display = 'flex';
           }
         });
       });

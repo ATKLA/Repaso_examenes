@@ -117,6 +117,58 @@
       color: var(--accent-bright);
     }
 
+    /* Cards de ejercicios de código */
+    .ejercicio-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ejercicio-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .ejercicio-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ejercicio-numero {
+      background: var(--accent-bg);
+      color: var(--accent-bright);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-m);
+      font-size: 0.875rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .ejercicio-titulo {
+      font-family: var(--font-d);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .ejercicio-descripcion {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
   </style>
 </head>
 
@@ -163,24 +215,25 @@
 
         <!-- SELECTOR DE CATEGORÍAS DE CÓDIGO (solo visible en modo código) -->
         <div id="category-section" style="display:none;">
-          <p class="section-label">Categoría de ejercicios</p>
+          <p class="section-label">Selecciona la categoría de ejercicios</p>
           <div class="category-selector visible">
-            <button class="btn-category active" data-category="all">
-              <div style="font-weight:700;margin-bottom:2px;">Todo</div>
-              <div style="font-size:0.7rem;opacity:0.7;">70 ejercicios</div>
-            </button>
-            <button class="btn-category" data-category="php">
+            <button class="btn-category active" data-category="php">
               <div style="font-weight:700;margin-bottom:2px;">PHP</div>
-              <div style="font-size:0.7rem;opacity:0.7;">30 ejercicios</div>
+              <div style="font-size:0.7rem;opacity:0.7;">5 ejercicios</div>
             </button>
             <button class="btn-category" data-category="laravel">
               <div style="font-weight:700;margin-bottom:2px;">Laravel</div>
-              <div style="font-size:0.7rem;opacity:0.7;">30 ejercicios</div>
+              <div style="font-size:0.7rem;opacity:0.7;">5 ejercicios</div>
             </button>
             <button class="btn-category" data-category="mongodb">
               <div style="font-weight:700;margin-bottom:2px;">MongoDB</div>
-              <div style="font-size:0.7rem;opacity:0.7;">10 ejercicios</div>
+              <div style="font-size:0.7rem;opacity:0.7;">5 ejercicios</div>
             </button>
+          </div>
+          
+          <!-- Panel de ejercicios de código -->
+          <div id="codigo-ejercicios-panel" style="display:none; margin-top:1.5rem;">
+            <div id="ejercicios-cards-container"></div>
           </div>
         </div>
 
@@ -294,6 +347,7 @@
   </main>
   <script src="dwes_preguntas.js"></script>
   <script src="dwes_ejercicios_codigo.js"></script>
+  <script src="codigo_ejercicios_handler.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Contar preguntas de test por UF
@@ -322,7 +376,7 @@
           } else if (modo === 'codigo') {
             ufSection.style.display = 'none';
             categorySection.style.display = 'block';
-            quizControls.style.display = 'block';
+            quizControls.style.display = 'none'; // OCULTAR en modo código
           } else {
             ufSection.style.display = 'block';
             categorySection.style.display = 'none';
@@ -343,7 +397,7 @@
 
       // Valores por defecto
       window.MODO_EJERCICIO = 'test';
-      window.CODIGO_CATEGORY = 'all';
+      window.CODIGO_CATEGORY = 'php'; // PHP por defecto
     });
   </script>
   <script>window.QUIZ_KEY = "dwes";</script>

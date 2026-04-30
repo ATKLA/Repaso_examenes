@@ -9,6 +9,8 @@
   // Estado global
   let categoriaActual = 'php';
   let ejercicioActual = null;
+  let huecosCompletados = new Set(); // Rastrear huecos completados correctamente
+  let totalHuecos = 0; // Total de huecos en el ejercicio actual
 
   // Inicializar cuando se carga el DOM
   document.addEventListener('DOMContentLoaded', () => {
@@ -47,7 +49,7 @@
   // ─────────────────────────────────────────────────────────────
   // MOSTRAR CARDS DE EJERCICIOS
   // ─────────────────────────────────────────────────────────────
-  function mostrarEjerciciosCategoria(categoria) {
+  window.mostrarEjerciciosCategoria = function(categoria) {
     const container = document.getElementById('ejercicios-cards-container');
     if (!container) return;
 
@@ -92,13 +94,17 @@
   // ─────────────────────────────────────────────────────────────
   // ABRIR EJERCICIO COMPLETO
   // ─────────────────────────────────────────────────────────────
-  function abrirEjercicio(categoria, ejercicioId) {
+  window.abrirEjercicio = function(categoria, ejercicioId) {
     const categoriaUpper = categoria.toUpperCase();
     const ejercicio = EJERCICIOS_CODIGO[categoriaUpper].find(e => e.id === ejercicioId);
     
     if (!ejercicio) return;
     
     ejercicioActual = { categoria, ejercicio };
+    
+    // Reiniciar progreso para este ejercicio
+    huecosCompletados.clear();
+    totalHuecos = ejercicio.huecos.length;
 
     // Ocultar panel de configuración
     const panelConfig = document.getElementById('panel-config');
@@ -133,13 +139,19 @@
 
     panelQuiz.innerHTML = `
       <div class="quiz-meta">
-        <span class="quiz-counter">${ejercicio.titulo}</span>
+        <span class="quiz-counter" id="quiz-counter">${ejercicio.titulo}</span>
         <button class="btn-volver" onclick="volverACategoria()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--muted); padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer; font-family: var(--font-m); font-size: 0.875rem;">
           ← Volver
         </button>
       </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
       ${contenidoHTML}
     `;
+    
+    // Actualizar progreso después de renderizar
+    actualizarBarraProgreso();
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -254,13 +266,27 @@
     const respuestaCorrecta = input.dataset.respuesta.trim();
     const explicacion = input.dataset.explicacion;
     
-    // Comparar (case-insensitive)
-    const esCorrecta = respuestaUsuario.toLowerCase() === respuestaCorrecta.toLowerCase();
+    // Normalizar: quitar comillas, tildes, espacios extra
+    const normalizar = (str) => {
+      return str
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quitar tildes
+        .replace(/['"]/g, '') // quitar comillas simples y dobles
+        .replace(/\s+/g, ' ') // espacios múltiples a uno
+        .trim();
+    };
+    
+    // Comparar normalizando ambas respuestas
+    const esCorrecta = normalizar(respuestaUsuario) === normalizar(respuestaCorrecta);
     
     if (esCorrecta) {
       // CORRECTO
       input.style.borderColor = '#6ee7a0';
       input.style.background = 'rgba(60, 210, 100, 0.1)';
+      
+      // Añadir a completados y actualizar progreso
+      huecosCompletados.add(num);
+      actualizarBarraProgreso();
       
       feedbackDiv.innerHTML = `
         <div style="padding: 0.75rem; background: rgba(60, 210, 100, 0.1); border-left: 3px solid #6ee7a0; border-radius: 0.375rem;">
@@ -276,6 +302,10 @@
       // INCORRECTO
       input.style.borderColor = '#f87b6a';
       input.style.background = 'rgba(240, 80, 60, 0.1)';
+      
+      // Quitar de completados si estaba y actualizar progreso
+      huecosCompletados.delete(num);
+      actualizarBarraProgreso();
       
       feedbackDiv.innerHTML = `
         <div style="padding: 0.75rem; background: rgba(240, 80, 60, 0.1); border-left: 3px solid #f87b6a; border-radius: 0.375rem;">
@@ -299,6 +329,28 @@
   };
 
   // ─────────────────────────────────────────────────────────────
+  // ACTUALIZAR BARRA DE PROGRESO
+  // ─────────────────────────────────────────────────────────────
+  function actualizarBarraProgreso() {
+    const progressFill = document.getElementById('progress-fill');
+    if (!progressFill) return;
+    
+    if (totalHuecos === 0) {
+      progressFill.style.width = '0%';
+      return;
+    }
+    
+    const porcentaje = (huecosCompletados.size / totalHuecos) * 100;
+    progressFill.style.width = `${porcentaje}%`;
+    
+    // También actualizar el contador si existe
+    const quizCounter = document.getElementById('quiz-counter');
+    if (quizCounter && ejercicioActual) {
+      quizCounter.textContent = `${ejercicioActual.ejercicio.titulo} - ${huecosCompletados.size}/${totalHuecos} completados`;
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────
   // VOLVER A CATEGORÍA
   // ─────────────────────────────────────────────────────────────
   window.volverACategoria = function() {
@@ -308,6 +360,9 @@
     if (panelConfig) panelConfig.style.display = 'block';
     if (panelQuiz) panelQuiz.style.display = 'none';
     
+    // Reiniciar progreso
+    huecosCompletados.clear();
+    totalHuecos = 0;
     ejercicioActual = null;
   };
 

@@ -143,8 +143,8 @@
 
     .progress-cards {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
 
     .progress-card {
@@ -430,7 +430,7 @@
       }
 
       .progress-cards {
-        grid-template-columns: 1fr;
+      grid-template-columns: repeat(3, 1fr);
       }
 
       .hero {
@@ -474,19 +474,6 @@
           <div class="progress-pct" id="pct-dwes">—</div>
           <div class="progress-detail" id="detail-dwes">
             <span class="progress-empty">Sin tests aún</span>
-          </div>
-        </div>
-      </div>
-      <!-- DWES Código -->
-      <div class="progress-card">
-        <div class="progress-card-label amber">0613 · DWES Código</div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill amber" id="bar-dwes-codigo"></div>
-        </div>
-        <div class="progress-stats">
-          <div class="progress-pct" id="pct-dwes-codigo">—</div>
-          <div class="progress-detail" id="detail-dwes-codigo">
-            <span class="progress-empty">Sin ejercicios aún</span>
           </div>
         </div>
       </div>
@@ -584,7 +571,6 @@
     function loadProgress() {
       const asignaturas = [
         { key: "dwes", id: "dwes", label: "test" },
-        { key: "dwes_codigo", id: "dwes-codigo", label: "ejercicio" },
         { key: "despliegue", id: "despliegue", label: "test" },
         { key: "ciber", id: "ciber", label: "test" },
       ];

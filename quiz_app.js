@@ -235,6 +235,7 @@
     $('panel-config').style.display  = 'none';
     $('panel-results').style.display = 'none';
     $('panel-quiz').style.display    = 'block';
+    añadirBotonVolver();
     renderPregunta();
   }
 
@@ -476,6 +477,7 @@
 
     $('panel-results').style.display = 'none';
     $('panel-quiz').style.display    = 'block';
+    añadirBotonVolver();
     renderPregunta();
   }
 
@@ -494,3 +496,40 @@
   }
 
 })();
+
+// ── Añadir botón Volver ──────────────────────────────────────
+function añadirBotonVolver() {
+  const quizMeta = document.querySelector('#panel-quiz .quiz-meta');
+  if (!quizMeta || quizMeta.querySelector('.btn-volver')) return;
+  
+  const btnVolver = document.createElement('button');
+  btnVolver.className = 'btn-volver';
+  btnVolver.innerHTML = '← Volver';
+  btnVolver.onclick = volverAlInicio;
+  btnVolver.style.cssText = 'background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--muted); padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer; font-family: var(--font-m); font-size: 0.875rem; transition: all 0.2s; margin-left: auto;';
+  btnVolver.onmouseover = function() { this.style.borderColor = 'rgba(255,255,255,0.4)'; this.style.color = 'var(--text-2)'; };
+  btnVolver.onmouseout = function() { this.style.borderColor = 'rgba(255,255,255,0.2)'; this.style.color = 'var(--muted)'; };
+  
+  quizMeta.style.display = 'flex';
+  quizMeta.style.justifyContent = 'space-between';
+  quizMeta.style.alignItems = 'center';
+  
+  const leftContent = document.createElement('div');
+  leftContent.style.cssText = 'display: flex; gap: 1rem; align-items: center;';
+  const counter = quizMeta.querySelector('.quiz-counter');
+  const liveScore = quizMeta.querySelector('.quiz-live-score');
+  if (counter) leftContent.appendChild(counter);
+  if (liveScore) leftContent.appendChild(liveScore);
+  
+  quizMeta.innerHTML = '';
+  quizMeta.appendChild(leftContent);
+  quizMeta.appendChild(btnVolver);
+}
+
+function volverAlInicio() {
+  const $ = id => document.getElementById(id);
+  $('panel-quiz').style.display = 'none';
+  $('panel-config').style.display = 'block';
+  $('panel-results').style.display = 'none';
+  $('progress-fill').style.width = '0%';
+}

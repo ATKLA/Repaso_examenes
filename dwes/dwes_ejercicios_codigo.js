@@ -16,8 +16,8 @@ const EJERCICIOS_CODIGO = {
     {
       id: 1,
       titulo: 'PHP 1/7: Conexión PDO',
-      descripcion: 'Sistema de reservas para restaurante. Completa la conexión PDO con configuración de errores.',
-      contexto: 'Base de datos: restaurante_db | Servidor: localhost',
+      descripcion: 'Completa las variables de configuración para conectarte a la base de datos "restaurante_db" usando PDO. Importante: las variables de texto ($host, $dbname, $username, $password) deben llevar comillas simples.',
+      contexto: 'Base de datos: restaurante_db | Servidor: localhost | Usuario: root | Contraseña vacía | Todas las variables de texto van CON comillas simples',
       codigo: `$host = ___1___;
 $dbname = ___2___;
 $username = ___3___;
@@ -29,10 +29,10 @@ $conn = new ___5___(
 );
 $conn->setAttribute(PDO::___6___, PDO::___7___);`,
       huecos: [
-        { num: 1, respuesta: "'localhost'", explicacion: "Servidor MySQL en local (CON comillas simples)" },
-        { num: 2, respuesta: "'restaurante_db'", explicacion: "Nombre de la base de datos (CON comillas)" },
-        { num: 3, respuesta: "'root'", explicacion: "Usuario por defecto en XAMPP (CON comillas)" },
-        { num: 4, respuesta: "''", explicacion: "Contraseña vacía en local (dos comillas vacías '')" },
+        { num: 1, respuesta: "localhost", explicacion: "Servidor MySQL en local - escribe: 'localhost' (CON comillas simples)" },
+        { num: 2, respuesta: "restaurante_db", explicacion: "Nombre de la base de datos - escribe: 'restaurante_db' (CON comillas)" },
+        { num: 3, respuesta: "root", explicacion: "Usuario por defecto en XAMPP - escribe: 'root' (CON comillas)" },
+        { num: 4, respuesta: "", explicacion: "Contraseña vacía - escribe: '' (dos comillas simples vacías)" },
         { num: 5, respuesta: 'PDO', explicacion: 'Clase PDO para crear la conexión' },
         { num: 6, respuesta: 'ATTR_ERRMODE', explicacion: 'Atributo para configurar modo de errores' },
         { num: 7, respuesta: 'ERRMODE_EXCEPTION', explicacion: 'Lanzar excepciones automáticamente' }
@@ -42,7 +42,7 @@ $conn->setAttribute(PDO::___6___, PDO::___7___);`,
       id: 2,
       titulo: 'PHP 2/7: INSERT PDO (10 campos)',
       descripcion: 'Completa el INSERT con prepared statements PDO para guardar una reserva completa.',
-      contexto: 'Campos: nombre, email, telefono, fecha_reserva, num_personas, turno, zona, tipo_menu, ocasion_especial, comentarios',
+      contexto: 'Tabla: reservas | 10 campos: nombre, email, telefono, fecha_reserva, num_personas, turno, zona, tipo_menu, ocasion_especial, comentarios | Usa prepared statements con placeholders nombrados (:nombre, :email, etc.)',
       codigo: `$sql = "___1___ INTO reservas 
         (nombre, email, telefono, fecha_reserva, num_personas, 
          turno, zona, tipo_menu, ocasion_especial, comentarios)
@@ -67,7 +67,7 @@ $stmt->___4___([
       id: 3,
       titulo: 'PHP 3/7: MySQLi bind_param',
       descripcion: 'Completa el código MySQLi usando placeholders posicionales (?) y bind_param con tipos.',
-      contexto: 'MySQLi usa ? en lugar de :nombre y requiere especificar tipos manualmente',
+      contexto: 'MySQLi usa ? como placeholders | bind_param necesita especificar TIPOS: s=string, i=integer | Aquí: 9 strings + 1 integer (num_personas) = "ssssisssss"',
       codigo: `$sql = "INSERT INTO reservas 
         (nombre, email, telefono, fecha_reserva, num_personas, 
          turno, zona, tipo_menu, ocasion_especial, comentarios)
@@ -87,7 +87,7 @@ ___4___($stmt);`,
       huecos: [
         { num: 1, respuesta: 'mysqli_prepare', explicacion: 'Función para preparar consulta en MySQLi' },
         { num: 2, respuesta: 'mysqli_stmt_bind_param', explicacion: 'Función para vincular parámetros con tipos' },
-        { num: 3, respuesta: '"ssssisssss"', explicacion: '9 strings (s) + 1 integer (i) en posición 5 (num_personas)' },
+        { num: 3, respuesta: 'ssssisssss', explicacion: '10 parámetros: string, string, string, string, integer, string, string, string, string, string. Escribe: "ssssisssss" (CON comillas dobles)' },
         { num: 4, respuesta: 'mysqli_stmt_execute', explicacion: 'Ejecutar el statement preparado' }
       ]
     },
@@ -231,7 +231,7 @@ ___3___
       id: 2,
       titulo: 'Laravel 2/6: Configurar BD y Migración',
       descripcion: 'Crear BD, configurar .env y generar migración.',
-      contexto: 'Archivo .env contiene credenciales de BD',
+      contexto: 'La base de datos se llamará: peliculas_db | El modelo se llamará: Pelicula (singular, con mayúscula)',
       codigo: `# Editar archivo .env:
 DB_DATABASE=___1___
 DB_USERNAME=___2___
@@ -389,7 +389,7 @@ ___6___($peliculas as $pelicula)
       id: 1,
       titulo: 'MongoDB 1/6: Crear BD e Insertar',
       descripcion: 'Comandos básicos: crear BD, colección e insertar documentos.',
-      contexto: 'MongoDB crea automáticamente al usar por primera vez',
+      contexto: 'Base de datos: gamezone | Colección: videojuegos | MongoDB crea automáticamente ambas al usarlas por primera vez',
       codigo: `// Crear/seleccionar BD:
 ___1___
 

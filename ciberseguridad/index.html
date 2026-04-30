@@ -285,8 +285,14 @@
     </div>
     <!-- PANEL DESARROLLO -->
     <div id="panel-desarrollo" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 class="desarrollo-title" style="margin: 0;">Desarrollo - Preguntas y Respuestas</h2>
+        <button onclick="volverDesdeDesarrollo()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--muted); padding: 0.5rem 1rem; border-radius: 0.375rem; cursor: pointer; font-family: var(--font-m); font-size: 0.875rem; transition: all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.4)'; this.style.color='var(--text-2)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.color='var(--muted)';">
+          ← Volver
+        </button>
+      </div>
       <div class="desarrollo-container">
-        <h2 class="desarrollo-title">Desarrollo - Preguntas y Respuestas</h2>
+        <p class="desarrollo-intro">Explicaciones detalladas de los conceptos clave vistos en clase sobre seguridad
         <p class="desarrollo-intro">Explicaciones detalladas de los conceptos clave vistos en clase sobre seguridad
           informática, copias de seguridad, cifrado, análisis de red y protección de datos.</p>
 
@@ -753,6 +759,12 @@
         });
       });
     });
+  </script>
+  <script>
+    function volverDesdeDesarrollo() {
+      document.getElementById('panel-desarrollo').style.display = 'none';
+      document.getElementById('panel-config').style.display = 'block';
+    }
   </script>
   <script>window.QUIZ_KEY = "ciber";</script>
   <script src="../quiz_app.js"></script>
